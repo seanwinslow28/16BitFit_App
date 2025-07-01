@@ -1,0 +1,73 @@
+{
+  "name": "16bitfit",
+  "version": "1.0.0",
+  "description": "A gamified fitness and nutrition tracking app with 16-bit aesthetics",
+  "main": "index.js",
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "build:android": "cd android && ./gradlew assembleRelease",
+    "build:ios": "xcodebuild -workspace ios/16bitfit.xcworkspace -scheme 16bitfit -configuration Release archive",
+    "clean": "react-native clean-project-auto"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-native": "0.72.6",
+    "react-native-sqlite-storage": "^6.0.1",
+    "react-native-sound": "^0.11.2",
+    "@reduxjs/toolkit": "^1.9.7",
+    "react-redux": "^8.1.3",
+    "@react-navigation/native": "^6.1.9",
+    "@react-navigation/stack": "^6.3.20",
+    "react-native-screens": "^3.27.0",
+    "react-native-safe-area-context": "^4.7.4",
+    "react-native-gesture-handler": "^2.13.4",
+    "react-native-vector-icons": "^10.0.2",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-native-haptic-feedback": "^2.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/runtime": "^7.20.0",
+    "@react-native/eslint-config": "^0.72.2",
+    "@react-native/metro-config": "^0.72.11",
+    "@tsconfig/react-native": "^3.0.0",
+    "@types/react": "^18.0.24",
+    "@types/react-test-renderer": "^18.0.0",
+    "babel-jest": "^29.2.1",
+    "eslint": "^8.19.0",
+    "jest": "^29.2.1",
+    "metro-react-native-babel-preset": "0.76.8",
+    "prettier": "^2.4.1",
+    "react-test-renderer": "18.2.0",
+    "typescript": "4.8.4"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/16bitfit.git"
+  },
+  "keywords": [
+    "fitness",
+    "gamification",
+    "health",
+    "react-native",
+    "mobile-app",
+    "16-bit",
+    "retro",
+    "nutrition",
+    "rpg"
+  ],
+  "author": "Sean Winslow",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/your-username/16bitfit/issues"
+  },
+  "homepage": "https://github.com/your-username/16bitfit#readme"
+}
