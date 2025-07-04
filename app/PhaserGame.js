@@ -69,21 +69,17 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
     }
 
     preload() {
-      // Create simple colored rectangles as sprites (no external assets needed)
-      this.load.image('player', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+      // Load your custom sprite sheet
+      this.load.spritesheet('hero', 'assets/Sprites/16BitFit_Sprite_Sheet.png', {
+        frameWidth: 512,
+        frameHeight: 512,
+      });
       
-      // Create pixel art sprites programmatically
+      // Create other sprites programmatically
       this.createPixelSprites();
     }
 
     createPixelSprites() {
-      // Create player sprite (green square)
-      const playerGraphics = this.add.graphics();
-      playerGraphics.fillStyle(0x00FF00);
-      playerGraphics.fillRect(0, 0, 16, 16);
-      playerGraphics.generateTexture('player', 16, 16);
-      playerGraphics.destroy();
-
       // Create enemy sprite (red square)
       const enemyGraphics = this.add.graphics();
       enemyGraphics.fillStyle(0xFF0000);
@@ -99,6 +95,37 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
       collectibleGraphics.destroy();
     }
 
+    createHeroAnimations() {
+      // Create animations for the hero sprite
+      // Note: Adjust frame numbers based on your actual sprite sheet layout
+      
+      // Idle animation (assuming frames 0-1)
+      this.anims.create({
+        key: 'idle',
+        frames: this.anims.generateFrameNumbers('hero', { start: 0, end: 1 }),
+        frameRate: 2,
+        repeat: -1
+      });
+
+      // Run animation (assuming frames 2-5)
+      this.anims.create({
+        key: 'run',
+        frames: this.anims.generateFrameNumbers('hero', { start: 2, end: 5 }),
+        frameRate: 8,
+        repeat: -1
+      });
+
+      // Jump animation (assuming frame 6)
+      this.anims.create({
+        key: 'jump',
+        frames: [{ key: 'hero', frame: 6 }],
+        frameRate: 1
+      });
+
+      // Start with idle animation
+      this.player.anims.play('idle', true);
+    }
+
     create() {
       // Add retro-style text
       this.add.text(10, 10, '16BitFit Battle!', {
@@ -107,9 +134,21 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
         fontFamily: 'monospace'
       });
 
-      // Create player
-      this.player = this.physics.add.sprite(50, 150, 'player');
+      // Add power-up indicator
+      this.add.text(10, 60, 'Collect coins for power!', {
+        fontSize: '8px',
+        fill: '#000',
+        fontFamily: 'monospace'
+      });
+
+      // Create hero player using sprite sheet
+      this.player = this.physics.add.sprite(50, 150, 'hero', 0);
       this.player.setCollideWorldBounds(true);
+      // Scale down the hero (512x512 is too big for our game area)
+      this.player.setScale(0.06); // This makes it about 30x30 pixels
+      
+      // Create hero animations
+      this.createHeroAnimations();
 
       // Create enemies group
       this.enemies = this.physics.add.group();
@@ -166,17 +205,30 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
     update() {
       if (this.isGameOver) return;
 
-      // Player movement
+      // Player movement with animations
       if (this.cursors.left.isDown) {
         this.player.setVelocityX(-160);
+        this.player.setFlipX(true); // Flip sprite when moving left
+        if (this.player.body.touching.down) {
+          this.player.anims.play('run', true);
+        }
       } else if (this.cursors.right.isDown) {
         this.player.setVelocityX(160);
+        this.player.setFlipX(false); // Normal direction when moving right
+        if (this.player.body.touching.down) {
+          this.player.anims.play('run', true);
+        }
       } else {
         this.player.setVelocityX(0);
+        if (this.player.body.touching.down) {
+          this.player.anims.play('idle', true);
+        }
       }
 
+      // Jump
       if (this.cursors.up.isDown && this.player.body.touching.down) {
         this.player.setVelocityY(-330);
+        this.player.anims.play('jump', true);
       }
     }
 
@@ -234,11 +286,18 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
       this.score = Math.max(0, this.score - 5);
       this.scoreText.setText(`Score: ${this.score}`);
       
-      // Flash player red
+      // Flash player red and briefly show hurt animation
       this.player.setTint(0xff0000);
       this.time.delayedCall(200, () => {
         this.player.clearTint();
       });
+      
+      // Small knockback effect
+      if (player.x < enemy.x) {
+        player.setVelocityX(-100);
+      } else {
+        player.setVelocityX(100);
+      }
     }
 
     updateTimer() {
