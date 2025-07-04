@@ -188,6 +188,18 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
         fontFamily: 'monospace'
       });
 
+      // Add animation controls instructions
+      this.add.text(10, 75, 'Press 1-5 to test animations:', {
+        fontSize: '7px',
+        fill: '#000',
+        fontFamily: 'monospace'
+      });
+      this.add.text(10, 85, '1=Flex 2=Tired 3=Point 4=Drink 5=Sad', {
+        fontSize: '6px',
+        fill: '#000',
+        fontFamily: 'monospace'
+      });
+
       // Create hero player - check if sprite sheet loaded
       if (this.spriteSheetFailed || !this.textures.exists('hero')) {
         // Sprite sheet failed to load, create fallback
@@ -222,6 +234,13 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
 
       // Input handling
       this.cursors = this.input.keyboard.createCursorKeys();
+      this.keys = this.input.keyboard.addKeys({
+        flex: Phaser.Input.Keyboard.KeyCodes.ONE,
+        tired: Phaser.Input.Keyboard.KeyCodes.TWO,
+        point: Phaser.Input.Keyboard.KeyCodes.THREE,
+        drink: Phaser.Input.Keyboard.KeyCodes.FOUR,
+        sad: Phaser.Input.Keyboard.KeyCodes.FIVE
+      });
 
       // Game variables
       this.score = 0;
@@ -264,6 +283,19 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
 
     update() {
       if (this.isGameOver) return;
+
+      // Manual animation controls (1-5 keys)
+      if (Phaser.Input.Keyboard.JustDown(this.keys.flex)) {
+        this.player.anims.play('flex');
+      } else if (Phaser.Input.Keyboard.JustDown(this.keys.tired)) {
+        this.player.anims.play('tired');
+      } else if (Phaser.Input.Keyboard.JustDown(this.keys.point)) {
+        this.player.anims.play('point');
+      } else if (Phaser.Input.Keyboard.JustDown(this.keys.drink)) {
+        this.player.anims.play('drink');
+      } else if (Phaser.Input.Keyboard.JustDown(this.keys.sad)) {
+        this.player.anims.play('sad');
+      }
 
       // Player movement with fitness-themed animations
       if (this.cursors.left.isDown) {
