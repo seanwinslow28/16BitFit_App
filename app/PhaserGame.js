@@ -69,18 +69,19 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
     }
 
     preload() {
-      // Load your custom sprite sheet
-      // Try different asset loading approaches for Expo
-      try {
-        this.load.spritesheet('hero', require('../assets/Sprites/16BitFit_Sprite_Sheet.png'), {
-          frameWidth: 512,
-          frameHeight: 512,
-        });
-      } catch (error) {
-        console.warn('Could not load sprite sheet, using fallback');
-        // Create a fallback sprite if the main one fails
-        this.createFallbackSprite();
-      }
+      // Load your custom sprite sheet with proper Expo asset handling
+      this.load.spritesheet('hero', './assets/Sprites/16BitFit_Sprite_Sheet.png', {
+        frameWidth: 512,
+        frameHeight: 512,
+      });
+      
+      // Handle load errors and create fallback
+      this.load.on('filefailed', (key) => {
+        if (key === 'hero') {
+          console.warn('Sprite sheet failed to load, will use fallback');
+          this.spriteSheetFailed = true;
+        }
+      });
       
       // Create other sprites programmatically
       this.createPixelSprites();
@@ -115,47 +116,58 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
       // Create animations based on your sprite sheet layout
       // 2x3 grid: Idle, Flex, Tired, Pointing, Drinking, Overweight/Sad
       
-      // Frame 0: Idle
-      this.anims.create({
-        key: 'idle',
-        frames: [{ key: 'hero', frame: 0 }],
-        frameRate: 1,
-      });
+      if (this.spriteSheetFailed) {
+        // For fallback sprite, all animations use frame 0
+        ['idle', 'flex', 'tired', 'point', 'drink', 'sad'].forEach(key => {
+          this.anims.create({
+            key: key,
+            frames: [{ key: 'hero', frame: 0 }],
+            frameRate: 1,
+          });
+        });
+      } else {
+        // Frame 0: Idle
+        this.anims.create({
+          key: 'idle',
+          frames: [{ key: 'hero', frame: 0 }],
+          frameRate: 1,
+        });
 
-      // Frame 1: Flex (for victories/strength)
-      this.anims.create({
-        key: 'flex',
-        frames: [{ key: 'hero', frame: 1 }],
-        frameRate: 1,
-      });
+        // Frame 1: Flex (for victories/strength)
+        this.anims.create({
+          key: 'flex',
+          frames: [{ key: 'hero', frame: 1 }],
+          frameRate: 1,
+        });
 
-      // Frame 2: Tired (for when hit by enemies)
-      this.anims.create({
-        key: 'tired',
-        frames: [{ key: 'hero', frame: 2 }],
-        frameRate: 1,
-      });
+        // Frame 2: Tired (for when hit by enemies)
+        this.anims.create({
+          key: 'tired',
+          frames: [{ key: 'hero', frame: 2 }],
+          frameRate: 1,
+        });
 
-      // Frame 3: Pointing (for movement/direction)
-      this.anims.create({
-        key: 'point',
-        frames: [{ key: 'hero', frame: 3 }],
-        frameRate: 1,
-      });
+        // Frame 3: Pointing (for movement/direction)
+        this.anims.create({
+          key: 'point',
+          frames: [{ key: 'hero', frame: 3 }],
+          frameRate: 1,
+        });
 
-      // Frame 4: Drinking (for collecting items)
-      this.anims.create({
-        key: 'drink',
-        frames: [{ key: 'hero', frame: 4 }],
-        frameRate: 1,
-      });
+        // Frame 4: Drinking (for collecting items)
+        this.anims.create({
+          key: 'drink',
+          frames: [{ key: 'hero', frame: 4 }],
+          frameRate: 1,
+        });
 
-      // Frame 5: Overweight/Sad (for game over)
-      this.anims.create({
-        key: 'sad',
-        frames: [{ key: 'hero', frame: 5 }],
-        frameRate: 1,
-      });
+        // Frame 5: Overweight/Sad (for game over)
+        this.anims.create({
+          key: 'sad',
+          frames: [{ key: 'hero', frame: 5 }],
+          frameRate: 1,
+        });
+      }
 
       // Start with idle animation
       this.player.anims.play('idle', true);
@@ -176,12 +188,18 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
         fontFamily: 'monospace'
       });
 
-      // Create hero player using sprite sheet
+      // Create hero player - check if sprite sheet loaded
+      if (this.spriteSheetFailed || !this.textures.exists('hero')) {
+        // Sprite sheet failed to load, create fallback
+        this.createFallbackSprite();
+        console.warn('Using fallback sprite - sprite sheet not found');
+      }
+      
       this.player = this.physics.add.sprite(50, 150, 'hero', 0);
       this.player.setCollideWorldBounds(true);
       
       // Scale based on sprite type
-      if (this.textures.exists('hero')) {
+      if (!this.spriteSheetFailed && this.textures.exists('hero')) {
         // If sprite sheet loaded successfully, scale it down
         this.player.setScale(0.06); // Scale down 512x512 to ~30x30 pixels
       } else {
