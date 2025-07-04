@@ -15,6 +15,7 @@ import {
   Dimensions,
   Animated,
 } from 'react-native';
+import PhaserGame from './PhaserGame';
 
 const {width, height} = Dimensions.get('window');
 
@@ -300,25 +301,27 @@ const App = () => {
 
     const executeBattle = () => {
       setBattlePhase('fighting');
-      
-      // Battle logic based on stats
+    };
+
+    const handleGameComplete = (gameResult) => {
+      // Battle logic based on game performance and stats
       const totalStats = playerStats.strength + playerStats.endurance + playerStats.focus + playerStats.health;
-      const requiredStats = playerStats.level * 50; // Dynamic difficulty
+      const baseRequiredStats = playerStats.level * 40; // Reduced difficulty since game performance matters
+      const gameBonus = gameResult.score; // Game score adds to your "combat power"
       
-      setTimeout(() => {
-        const won = totalStats >= requiredStats;
-        setBattleResult(won ? 'win' : 'lose');
-        setBattlePhase('result');
-        
-        if (won) {
-          setPlayerStats(prev => ({
-            ...prev,
-            xp: prev.xp + 100,
-            level: prev.level + 1,
-            evolutionStage: Math.min(prev.evolutionStage + 1, 5),
-          }));
-        }
-      }, 3000);
+      const won = (totalStats + gameBonus) >= baseRequiredStats;
+      setBattleResult(won ? 'win' : 'lose');
+      setBattlePhase('result');
+      
+      if (won) {
+        setPlayerStats(prev => ({
+          ...prev,
+          xp: prev.xp + 100 + gameResult.xpEarned,
+          level: prev.level + 1,
+          evolutionStage: Math.min(prev.evolutionStage + 1, 5),
+          focus: Math.min(prev.focus + gameResult.statsBoost, 100),
+        }));
+      }
     };
 
     if (battlePhase === 'prep') {
@@ -349,7 +352,14 @@ const App = () => {
       return (
         <View style={styles.screenContent}>
           <Text style={styles.battleAnimation}>⚔️ BATTLE IN PROGRESS! ⚔️</Text>
-          <Text style={styles.battleText}>Your fighter is battling...</Text>
+          <Text style={styles.battleText}>Control your fighter! Use arrow keys to move and jump!</Text>
+          <View style={styles.gameArea}>
+            <PhaserGame 
+              gameType="battle" 
+              playerStats={playerStats} 
+              onGameComplete={handleGameComplete}
+            />
+          </View>
         </View>
       );
     }
@@ -882,6 +892,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     marginTop: 20,
+  },
+  gameArea: {
+    flex: 1,
+    marginTop: 15,
+    backgroundColor: '#9BBD3F',
+    borderRadius: 8,
+    padding: 5,
   },
   battleResultText: {
     color: '#fff',
