@@ -70,10 +70,17 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
 
     preload() {
       // Load your custom sprite sheet
-      this.load.spritesheet('hero', 'assets/Sprites/16BitFit_Sprite_Sheet.png', {
-        frameWidth: 512,
-        frameHeight: 512,
-      });
+      // Try different asset loading approaches for Expo
+      try {
+        this.load.spritesheet('hero', require('../assets/Sprites/16BitFit_Sprite_Sheet.png'), {
+          frameWidth: 512,
+          frameHeight: 512,
+        });
+      } catch (error) {
+        console.warn('Could not load sprite sheet, using fallback');
+        // Create a fallback sprite if the main one fails
+        this.createFallbackSprite();
+      }
       
       // Create other sprites programmatically
       this.createPixelSprites();
@@ -95,31 +102,59 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
       collectibleGraphics.destroy();
     }
 
+    createFallbackSprite() {
+      // Create a simple fallback hero sprite if the main sprite sheet fails
+      const heroGraphics = this.add.graphics();
+      heroGraphics.fillStyle(0x00FF00);
+      heroGraphics.fillRect(0, 0, 32, 32);
+      heroGraphics.generateTexture('hero', 32, 32);
+      heroGraphics.destroy();
+    }
+
     createHeroAnimations() {
-      // Create animations for the hero sprite
-      // Note: Adjust frame numbers based on your actual sprite sheet layout
+      // Create animations based on your sprite sheet layout
+      // 2x3 grid: Idle, Flex, Tired, Pointing, Drinking, Overweight/Sad
       
-      // Idle animation (assuming frames 0-1)
+      // Frame 0: Idle
       this.anims.create({
         key: 'idle',
-        frames: this.anims.generateFrameNumbers('hero', { start: 0, end: 1 }),
-        frameRate: 2,
-        repeat: -1
+        frames: [{ key: 'hero', frame: 0 }],
+        frameRate: 1,
       });
 
-      // Run animation (assuming frames 2-5)
+      // Frame 1: Flex (for victories/strength)
       this.anims.create({
-        key: 'run',
-        frames: this.anims.generateFrameNumbers('hero', { start: 2, end: 5 }),
-        frameRate: 8,
-        repeat: -1
+        key: 'flex',
+        frames: [{ key: 'hero', frame: 1 }],
+        frameRate: 1,
       });
 
-      // Jump animation (assuming frame 6)
+      // Frame 2: Tired (for when hit by enemies)
       this.anims.create({
-        key: 'jump',
-        frames: [{ key: 'hero', frame: 6 }],
-        frameRate: 1
+        key: 'tired',
+        frames: [{ key: 'hero', frame: 2 }],
+        frameRate: 1,
+      });
+
+      // Frame 3: Pointing (for movement/direction)
+      this.anims.create({
+        key: 'point',
+        frames: [{ key: 'hero', frame: 3 }],
+        frameRate: 1,
+      });
+
+      // Frame 4: Drinking (for collecting items)
+      this.anims.create({
+        key: 'drink',
+        frames: [{ key: 'hero', frame: 4 }],
+        frameRate: 1,
+      });
+
+      // Frame 5: Overweight/Sad (for game over)
+      this.anims.create({
+        key: 'sad',
+        frames: [{ key: 'hero', frame: 5 }],
+        frameRate: 1,
       });
 
       // Start with idle animation
@@ -144,8 +179,15 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
       // Create hero player using sprite sheet
       this.player = this.physics.add.sprite(50, 150, 'hero', 0);
       this.player.setCollideWorldBounds(true);
-      // Scale down the hero (512x512 is too big for our game area)
-      this.player.setScale(0.06); // This makes it about 30x30 pixels
+      
+      // Scale based on sprite type
+      if (this.textures.exists('hero')) {
+        // If sprite sheet loaded successfully, scale it down
+        this.player.setScale(0.06); // Scale down 512x512 to ~30x30 pixels
+      } else {
+        // If using fallback sprite, use normal scale
+        this.player.setScale(1);
+      }
       
       // Create hero animations
       this.createHeroAnimations();
@@ -205,30 +247,30 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
     update() {
       if (this.isGameOver) return;
 
-      // Player movement with animations
+      // Player movement with fitness-themed animations
       if (this.cursors.left.isDown) {
         this.player.setVelocityX(-160);
         this.player.setFlipX(true); // Flip sprite when moving left
         if (this.player.body.touching.down) {
-          this.player.anims.play('run', true);
+          this.player.anims.play('point', true); // Pointing while moving
         }
       } else if (this.cursors.right.isDown) {
         this.player.setVelocityX(160);
         this.player.setFlipX(false); // Normal direction when moving right
         if (this.player.body.touching.down) {
-          this.player.anims.play('run', true);
+          this.player.anims.play('point', true); // Pointing while moving
         }
       } else {
         this.player.setVelocityX(0);
         if (this.player.body.touching.down) {
-          this.player.anims.play('idle', true);
+          this.player.anims.play('idle', true); // Idle when standing
         }
       }
 
-      // Jump
+      // Jump - use flex animation to show strength
       if (this.cursors.up.isDown && this.player.body.touching.down) {
         this.player.setVelocityY(-330);
-        this.player.anims.play('jump', true);
+        this.player.anims.play('flex', true); // Flex when jumping (showing strength)
       }
     }
 
@@ -280,16 +322,29 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
       collectible.destroy();
       this.score += 10;
       this.scoreText.setText(`Score: ${this.score}`);
+      
+      // Show drinking animation when collecting (nutrition/hydration)
+      this.player.anims.play('drink', true);
+      this.time.delayedCall(500, () => {
+        if (!this.isGameOver) {
+          this.player.anims.play('idle', true);
+        }
+      });
     }
 
     hitEnemy(player, enemy) {
       this.score = Math.max(0, this.score - 5);
       this.scoreText.setText(`Score: ${this.score}`);
       
-      // Flash player red and briefly show hurt animation
+      // Show tired animation when hit (fitness exhaustion)
+      this.player.anims.play('tired', true);
       this.player.setTint(0xff0000);
-      this.time.delayedCall(200, () => {
+      
+      this.time.delayedCall(800, () => {
         this.player.clearTint();
+        if (!this.isGameOver) {
+          this.player.anims.play('idle', true);
+        }
       });
       
       // Small knockback effect
@@ -316,6 +371,13 @@ const createGameScene = (gameType, playerStats, onGameComplete) => {
 
       // Stop all physics
       this.physics.pause();
+
+      // Show appropriate ending animation based on score
+      if (this.score >= 50) {
+        this.player.anims.play('flex', true); // Victory pose for good score
+      } else {
+        this.player.anims.play('sad', true); // Sad pose for low score
+      }
 
       // Show game over screen
       this.add.rectangle(140, 100, 280, 200, 0x000000, 0.7);
