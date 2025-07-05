@@ -1,0 +1,49 @@
+{
+  "name": "phaser3-vjoy-plugin",
+  "version": "1.0.3",
+  "description": "Virtual Joystick Plugin for Phaser 3",
+  "keywords": [
+    "phaser",
+    "phaser3",
+    "phaser-plugin",
+    "phaser3-plugin",
+    "vjoy",
+    "virtual-joystick"
+  ],
+  "homepage": "https://github.com/florianvazelle/phaser3-vjoy-plugin#readme",
+  "bugs": {
+    "url": "https://github.com/florianvazelle/phaser3-vjoy-plugin/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/florianvazelle/phaser3-vjoy-plugin.git"
+  },
+  "license": "MIT",
+  "author": "Florian Vazelle <ponythugflorian@gmail.com>",
+  "main": "./dist/VJoyPlugin.js",
+  "scripts": {
+    "demo": "http-server demo -p 2234",
+    "dev": "webpack watch --mode=development",
+    "build": "npm run build:dev && npm run build:prod",
+    "build:dev": "webpack build --mode=development",
+    "build:prod": "webpack build --mode=production",
+    "lint": "eslint --config .eslintrc.json \"src/**/*.js\"",
+    "lintfix": "eslint --config .eslintrc.json \"src/**/*.js\" --fix",
+    "test": "jest --config=jest.config.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.8.0",
+    "eslint-plugin-es5": "^1.5.0",
+    "http-server": "^14.1.0",
+    "jest": "^27.5.0",
+    "jest-canvas-mock": "^2.3.1",
+    "phaser3.24": "npm:phaser@^3.24.1",
+    "phaser3.55": "npm:phaser@^3.55.2",
+    "terser-webpack-plugin": "^5.3.1",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "peerDependencies": {
+    "phaser": "^3.x"
+  }
+}

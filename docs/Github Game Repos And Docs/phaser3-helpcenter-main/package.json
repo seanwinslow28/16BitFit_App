@@ -1,0 +1,28 @@
+{
+  "name": "helpcenter-phaser3",
+  "version": "1.3.3",
+  "phaserVersion": "3.80.1",
+  "description": "Integrated tool for browsing the Phaser docs and examples.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-build": "cd source/editor/app/ && tsc -b",
+    "ts-clean": "cd source/editor/app/ && tsc -b -clean",
+    "build": "cd scripts/ && ./dist.sh",
+    "watch": "cd source/editor/app/ && tsc -b -w",
+    "build-examples-atlas": "free-tex-packer-cli --project scripts/texture-packer-project.ftpp --output source/editor/app/plugins/helpcenter.phaser/data/examples-screenshots-atlas",
+    "get-phaser-examples": "cd scripts && node get-phaser-examples.js",
+    "update-pwa": "cd scripts/ && node make-sw-assets.js",
+    "get-phaser": "cd scripts/ && ./get-all-metadata.sh",
+    "dev-server": "http-server ./source -p 9090 -d",
+    "dist-server": "http-server ./docs -p 9091 -d"
+  },
+  "author": "Arian Fornaris <developers@phasereditor2d.com> (https://phasereditor2d.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "colibri-packer": "^1.1.2",
+    "free-tex-packer-cli": "^0.2.8",
+    "tslint": "^6.1.3",
+    "typescript": "^4.1.2"
+  }
+}

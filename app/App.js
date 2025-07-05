@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Animated,
+  Image,
 } from 'react-native';
 import PhaserGame from './PhaserGame';
 
@@ -112,16 +113,32 @@ const App = () => {
     </View>
   );
 
-  // Avatar Component
-  const Avatar = () => {
-    const getAvatarEmoji = () => {
-      if (playerStats.evolutionStage >= 4) return '🥇'; // Champion
-      if (playerStats.evolutionStage >= 3) return '💪'; // Strong
-      if (playerStats.evolutionStage >= 2) return '🏃'; // Fit
-      if (playerStats.evolutionStage >= 1) return '🚶'; // Active
-      return '😴'; // Beginner
+  // Avatar Sprite Component - displays idle pose image
+  const AvatarSprite = ({ isFullSize = false }) => {
+    const getAvatarEvolution = () => {
+      if (playerStats.evolutionStage >= 4) return 'Champion'; 
+      if (playerStats.evolutionStage >= 3) return 'Strong'; 
+      if (playerStats.evolutionStage >= 2) return 'Fit'; 
+      if (playerStats.evolutionStage >= 1) return 'Active'; 
+      return 'Beginner'; 
     };
 
+    return (
+      <View style={styles.avatarSpriteContainer}>
+        <View style={isFullSize ? styles.fullSizeSpriteContainer : styles.spriteFrameContainer}>
+          <Image 
+            source={require('./assets/Sprites/Idle_Pose.png')}
+            style={isFullSize ? styles.fullSizeAvatarSprite : styles.avatarSprite}
+            resizeMode="contain"
+          />
+        </View>
+        <Text style={styles.evolutionBadge}>{getAvatarEvolution()}</Text>
+      </View>
+    );
+  };
+
+  // Avatar Component
+  const Avatar = ({ isFullSize = false }) => {
     const getAvatarMessage = () => {
       if (playerStats.health >= 90) return "I'm feeling amazing!";
       if (playerStats.health >= 70) return "Ready for action!";
@@ -130,8 +147,8 @@ const App = () => {
     };
 
     return (
-      <View style={styles.avatarContainer}>
-        <Text style={styles.avatarSprite}>{getAvatarEmoji()}</Text>
+      <View style={isFullSize ? styles.fullSizeAvatarContainer : styles.avatarContainer}>
+        <AvatarSprite isFullSize={isFullSize} />
         <Text style={styles.avatarName}>Warrior Level {playerStats.level}</Text>
         <View style={styles.speechBubble}>
           <Text style={styles.speechText}>{getAvatarMessage()}</Text>
@@ -411,7 +428,7 @@ const App = () => {
   const AvatarScreen = () => (
     <ScrollView style={styles.screenContent}>
       <Text style={styles.screenTitle}>👤 Your Fighter</Text>
-      <Avatar />
+      <Avatar isFullSize={true} />
       
       <View style={styles.evolutionInfo}>
         <Text style={styles.sectionTitle}>Evolution Progress</Text>
@@ -644,9 +661,52 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#475569',
   },
-  avatarSprite: {
-    fontSize: 60,
+  fullSizeAvatarContainer: {
+    alignItems: 'center',
+    backgroundColor: '#1e293b',
+    borderRadius: 15,
+    padding: 30,
+    marginBottom: 20,
+    borderWidth: 3,
+    borderColor: '#475569',
+  },
+  avatarSpriteContainer: {
+    alignItems: 'center',
     marginBottom: 10,
+  },
+  spriteFrameContainer: {
+    width: 60,
+    height: 60,
+    overflow: 'hidden',
+    borderRadius: 8,
+    backgroundColor: '#374151',
+    marginBottom: 5,
+  },
+  fullSizeSpriteContainer: {
+    width: 120,
+    height: 120,
+    overflow: 'hidden',
+    borderRadius: 12,
+    backgroundColor: '#374151',
+    marginBottom: 10,
+  },
+  avatarSprite: {
+    width: 60,
+    height: 60,
+  },
+  fullSizeAvatarSprite: {
+    width: 120,
+    height: 120,
+  },
+  evolutionBadge: {
+    color: '#FFD700',
+    fontSize: 10,
+    fontWeight: 'bold',
+    backgroundColor: '#374151',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
   avatarName: {
     color: '#FFD700',

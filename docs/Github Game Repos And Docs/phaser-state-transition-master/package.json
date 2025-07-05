@@ -1,0 +1,33 @@
+{
+  "name": "phaser-state-transition",
+  "version": "2.5.1",
+  "description": "Phaser state transition plugin",
+  "main": "dist/phaser-state-transition.js",
+  "module": "dist/phaser-state-transition.m.js",
+  "umd:main": "dist/phaser-state-transition.umd.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:cristianbote/phaser-state-transition.git"
+  },
+  "files": [
+    "index.js",
+    "dist",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "keywords": [
+    "phaser",
+    "plugin",
+    "state",
+    "transition"
+  ],
+  "scripts": {
+    "build": "rm -rf dist; microbundle build --output dist --target browser --name StateTransition",
+    "watch": "microbundle watch --output dist --target browser --name StateTransition --entry src/index.js"
+  },
+  "author": "Cristian Bote <me@cristianbote.ro>",
+  "license": "ISC",
+  "devDependencies": {
+    "microbundle": "^0.4.3"
+  }
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Unofficial Phaser Help Center | Phaser Editor 2D</title>
+
+    <link rel="icon" type="image/png" href="/editor/static/favicon.png">
+
+    <link rel="manifest" href="./manifest.json" />
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="/icons/icon-72.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-96.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-128.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-144.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-152.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-384.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-512.png" />
+    <meta name="apple-mobile-web-app-status-bar" content="#242424" />
+    <meta name="theme-color" content="#242424" />
+
+    <!-- open-graph card -->
+    <meta name="og:title" content="Unofficial Phaser Help Center v<? echo $EDITOR_VER ?> | Phaser Editor 2D">
+    <meta name="og:description" content="Integrated tool for browsing the Phaser docs and examples.">
+    <meta name="og:image" content="https://helpcenter.phasereditor2d.com/editor/static/screenshot.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@PhaserEditor2D">
+    <meta name="twitter:creator" content="@PhaserEditor2D">
+    
+    	<!-- product.all -->
+	<link href="/editor/app/plugins/product.all/product.all.css?v=1710248657" rel="stylesheet">
+
+
+    <style>
+        #splash {
+            animation-name: splashAnim;
+            animation-delay: 0ms;
+            animation-duration: .5s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+
+        @keyframes splashAnim {
+            from {
+                opacity: 0.8;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        #splash-container {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background: #242424;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="splash-container">
+        <img id="splash" src="/editor/static/splash.svg" width="128" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%)">
+    </div>
+
+    <script>
+    </script>
+
+    	<!-- product.all -->
+	<script src="/editor/app/plugins/product.all/product.all.js?v=1710248657"></script>
+
+</body>
+
+</html>

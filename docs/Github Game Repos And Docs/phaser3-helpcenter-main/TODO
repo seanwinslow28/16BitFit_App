@@ -1,0 +1,43 @@
+--- dev ---
+
+- Add the official spine docs.
+- Check the spine examples. It should support only the official v4 examples.
+- Include official spine examples provided by Esoteric Softwares.
+
+- The class icon is yellow and doesn't look well in the light theme.
+- Hey! Maybe it should use jsdelivr! https://cdn.jsdelivr.net/gh/PhaserEditor2D/helpcenter-phaser3@latest/docs/icons/icon-72.png
+- Maybe we should embedd product info in the index.html file,
+for better caching in a PWA distribution.
+x- Use colibri-packer for all json data.
+x- Pack all icons into atlas.
+x- Get latest colibri.
+x- Get the version from product.json.
+x- Get phaserVersion form product.json
+
+---
+
+- The JSDocEditor inspector should show links to open the doc entry in: 
+	- editors
+	- views 
+	- Phaser website.
+	- Github.
+- A doc-entry landing page? It is a page used for sharing doc links. So it shows the element without distractions. And it shows the links to the Phaser website and Github.
+	Nah! I think the official Phaser website is good enough: https://newdocs.phaser.io/docs/3.54.0/focus/Phaser.GameObjects.Blitter-alpha
+	But well, the Phaser website does not show meta tags for social networks. So maybe what I can do is a "doc card" service.
+- Parse {@link http://some.url}
+- The Versions view.
+- A welcome editor.
+- An Examples Assets view, for showing all the assets. It can help on creating new examples.
+And may help finding the examples associated with a particular asset?
+- Enable search in all files.
+- Enable minimap in the source file editor.
+
+--- DONE ---
+
+x- When focus on the app, it request for files changes. This is a feature from Phaser Editor I should remove from the Phaser Help Center.
+x- It is requesting phaser-docs.json file with a different URL each time.
+x- Update to the latest Phaser 3.55.2.
+x- Open in Official Phaser docs is not working.
+x- A script for generating the index.html file.
+
+---

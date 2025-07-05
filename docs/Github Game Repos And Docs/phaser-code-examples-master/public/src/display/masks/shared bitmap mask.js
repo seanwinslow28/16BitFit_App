@@ -1,0 +1,38 @@
+class Example extends Phaser.Scene
+{
+    constructor ()
+    {
+        super();
+    }
+
+    preload ()
+    {
+        // this.load.setBaseURL('https://cdn.phaserfiles.com/v385');
+        this.load.image('bg', 'assets/skies/deepblue.png');
+        this.load.image('splat', 'assets/pics/splat1.png');
+        this.load.image('atari', 'assets/sprites/atari130xe.png');
+    }
+
+    create ()
+    {
+        this.add.image(400, 300, 'bg');
+
+        for (let i = 0; i < 64; i++)
+        {
+            const x = Phaser.Math.Between(0, 800);
+            const y = Phaser.Math.Between(0, 600);
+
+            this.add.image(x, y, 'atari').enableFilters().filters.external.addMask('splat');
+        }
+    }
+}
+
+const config = {
+    type: Phaser.WEBGL,
+    parent: 'phaser-example',
+    width: 800,
+    height: 600,
+    scene: Example
+};
+
+const game = new Phaser.Game(config);

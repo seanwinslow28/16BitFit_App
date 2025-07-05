@@ -5,7 +5,6 @@
 
 import React, { useEffect, useRef } from 'react';
 import { View, StyleSheet, Platform, Text } from 'react-native';
-import Phaser from 'phaser';
 
 const PhaserGame = ({ gameType = 'battle', playerStats, onGameComplete }) => {
   const gameRef = useRef(null);
@@ -13,28 +12,30 @@ const PhaserGame = ({ gameType = 'battle', playerStats, onGameComplete }) => {
 
   useEffect(() => {
     if (Platform.OS === 'web') {
-      // Initialize Phaser game only on web platform
-      const config = {
-        type: Phaser.AUTO,
-        width: 280,
-        height: 200,
-        parent: gameRef.current,
-        backgroundColor: '#9BBD3F', // GameBoy green
-        physics: {
-          default: 'arcade',
-          arcade: {
-            gravity: { y: 300 },
-            debug: false
+      // Dynamically import Phaser only on web platform
+      import('phaser').then((Phaser) => {
+        const config = {
+          type: Phaser.AUTO,
+          width: 280,
+          height: 200,
+          parent: gameRef.current,
+          backgroundColor: '#9BBD3F', // GameBoy green
+          physics: {
+            default: 'arcade',
+            arcade: {
+              gravity: { y: 300 },
+              debug: false
+            }
+          },
+          scene: createGameScene(gameType, playerStats, onGameComplete, Phaser),
+          scale: {
+            mode: Phaser.Scale.FIT,
+            autoCenter: Phaser.Scale.CENTER_BOTH
           }
-        },
-        scene: createGameScene(gameType, playerStats, onGameComplete),
-        scale: {
-          mode: Phaser.Scale.FIT,
-          autoCenter: Phaser.Scale.CENTER_BOTH
-        }
-      };
+        };
 
-      phaserGameRef.current = new Phaser.Game(config);
+        phaserGameRef.current = new Phaser.Game(config);
+      });
     }
 
     return () => {
@@ -56,13 +57,13 @@ const PhaserGame = ({ gameType = 'battle', playerStats, onGameComplete }) => {
 
   return (
     <View style={styles.gameContainer}>
-      <div ref={gameRef} style={styles.phaserContainer} />
+      <View ref={gameRef} style={styles.phaserContainer} />
     </View>
   );
 };
 
 // Create game scene based on type
-const createGameScene = (gameType, playerStats, onGameComplete) => {
+const createGameScene = (gameType, playerStats, onGameComplete, Phaser) => {
   class GameScene extends Phaser.Scene {
     constructor() {
       super({ key: 'GameScene' });

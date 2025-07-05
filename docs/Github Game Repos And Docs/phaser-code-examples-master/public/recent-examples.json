@@ -1,0 +1,152 @@
+[
+    {
+        "path": "src\\utils\\array\\translate matrix.js",
+        "name": "translate matrix.js",
+        "birthtimeMs": 1748011839304.8093
+    },
+    {
+        "path": "src\\utils\\rbush\\rbush 1.js",
+        "name": "rbush 1.js",
+        "birthtimeMs": 1748011839304.8093
+    },
+    {
+        "path": "src\\utils\\rbush\\rbush 2.js",
+        "name": "rbush 2.js",
+        "birthtimeMs": 1748011839304.8093
+    },
+    {
+        "path": "src\\tweens\\stop a tween.js",
+        "name": "stop a tween.js",
+        "birthtimeMs": 1748011839303.8035
+    },
+    {
+        "path": "src\\tweens\\tween gauge.js",
+        "name": "tween gauge.js",
+        "birthtimeMs": 1748011839303.8035
+    },
+    {
+        "path": "src\\tweens\\tween sprite angle.js",
+        "name": "tween sprite angle.js",
+        "birthtimeMs": 1748011839303.8035
+    },
+    {
+        "path": "src\\tweens\\stagger delay.js",
+        "name": "stagger delay.js",
+        "birthtimeMs": 1748011839303.2986
+    },
+    {
+        "path": "src\\tweens\\stagger showcase.js",
+        "name": "stagger showcase.js",
+        "birthtimeMs": 1748011839303.2986
+    },
+    {
+        "path": "src\\tweens\\remove tween.js",
+        "name": "remove tween.js",
+        "birthtimeMs": 1748011839302.2935
+    },
+    {
+        "path": "src\\tweens\\seek to point in tween.js",
+        "name": "seek to point in tween.js",
+        "birthtimeMs": 1748011839302.2935
+    },
+    {
+        "path": "src\\tweens\\sprite angle between.js",
+        "name": "sprite angle between.js",
+        "birthtimeMs": 1748011839302.2935
+    },
+    {
+        "path": "src\\tweens\\global time scale.js",
+        "name": "global time scale.js",
+        "birthtimeMs": 1748011839301.781
+    },
+    {
+        "path": "src\\tweens\\loop.js",
+        "name": "loop.js",
+        "birthtimeMs": 1748011839301.781
+    },
+    {
+        "path": "src\\tweens\\flip y.js",
+        "name": "flip y.js",
+        "birthtimeMs": 1748011839301.2012
+    },
+    {
+        "path": "src\\tweens\\eases\\sine.js",
+        "name": "sine.js",
+        "birthtimeMs": 1748011839300.683
+    },
+    {
+        "path": "src\\tweens\\flip x.js",
+        "name": "flip x.js",
+        "birthtimeMs": 1748011839300.683
+    },
+    {
+        "path": "src\\tweens\\eases\\quintic.js",
+        "name": "quintic.js",
+        "birthtimeMs": 1748011839300.152
+    },
+    {
+        "path": "src\\tweens\\eases\\sine graph.js",
+        "name": "sine graph.js",
+        "birthtimeMs": 1748011839300.152
+    },
+    {
+        "path": "src\\tweens\\eases\\quintic graph.js",
+        "name": "quintic graph.js",
+        "birthtimeMs": 1748011839299.6484
+    },
+    {
+        "path": "src\\tweens\\eases\\quad graph.js",
+        "name": "quad graph.js",
+        "birthtimeMs": 1748011839298.6443
+    },
+    {
+        "path": "src\\tweens\\eases\\quad.js",
+        "name": "quad.js",
+        "birthtimeMs": 1748011839298.6443
+    },
+    {
+        "path": "src\\tweens\\eases\\quartic graph.js",
+        "name": "quartic graph.js",
+        "birthtimeMs": 1748011839298.6443
+    },
+    {
+        "path": "src\\tweens\\eases\\quartic.js",
+        "name": "quartic.js",
+        "birthtimeMs": 1748011839298.6443
+    },
+    {
+        "path": "src\\tweens\\eases\\exponential.js",
+        "name": "exponential.js",
+        "birthtimeMs": 1748011839297.9597
+    },
+    {
+        "path": "src\\tweens\\eases\\linear.js",
+        "name": "linear.js",
+        "birthtimeMs": 1748011839297.9597
+    },
+    {
+        "path": "src\\tweens\\eases\\circular.js",
+        "name": "circular.js",
+        "birthtimeMs": 1748011839296.2263
+    },
+    {
+        "path": "src\\tweens\\eases\\cubic graph.js",
+        "name": "cubic graph.js",
+        "birthtimeMs": 1748011839296.2263
+    },
+    {
+        "path": "src\\tweens\\eases\\cubic.js",
+        "name": "cubic.js",
+        "birthtimeMs": 1748011839296.2263
+    },
+    {
+        "path": "src\\tweens\\eases\\ease equations.js",
+        "name": "ease equations.js",
+        "birthtimeMs": 1748011839296.2263
+    },
+    {
+        "path": "src\\tweens\\eases\\ease mixer.js",
+        "name": "ease mixer.js",
+        "birthtimeMs": 1748011839296.2263
+    }
+]

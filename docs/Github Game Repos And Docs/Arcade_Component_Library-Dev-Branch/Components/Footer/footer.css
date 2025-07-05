@@ -1,0 +1,25 @@
+.docs-footer {
+  margin-top: 60px;
+}
+
+.docs-footer {
+  margin-top: 7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--violet-color-light);
+  padding: 15px 0px;
+}
+
+.docs-footer a {
+  text-decoration: none;
+}
+
+.docs-footer i {
+  font-size: 1.7rem;
+  color: var(--dark-grey);
+}
+
+.comp-footer {
+  margin-bottom: 60px;
+}

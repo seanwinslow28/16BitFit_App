@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/4a9487b343.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./Components/components.css" />
+    <link rel="stylesheet" href="index.css">
+    <title>Arcade UI</title>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">
+            <img src="Assets/Logo/logo-64.png" alt="logo">
+        </div>
+        <!-- <p class="nav-title">Booky UI</p> -->
+        <div class="nav-space"></div>
+        <div class="nav-items">
+            <a class="nav-link sm-title active" href="index.html">Home</a>
+            <a class="nav-link sm-title" href="documentation.html">Documentation</a>
+        </div>
+    </nav>
+
+    <!-- mobile navbar -->
+
+    <!-- <nav class="navbar">
+        <div class="nav-logo">
+            <img src="Assets/Logo/logo-64.png" alt="">
+        </div>
+        <p class="nav-title">Booky UI</p>
+        <div class="nav-space"></div>
+        <i class="fas fa-bars"></i>
+        <div class="nav-items">
+            <a class="nav-link" href="">Home</a>
+            <a class="nav-link" href="">Documentation</a>
+        </div>
+    </nav> -->
+
+    <section class="hero-section">
+        <div class="intro-container">
+            <p class="lg-booky-title bold">
+                Arcade UI
+            </p>
+            <p class="rg-p grey-txt mg-t-15">
+                This Library is made for the you that loves to have fun. Its built with the feeling you get when you
+                play your favourite game or read a book
+                that
+                takes you on a memorable trip. Its super easy to use and build on. Check out the docs
+                and
+                the get started
+                section for more on this.
+            </p>
+            <div class="flex-row mg-t-20">
+                <button onclick="window.location.href = '#getstarted'" class="btn primary-btn solid">Get
+                    Started</button>
+                <button onclick="window.location.href = 'documentation.html'" class="btn primary-outlined-btn">View
+                    Documentation</button>
+            </div>
+
+        </div>
+        <div class="intro-img md-none">
+            <img src="Assets/Images/Content structure-bro.svg" alt="story image" />
+        </div>
+    </section>
+    <section class="hero-section mg-t-50">
+        <div id="getstarted" class="intro-container">
+            <p class="lg-booky-title bold">
+                Get Started
+            </p>
+            <p class="rg-p grey-txt mg-t-15">
+                To get started with using andd customisingthe components you have to
+                Copy and paste the code in the head tag of your html document. Make sure that your custom style sheet is
+                linked below the pasted code. </p>
+            <p class="rg-p grey-txt mg-t-5">
+                <span class="orange-txt bold">Note:</span> You will need a FontAwesome CDN in your project to ensure the
+                proper working of all the components. Also, the root font size is set to <span
+                    class="violet-txt bold">13px</span>.
+            </p>
+        </div>
+        <div class="intro-img">
+            <iframe
+                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=613&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%2509%253C%21--%2520import%2520your%2520Font%2520Awesome%2520CDN%2520from%2520%2509%2520%2520%2520%2520%2509%2509https%253A%252F%252Ffontawesome.com%252F%2520--%253E%250A%2509%253Clink%2520rel%253D%2522stylesheet%2522%2520href%253D%2522https%253A%252F%252F%250A%2509nifty-tesla-85dda2.netlify.app%252FComponents%252F%250A%2509components.css%2522%253E%250A"
+                class="resp-iframe" loading="lazy" sandbox="allow-scripts allow-same-origin">
+            </iframe>
+        </div>
+    </section>
+    <footer class="docs-footer">
+        <p class="sm-p mg-t-15">Made with 💖 by Shivani</p>
+        <div class="flex-row mg-t-10">
+            <a target="_blank" rel="noopener" href="https://twitter.com/Shivani07517015">
+                <button class="btn icon-btn center-items">
+                    <i class="fa fa-brands fa-twitter"></i>
+                </button>
+            </a>
+            <a target="_blank" rel="noopener" href="https://medium.com/@shivanipothirajan">
+                <button class="btn icon-btn center-items">
+                    <i class="fa fa-brands fa-medium"></i>
+                </button>
+            </a>
+            <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/shivani-pothirajan-2b276996/">
+                <button class="btn icon-btn center-items">
+                    <i class="fa fa-brands fa-linkedin"></i>
+                </button>
+            </a>
+            <a target="_blank" rel="noopener" href="https://github.com/Shivani-1524">
+                <button class="btn icon-btn center-items">
+                    <i class="fa fa-brands fa-github"></i>
+                </button>
+            </a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

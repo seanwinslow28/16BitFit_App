@@ -1,0 +1,175 @@
+@font-face {
+	font-family: 'VCR-Mono';
+	font-style: normal;
+	font-weight: normal;
+	src: url('fonts/VCR-Mono/VCR-Mono.eot');
+    src: url('fonts/VCR-Mono/VCR-Mono.eot?#iefix') format('embedded-opentype'),
+	url('fonts/VCR-Mono/VCR-Mono.woff2') format('woff2'),
+	url('fonts/VCR-Mono/VCR-Mono.woff') format('woff'),
+	url('fonts/VCR-Mono/VCR-Mono.ttf') format('truetype'),
+	url('fonts/VCR-Mono/VCR-Mono.svg#VCR-Mono') format('svg');
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	background-color: rgb(252, 232, 237);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.tamagotchi-device {
+	border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+	height: 480px;
+	width: 360px;
+	background-color: #ffe44b;
+	color: rgb(70, 152, 206);
+	font-family: 'Syncopate', sans-serif;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+header {
+	margin-top: 40px;
+	text-align: center;
+	font-size: 0.95rem;
+	letter-spacing: 0.04em;
+}
+
+.screen {
+	margin: 10px 0 30px 0;
+	height: 40%;
+	width: 50%;
+	border: 3px solid rgb(210, 0, 0);
+	border-radius: 10px;
+	padding: 10px;
+	background: #cfe4f1;
+	color: #222;
+	font-family: VCR-Mono;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	overflow: hidden;
+	transition: 1s ease-in-out;
+}
+
+p {
+	margin: 0;
+}
+
+.pet-container {
+	height: 50%;
+	width: 100%;
+	display: flex;
+}
+
+.center-pet {
+	width: 100%;
+	justify-content: center;
+}
+
+.pet {
+	margin: 0;
+	height: 100%;
+	width: 40%;
+	background-image: url('graphics/pacing.gif');
+	background-size: 100% 100%;
+	transition: 0s ease-in-out;
+}
+
+.pacing {
+	animation: pacing 10s alternate infinite;
+}
+
+@keyframes pacing {
+	0% {
+		justify-content: flex-start;
+	}
+	50% {
+		justify-content: center;
+	}
+	100% {
+		justify-content: flex-end;
+	}
+}
+
+.playing {
+	position: relative;
+	background-image: url('graphics/dancing.gif');
+	background-size: 100% 100%;
+	animation: playing 0.2s alternate infinite;
+}
+
+@keyframes playing {
+	0% {
+		bottom: 10px;
+	}
+	100% {
+		bottom: 0px;
+	}
+}
+
+.sleeping {
+	background-image: url('graphics/sleeping.gif');
+	background-size: 100% 100%;
+}
+
+.eating {
+	background-image: url('graphics/eating.gif');
+	background-size: 100% 100%;
+}
+
+.button-container {
+	height: 10%;
+	width: 50%;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.disable-buttons {
+	pointer-events: none;
+}
+
+.middle-button {
+	align-self: flex-end;
+}
+
+button {
+	height: 30px;
+	width: 30px;
+	border: none;
+	border-radius: 50%;
+	box-shadow: 4px 4px 4px rgba(0, 0, 255, 0.1);
+	background-color: rgb(140, 123, 252);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.button-text {
+	position: absolute;
+	margin-top: 7px;
+	font-size: 0.7rem;
+	display: none;
+}
+
+button:hover + .button-text {
+	display: block
+}
+
+@media all and (max-width: 800px) {
+    body {
+		min-height: 0;
+		padding-top: 30%;
+	}
+
+	.button-text {
+		display: block;
+	}
+}

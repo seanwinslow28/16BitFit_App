@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Materialize Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="/assets/favicomatic/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/assets/favicomatic/favicon-16x16.png" sizes="16x16" />
+    <!-- Materialize icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/instructions.css">
+
+    <title>Digital Dude: Instructions</title>
+</head>
+
+<body>
+    <main>
+        <div class="list">
+            <header class="navbar-fixed list">
+                <nav class="row blue darken-3">
+                    <div class="nav-wrapper">
+                        <a href="/login" class="left-brand-logo">
+                            <img id="logo" src="/assets/css/images/logo-17percent.jpg" alt="digidude-logo"
+                                title="digital dude" /></a>
+                        <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i
+                                class="material-icons">menu</i></a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a class="logout">Logout</a></li>
+                            <li><a href="/list">Animals</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <ul class="sidenav white" id="mobile-demo">
+                    <li><a class="logout">Logout</a></li>
+                    <li><a href="/list">Animals</a></li>
+                </ul>
+            </header>
+
+            <div style="padding-bottom:30px;">
+                <div class="background">
+                    <div class="body-container">
+                        <p class="topic">Choose your pet</p>
+
+                        <ul>
+                            <li>Turtle</li>
+                            <li>Fish </li>
+                            <li>Bird </li>
+                            <li>Mammal </li>
+                        </ul>
+                        <p class="clause">*User inputs Name. Date and pet ID get auto generated.</p>
+
+                    </div>
+                </div>
+                <div class="background">
+                    <div class="body-container">
+                        <p class="topic">Choose level of difficulty</p>
+                        <ul>
+                            <li>Easy - Starts off with meters near empty</li>
+                            <li>Medium - Starts off with meters half full</li>
+                            <li>Hard - Starts off with meters almost full</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="background">
+                    <div class="body-container">
+
+                        <p class="topic">How to Play</p>
+                        <p class="subtitle">Feed Button</p>
+                        <p>This will update your Hunger meter (makes positive sound)
+                        </p>
+                        <p class="subtitle">Clean Button </p>
+                        <p>After your pet poops, it will need to be cleaned. Don't let it sit too long in it's poop or
+                            the health meter will be decremented.</p>
+                        <p class="subtitle">Play Button</p>
+                        <p>Play with pet to boost Happy/Bored meter (makes a positive sound).</p>
+
+                        <p class="subtitle">Medicine Button</p>
+                        <p>When your pet's health is very low you can use this but it will also severely lower their
+                            Happy/Bored meter (makes a negative sound)</p>
+                        <p class="subtitle">Sleep Button</p>
+                        <p>Play with pet to boost Happy/Bored meter (makes a positive sound)</p>
+                        <p class="subtitle">Love Button</p>
+                        <p>Love your pet to boost Happy/Bored meter (makes a positive sound)
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="page-footer blue darken-3">
+        <div class="footer-copyright blue darken-4">
+            <div class="footer-container">
+                <div class="copyright">&copy; Copyright 2020</div>
+            </div>
+            <div class="footer-link">
+                <a class="link" id="instructions" href="/how-to">Instructions</a>
+            </div>
+    </footer>
+
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"
+        integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <!-- MATERIALIZE CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- JavaScript file -->
+    <script src="/assets/js/instructions.js"></script>
+</body>
+
+</html>

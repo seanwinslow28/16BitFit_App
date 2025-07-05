@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcade UI</title>
+    <script src="https://kit.fontawesome.com/4a9487b343.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./Components/components.css" />
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="documentation.css">
+</head>
+
+<body>
+    <nav class="navbar custom-nav-style">
+        <div class="nav-logo">
+            <img src="Assets/Logo/logo-64.png" alt="logo" />
+        </div>
+        <!-- <p class="nav-title">BOOKY UI</p> -->
+        <div class="nav-space"></div>
+        <div class="nav-items">
+            <a class="nav-link sm-title" href="index.html">Home</a>
+            <a class="nav-link sm-title active" href="documentation.html">Documentation</a>
+        </div>
+    </nav>
+    <aside class="sidenav">
+        <div class="sidenav-container">
+            <div class="sidenav-section">
+                <p class="sidenav-item title sm-title">
+                    Components
+                </p>
+                <div>
+                    <a href="#alerts" class="sidenav-item sidenav-txt">Alerts</a>
+                    <a href="#avatar" class="sidenav-item sidenav-txt">Avatar</a>
+                    <a href="#badges" class="sidenav-item sidenav-txt">Badges</a>
+                    <a href="#buttons" class="sidenav-item sidenav-txt">Buttons</a>
+                    <a href="#image" class="sidenav-item sidenav-txt">Image</a>
+                    <a href="#cards" class="sidenav-item sidenav-txt">Cards</a>
+                    <a href="#inputs" class="sidenav-item sidenav-txt">Inputs</a>
+                    <a href="#lists" class="sidenav-item sidenav-txt">Lists</a>
+                    <a href="#navbar" class="sidenav-item sidenav-txt">NavBar</a>
+                    <a href="#modal" class="sidenav-item sidenav-txt">Modal</a>
+                    <a href="#toast" class="sidenav-item sidenav-txt">Toast</a>
+                    <a href="#slider" class="sidenav-item sidenav-txt">Slider</a>
+                    <a href="#rating" class="sidenav-item sidenav-txt">Rating</a>
+                </div>
+                <div class="sidenav-section">
+                    <p class="sidenav-item title sm-title">
+                        Utilities
+                    </p>
+                    <div>
+                        <a href="#colors" class="sidenav-item sidenav-txt">Colors</a>
+                        <a href="#typography" class="sidenav-item sidenav-txt">Typography</a>
+                        <a href="#grid" class="sidenav-item sidenav-txt">Grid</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main id="scroll-container" class="container">
+        <div class="docs-section">
+            <div class="docs-container">
+
+                <!-- ALERTS-START -->
+                <section id="alerts" class="alerts-section">
+                    <h1 class="lg-title">Alerts</h1>
+                    <p class="rg-p mg-t-10">
+                        Alerts are used to draw the user's attention to essential information based on importance
+                        without
+                        abruptly disrupting the user's flow.
+                    </p>
+                    <p class="rg-p mg-t-5">
+                        Alerts are classified into three types: those with icons, those without icons, and those with a
+                        dismissal icon. Examples of these are shown below, along with the corresponding code.
+                    </p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Simple Alert Bar Without Icons</h2>
+                        <div class="flex-col mg-t-30">
+                            <div class="alert primary-alert">
+                                <p class="rg-p"> This is a primary alert </p>
+                            </div>
+                            <div class="alert secondary-alert">
+                                <p class="rg-p"> This is a secondary alert</p>
+                            </div>
+                            <div class="alert signature-alert">
+                                <p class="rg-p"> This is a signature alert</p>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe class="code-snip"
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cbutton%2520class%253D%2522btn%2520primary-outlined-btn%2522%253EPrimary%2520Button%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520secondary-outlined-btn%2522%253ESecondary%2520Button%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520success-outlined-btn%2522%253ESuccess%2520Button%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520warning-outlined-btn%2522%253EWarning%2520Button%253C%252Fbutton%253E%2520%250A%253Cbutton%2520class%253D%2522btn%2520danger-outlined-btn%2522%253EError%2520Button%253C%252Fbutton%253E"
+                                loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Alert With Icons</h2>
+                        <div class="flex-col mg-t-30">
+                            <div class="alert success-alert">
+                                <i class="fas fa-check-circle"></i>
+                                <p class="rg-p"> This is a success alert</p>
+                            </div>
+                            <div class="alert warning-alert">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <p class="rg-p">This is a warning alert</p>
+                            </div>
+                            <div class="alert danger-alert">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <p class="rg-p">This is a danger alert</p>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522alert%2520success-alert%2522%253E%250A%2520%2520%253Ci%2520class%253D%2522fas%2520fa-check-circle%2522%253E%253C%252Fi%253E%250A%2520%2520%253Cp%2520class%253D%2522rg-p%2522%253E%2520This%2520is%2520a%2520success%2520alert%253C%252Fp%253E%250A%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522alert%2520warning-alert%2522%253E%250A%2520%2520%253Ci%2520class%253D%2522fas%2520fa-exclamation-circle%2522%253E%253C%252Fi%253E%250A%2520%2520%253Cp%2520class%253D%2522rg-p%2522%253EThis%2520is%2520a%2520warning%2520alert%253C%252Fp%253E%250A%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522alert%2520danger-alert%2522%253E%250A%2520%2520%253Ci%2520class%253D%2522fas%2520fa-exclamation-triangle%2522%253E%253C%252Fi%253E%250A%2520%2520%253Cp%2520class%253D%2522rg-p%2522%253EThis%2520is%2520a%2520danger%2520alert%253C%252Fp%253E%250A%253C%252Fdiv%253E"
+                                loading="lazy" class="code-snip" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- ALERTS-END -->
+
+
+
+                <!-- AVATAR START -->
+                <section id="avatar">
+                    <h1 class="lg-title">Avatar</h1>
+                    <p class="rg-p mg-t-10">
+                        Avatars can be used to display a user's profile image or their initials in place of a picture.
+                    </p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Profile Avatar </h2>
+                        <div class="center-block">
+                            <div class="flex-row mg-t-30">
+                                <div class="avatar lg">
+                                    <img class="img-resp round-img"
+                                        src="https://avatars.dicebear.com/api/bottts/:meow.svg?backgroundColor=black"
+                                        alt="avatar">
+                                </div>
+                                <div class="avatar md">
+                                    <img class="img-resp round-img"
+                                        src="https://avatars.dicebear.com/api/bottts/:meow.svg?backgroundColor=black"
+                                        alt="avatar">
+                                </div>
+                                <div class="avatar rg">
+                                    <img class="img-resp round-img"
+                                        src="https://avatars.dicebear.com/api/bottts/:meow.svg?backgroundColor=black"
+                                        alt="avatar">
+                                </div>
+                                <div class="avatar sm">
+                                    <img class="img-resp round-img"
+                                        src="https://avatars.dicebear.com/api/bottts/:meow.svg?backgroundColor=black"
+                                        alt="avatar">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe class="code-snip"
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522avatar%2520lg%2522%253E%250A%2509%253Cimg%2520class%253D%2522avatar-img%2522%2520src%253D%2522...%2522%2520alt%253D%2522avatar%2522%253E%250A%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522avatar%2520md%2522%253E%250A%2509%253Cimg%2520class%253D%2522avatar-img%2522%2520src%253D%2522...%2522%2520alt%253D%2522avatar%2522%253E%250A%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522avatar%2520rg%2522%253E%250A%2509%253Cimg%2520class%253D%2522avatar-img%2522%2520src%253D%2522...%2522%2520alt%253D%2522avatar%2522%253E%250A%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522avatar%2520sm%2522%253E%250A%2509%253Cimg%2520class%253D%2522avatar-img%2522%2520src%253D%2522...%2522%2520alt%253D%2522avatar%2522%253E%250A%253C%252Fdiv%253E"
+                                loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Text Avatars</h2>
+                        <div class="center-block">
+                            <div class="flex-row mg-t-30">
+                                <div class="avatar avatar-txt lg">
+                                    KS
+                                </div>
+                                <div class="avatar avatar-txt md">
+                                    KS
+                                </div>
+                                <div class="avatar avatar-txt rg ">
+                                    KS
+                                </div>
+                                <div class="avatar avatar-txt sm">
+                                    KS
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe class="code-snip"
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522avatar%2520avatar-txt%2520lg%2522%253E%2520KS%2520%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522avatar%2520avatar-txt%2520md%2522%253E%2520KS%2520%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522avatar%2520avatar-txt%2520rg%2522%253E%2520KS%2520%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522avatar%2520avatar-txt%2520sm%2522%253E%2520KS%2520%253C%252Fdiv%253E"
+                                loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- AVATAR END -->
+
+
+
+
+
+                <!-- BADGES START -->
+                <section id="badges">
+                    <h1 class="lg-title">Badges</h1>
+                    <p class="rg-p mg-t-10">
+                        Badges are used to display a person's status (i.e. active, offline), to depict the quantity of
+                        items in a category, and to emphasise or draw attention to certain objects.
+                    </p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Status Badge</h2>
+                        <div class="center-block">
+                            <div class="flex-row mg-t-30">
+                                <div class="avatar lg pos-rel">
+                                    <img class="avatar-img"
+                                        src="https://avatars.dicebear.com/api/bottts/:seed.svg?backgroundColor=black"
+                                        alt="avatar">
+                                    <i class="badge badge-left badge-grey"></i>
+                                </div>
+                                <div class="avatar md avatar-txt pos-rel">
+                                    KS
+                                    <i class="badge badge-right"></i>
+                                </div>
+                                <div class="avatar rg pos-rel">
+                                    <img class="avatar-img"
+                                        src="https://avatars.dicebear.com/api/bottts/:seed.svg?backgroundColor=black"
+                                        alt="avatar">
+                                    <i class="badge badge-right"></i>
+                                </div>
+                                <div class="avatar avatar-txt sm pos-rel">
+                                    KS
+                                    <i class="badge badge-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe class="code-snip"
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522avatar%2520lg%2520pos-rel%2522%253E%250A%2509%253Cimg%2520class%253D%2522avatar-img%2522%2520src%253D%2522...%2522%2520alt%253D%2522avatar%2522%253E%250A%2509%253Ci%2520class%253D%2522badge%2520badge-left%2520badge-grey%2522%253E%253C%252Fi%253E%250A%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522avatar%2520md%2520avatar-txt%2520pos-rel%2522%253E%250A%2520%2509KS%2520%2520%253Ci%2520class%253D%2522badge%2520badge-right%2522%253E%253C%252Fi%253E%250A%253C%252Fdiv%253E"
+                                loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Text and Icon Badge</h2>
+                        <div class="center-block">
+                            <div class="flex-row mg-t-30">
+                                <div class="icon-badge pos-rel">
+                                    <i class="fas fa-book-open"></i>
+                                    <div class="badge num-badge center-items">
+                                        <p class="xsm-title">9</p>
+                                    </div>
+                                </div>
+                                <button class="btn icon-btn pos-rel">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <div class="badge num-sm-badge center-items">
+                                        <p class="xsm-title">9</p>
+                                    </div>
+                                </button>
+                                <div class="icon-badge">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <div class="rating-row bdg">
+                                    <i class="badge-star fas fa-star"></i>
+                                    <p class="xsm-title">4.3</p>
+                                    <i class="badge-circle fas fa-circle"></i>
+                                    <p class="review-num xsm-p grey-txt">(43)</p>
+                                </div>
+                                <div class="text-badge primary">
+                                    <p class="xsm-title">Bestseller</p>
+                                </div>
+                                <div class="text-badge secondary">
+                                    <p class="xsm-title">New</p>
+                                </div>
+                                <div class="text-badge primary">
+                                    <p class="sm-title bold">Trending</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe class="code-snip"
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522icon-badge%2520pos-rel%2522%253E%250A%2509%253Ci%2520class%253D%2522fas%2520fa-book-open%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522badge%2520num-badge%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522xsm-title%2522%253E%252B9%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522icon-badge%2522%253E%250A%2509%2509%253Ci%2520class%253D%2522fas%2520fa-book-open%2522%253E%253C%252Fi%253E%250A%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522text-badge%2520primary%2522%253E%250A%2520%2509%2509%253Cp%2520class%253D%2522xsm-title%2522%253EBestseller%253C%252Fp%253E%250A%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522text-badge%2520secondary%2522%253E%250A%2509%2509%253Cp%2520class%253D%2522xsm-title%2522%253ENew%253C%252Fp%253E%250A%253C%252Fdiv%253E"
+                                loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- BADGES END -->
+
+
+
+
+
+                <!-- BUTTONS-START -->
+                <section id="buttons">
+                    <h1 class="lg-title">Buttons</h1>
+                    <p class="rg-p mg-t-10">
+                        Buttons are mostly used to show that an object is clickable. They are commonly used as call to
+                        action indicators, but they can also be clickable icons, toggle buttons, or links.
+
+                    </p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Solid Buttons</h2>
+                        <p class="sm-p mg-t-5">
+                            The <span class="violet-txt bold">.solid</span> class gives the button its hover effect feel
+                            free
+                            to remove it and customise it
+                            to
+                            your
+                            needs.
+                        </p>
+
+                        <div class="center-block">
+                            <div class="flex-row mg-t-30">
+                                <!-- .solid class gives hover animation -->
+                                <button class="btn primary-btn solid">Primary Button</button>
+                                <button class="btn secondary-btn solid">Secondary Button</button>
+                                <button class="btn success-btn solid">Success Button</button>
+                                <button class="btn warning-btn solid">Warning Button</button>
+                                <button class="btn danger-btn solid">Error Button</button>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cbutton%2520class%253D%2522btn%2520primary-btn%2520solid%2522%253EPrimary%2520Button%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520secondary-btn%2520solid%2522%253ESecondary%2520Button%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520success-btn%2520solid%2522%253ESuccess%2520Button%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520warning-btn%2520solid%2522%253EWarning%2520Button%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520danger-btn%2520solid%2522%253EError%2520Button%253C%252Fbutton%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Outlined Buttons</h2>
+                        <div class="center-block">
+                            <div class="flex-row mg-t-30">
+                                <button class="btn primary-outlined-btn">Primary Button</button>
+                                <button class="btn secondary-outlined-btn">Secondary Button</button>
+                                <button class="btn success-outlined-btn">Success Button</button>
+                                <button class="btn warning-outlined-btn">Warning Button</button>
+                                <button class="btn danger-outlined-btn">Error Button</button>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe class="code-snip"
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cbutton%2520class%253D%2522btn%2520primary-outlined-btn%2522%253EPrimary%2520Button%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520secondary-outlined-btn%2522%253ESecondary%2520Button%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520success-outlined-btn%2522%253ESuccess%2520Button%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520warning-outlined-btn%2522%253EWarning%2520Button%253C%252Fbutton%253E%2520%250A%253Cbutton%2520class%253D%2522btn%2520danger-outlined-btn%2522%253EError%2520Button%253C%252Fbutton%253E"
+                                loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Other Button Styles</h2>
+                        <div class="center-block">
+                            <div class="flex-row mg-t-30">
+                                <button class="btn ghost-btn">Ghost Mode</button>
+                                <button class="btn subtle-btn">Subtle Button</button>
+                                <button class="btn link-btn">Link</button>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cbutton%2520class%253D%2522btn%2520ghost-btn%2522%253EGhost%2520Mode%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520subtle-btn%2522%253ESubtle%2520Button%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520link-btn%2522%253ELink%253C%252Fbutton%253E"
+                                loading="lazy" class="code-snip" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Floating Action button and Toggle Buttons</h2>
+                        <div class="center-block">
+                            <div class="flex-row mg-t-30">
+                                <button class="fab">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe class="code-snip"
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cbutton%2520class%253D%2522floating-btn%2522%253E%250A%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fas%2520fa-plus%2522%253E%253C%252Fi%253E%250A%253C%252Fbutton%253E%250A%253Clabel%2520class%253D%2522switch%2522%253E%250A%2520%2520%2520%2520%2520%253Cinput%2520type%253D%2522checkbox%2522%253E%250A%2520%2520%2520%2520%2520%253Cspan%2520class%253D%2522slider%2520round%2522%253E%253C%252Fspan%253E%250A%253C%252Flabel%253E"
+                                loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Buttons with Icons and Icon Buttons</h2>
+                        <div class="center-block">
+                            <div class="flex-row mg-t-30">
+                                <button class="btn primary-btn solid icon-left">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Add to Bag
+                                </button>
+                                <button class="btn warning-outlined-btn icon-right">
+                                    Add to Favourites
+                                    <i class="far fa-star"></i>
+                                </button>
+                                <button class="btn icon-btn danger-icon center-items">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                <button class="btn icon-btn center-items">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                                <button class="btn icon-btn primary-icon">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                                <button id="star-toggle-btn" class="btn icon-btn toggle-icon">
+                                    <i class="fas fa-star"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cbutton%2520class%253D%2522btn%2520primary-btn%2520solid%2520icon-left%2522%253E%250A%2520%2520%253Ci%2520class%253D%2522fas%2520fa-shopping-cart%2522%253E%253C%252Fi%253E%250A%2520%2520Add%2520to%2520Bag%250A%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520warning-outlined-btn%2520icon-right%2522%253E%250A%2520%2520Add%2520to%2520Favourites%250A%2520%2520%253Ci%2520class%253D%2522far%2520fa-star%2522%253E%253C%252Fi%253E%250A%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520icon-btn%2520danger-icon%2520center-items%2522%253E%250A%2520%2520%253Ci%2520class%253D%2522fas%2520fa-trash-alt%2522%253E%253C%252Fi%253E%250A%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520icon-btn%2520center-items%2522%253E%250A%2520%2520%253Ci%2520class%253D%2522fas%2520fa-shopping-cart%2522%253E%253C%252Fi%253E%250A%253C%252Fbutton%253E%250A%253Cbutton%2520class%253D%2522btn%2520icon-btn%2520primary-icon%2522%253E%250A%2520%2520%253Ci%2520class%253D%2522fas%2520fa-bookmark%2522%253E%253C%252Fi%253E%250A%253C%252Fbutton%253E%250A%253Cbutton%2520id%253D%2522star-toggle-btn%2522%2520class%253D%2522btn%2520icon-btn%2520toggle-icon%2522%253E%250A%2520%2520%253Ci%2520class%253D%2522fas%2520fa-star%2522%253E%253C%252Fi%253E%250A%253C%252Fbutton%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- BUTTONS END -->
+
+
+
+
+
+                <!-- IMAGE START -->
+                <section id="image">
+                    <h1 class="lg-title">Images</h1>
+                    <p class="rg-p mg-t-10">
+                        The aspect ratio of the image is maintatined across all sizes, making it a responsive image.
+                        There are two types: rounded and rectangular, as shown below.
+                    </p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Responsive Image</h2>
+                        <div class="center-block">
+                            <div class="mg-t-30">
+                                <div class="custom-img-container">
+                                    <img class="img-resp" src="./Assets/Images/respimg.jpg" alt="responsive image" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cimg%2520class%253D%2522img-resp%2522%2520src%253D%2522...%2522%2520alt%253D%2522responsive%2520image%2522%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Rounded Image</h2>
+                        <div class="center-block">
+                            <div class="mg-t-30">
+                                <div class="round-img-container">
+                                    <img class="round-img img-resp" src="./Assets/Images/avatar-img.jpg"
+                                        alt="round image" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cimg%2520class%253D%2522round-img%2520img-resp%2522%2520src%253D%2522...%2522%2520alt%253D%2522round%2520image%2522%2520%252F%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- IMAGE END -->
+
+
+
+
+
+                <!-- CARDS START -->
+                <section id="cards">
+                    <h1 class="lg-title">Cards</h1>
+                    <p class="rg-p mg-t-10">
+                        Cards are used to display data that is part of the same group or is related in some way.
+                        Typically used to display product information. Horizontal and vertical cards are the two
+                        variations, as shown below.
+                    </p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Horizontal Cards with Image and Text</h2>
+                        <div class="center-block card-ex">
+                            <div class="flex-col mg-t-30">
+                                <div class="card hor-card">
+                                    <div class="img-container">
+                                        <img class="img-resp" src="./Assets/Images/book.jpg" alt="card image">
+                                    </div>
+                                    <div class="text-card">
+                                        <p class="md-booky-title bold">The Chronicles of Narnia </p>
+                                        <p class="xsm-p grey-txt">Written by C.S.Lewis</p>
+                                        <p class="sm-p mg-t-10">Lorem ipsum dolor sit amet consectetur, adipisicing
+                                            elit. Fugit
+                                            consequatur officiis doloribus. .</p>
+                                        <div class="review-row mg-t-15">
+                                            <div class="rating-row">
+                                                <i class="fas fa-star"></i>
+                                                <p class="sm-title">4.3</p>
+                                            </div>
+                                            <i class="fas fa-circle"></i>
+                                            <p class="review-num xsm-p grey-txt">(43)</p>
+                                        </div>
+                                        <div class="mg-t-5 price-row">
+                                            <p class="md-title">Rs. 200</p>
+                                            <p class="sm-p grey-txt striked-txt">Rs. 400</p>
+                                            <p class="sm-p orange-txt">50% OFF</p>
+                                        </div>
+                                        <div class="card-btn-row mg-t-10">
+                                            <button class="btn primary-btn solid">Add to Cart</button>
+                                            <button class="btn primary-outlined-btn">Add to List</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522card%2520hor-card%2522%253E%250A%2520%2520%253Cdiv%2520class%253D%2522img-container%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cimg%2520src%253D%2522...%2522%2520alt%253D%2522card%2520image%2522%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522text-card%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522md-booky-title%2520bold%2522%253EThe%2520Chronicles%2520of%2520Narnia%2520%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522xsm-p%2520grey-txt%2522%253EWritten%2520by%2520C.S.Lewis%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-p%2520mg-t-10%2522%253ELorem%2520ipsum%2520dolor%2520sit%2520amet%250A%2520%2520%2520%2520%2520%2520consectetur%252C%2520adipisicing%2520elit.%2520Fugit%2520consequatur%2520%250A%2520%2520%2520%2520%2520%2520officiis%2520doloribus.%2520.%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522review-row%2520mg-t-15%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522rating-row%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fas%2520fa-star%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-title%2522%253E4.3%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fas%2520fa-circle%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522review-num%2520xsm-p%2520grey-txt%2522%253E%2843%29%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522mg-t-5%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522md-title%2522%253ERs.%2520200%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522card-btn-row%2520mg-t-10%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cbutton%2520class%253D%2522btn%2520primary-btn%2522%253EAdd%2520to%2520Cart%253C%252Fbutton%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cbutton%2520class%253D%2522btn%2520primary-outlined-btn%2522%253EAdd%2520to%2520List%253C%252Fbutton%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253C%252Fdiv%253E%250A%253C%252Fdiv%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Vertical Cards with Image and Text</h2>
+                        <div class="center-block card-ex">
+                            <div class="flex-row mg-t-30">
+                                <div class="card ver-card">
+                                    <div class="img-container">
+                                        <img class="img-resp" src="./Assets/Images/book.jpg" alt="card image">
+                                    </div>
+                                    <div class="text-card">
+                                        <p class="sm-booky-title bold">The Chronicles of Narnia </p>
+                                        <div class="mg-t-5 price-row">
+                                            <p class="sm-title grey-txt">Rs. 200</p>
+                                            <p class="sm-p grey-txt striked-txt">Rs. 400</p>
+                                            <p class="sm-p orange-txt">50% OFF</p>
+                                        </div>
+                                        <button class="btn primary-btn solid icon-left mg-t-10">
+                                            <i class="fas fa-shopping-cart"></i>
+                                            Add to Bag
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card ver-lg-card">
+                                    <div class="img-container">
+                                        <img class="img-resp" src="./Assets/Images/book.jpg" alt="card image">
+                                    </div>
+                                    <div class="text-card">
+                                        <p class="sm-booky-title bold">The Chronicles of Narnia </p>
+                                        <p class="xsm-p grey-txt">from C.S.Lewis</p>
+                                        <div class="mg-t-5">
+                                            <p class="sm-title">Rs. 200</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card ver-card no-bg-color">
+                                    <div class="img-container">
+                                        <img class="img-resp" src="./Assets/Images/book.jpg" alt="card image">
+                                    </div>
+                                    <div class="text-card">
+                                        <p class="sm-booky-title bold">The Chronicles of Narnia </p>
+                                        <p class="xsm-p grey-txt">from C.S.Lewis</p>
+                                        <div class="mg-t-5 grey-txt">
+                                            <p class="sm-title grey-txt">Rs. 200</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=613&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522card%2520ver-card%2522%253E%250A%2520%2520%253Cdiv%2520class%253D%2522img-container%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cimg%2520class%253D%2522img-resp%2522%2520src%253D%2522...%2522%2520alt%253D%2522card%2520image%2522%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522text-card%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-booky-title%2520bold%2522%253EThe%2520Chronicles%2520of%2520Narnia%2520%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522xsm-p%2520grey-txt%2522%253Efrom%2520C.S.Lewis%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522mg-t-5%2520grey-txt%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-title%2520grey-txt%2522%253ERs.%2520200%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253C%252Fdiv%253E%250A%253C%252Fdiv%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%250A%253Cdiv%2520class%253D%2522card%2520ver-lg-card%2522%253E%250A%2520%2520%253Cdiv%2520class%253D%2522img-container%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cimg%2520class%253D%2522img-resp%2522%2520src%253D%2522...%2522%2520alt%253D%2522card%2520image%2522%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522text-card%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-booky-title%2520bold%2522%253EThe%2520Chronicles%2520of%2520Narnia%2520%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522xsm-p%2520grey-txt%2522%253Efrom%2520C.S.Lewis%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522mg-t-5%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-title%2522%253ERs.%2520200%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253C%252Fdiv%253E%250A%253C%252Fdiv%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%250A%253Cdiv%2520class%253D%2522card%2520ver-card%2520no-bg-color%2522%253E%250A%2520%2520%253Cdiv%2520class%253D%2522img-container%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cimg%2520class%253D%2522img-resp%2522%2520src%253D%2522...%2522%2520alt%253D%2522card%2520image%2522%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522text-card%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-booky-title%2520bold%2522%253EThe%2520Chronicles%2520of%2520Narnia%2520%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522xsm-p%2520grey-txt%2522%253Efrom%2520C.S.Lewis%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522mg-t-5%2520grey-txt%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-title%2520grey-txt%2522%253ERs.%2520200%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253C%252Fdiv%253E%250A%253C%252Fdiv%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Cards with Badges and Icons</h2>
+                        <div class="center-block">
+                            <div class="flex-col mg-t-30">
+                                <div class="card ver-card">
+                                    <div class="img-container pos-rel">
+                                        <img class="img-resp" src="./Assets/Images/book.jpg" alt="card image">
+                                        <div class="rating-row bdg pos-abs bottom-left">
+                                            <i class="badge-star fas fa-star"></i>
+                                            <p class="xsm-title">4.3</p>
+                                            <i class="badge-circle fas fa-circle"></i>
+                                            <p class="review-num xsm-p grey-txt">(43)</p>
+                                        </div>
+                                        <div class="text-badge secondary pos-abs top-left">
+                                            <p class="xsm-title">Trending</p>
+                                        </div>
+                                        <div class="icon-badge pos-abs top-right">
+                                            <i class="fas fa-book-open"></i>
+                                        </div>
+                                    </div>
+                                    <div class="text-card pos-rel">
+                                        <div class="icon-badge pos-abs bottom-right">
+                                            <i class="fas fa-book-open"></i>
+                                        </div>
+                                        <p class="sm-booky-title bold">The Chronicles of Narnia </p>
+                                        <p class="xsm-p grey-txt">from C.S.Lewis</p>
+                                        <div class="mg-t-5 grey-txt">
+                                            <p class="sm-title grey-txt">Rs. 200</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=613&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522card%2520ver-card%2520pos-rel%2522%253E%250A%2520%2520%253Cdiv%2520class%253D%2522text-badge%2520secondary%2520pos-abs%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522xsm-title%2522%253ETrending%253C%252Fp%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522icon-badge%2520pos-abs%2520top-right%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fas%2520fa-book-open%2522%253E%253C%252Fi%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522icon-badge%2520pos-abs%2520bottom-right%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fas%2520fa-book-open%2522%253E%253C%252Fi%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522img-container%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cimg%2520class%253D%2522img-resp%2522%2520src%253D%2522...%2522%2520alt%253D%2522card%2520image%2522%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522text-card%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-booky-title%2520bold%2522%253EThe%2520Chronicles%2520of%2520Narnia%2520%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522xsm-p%2520grey-txt%2522%253Efrom%2520C.S.Lewis%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522mg-t-5%2520grey-txt%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-title%2520grey-txt%2522%253ERs.%2520200%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253C%252Fdiv%253E%250A%253C%252Fdiv%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Flexible and Responsive Card</h2>
+                        <div class="center-block">
+                            <div class="flex-card-wrapper mg-t-30">
+                                <!-- give your width and height to the parent element -->
+                                <div class="card flex-card">
+                                    <div class="img-container">
+                                        <img class="img-resp" src="./Assets/Images/book.jpg" alt="card image">
+                                    </div>
+                                    <div class="text-card">
+                                        <p class="sm-booky-title bold">Title</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522flex-card-wrapper%2522%253E%250A%253C%21--%2520give%2520your%2520width%2520and%2520height%2520to%2520the%2520flex-card-wrapper%2520element%2520--%253E%250A%2520%2520%253Cdiv%2520class%253D%2522card%2520flex-card%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522img-container%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cimg%2520src%253D%2522...%2522%2520alt%253D%2522card%2520image%2522%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522text-card%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-booky-title%2520bold%2522%253ETitle%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253C%252Fdiv%253E%250A%253C%252Fdiv%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Card with Overlay and Dismissible</h2>
+                        <div class="center-block">
+                            <div class="flex-row mg-t-30">
+                                <div class="card ver-card overlay">
+                                    <div class="img-container">
+                                        <img class="img-resp" src="./Assets/Images/book.jpg" alt="card image">
+                                    </div>
+                                    <div class="text-card">
+                                        <p class="sm-booky-title bold">The Chronicles of Narnia </p>
+                                        <p class="xsm-p grey-txt">from C.S.Lewis</p>
+                                    </div>
+                                    <div class="overlay-layer">
+                                        <p class="md-title">OUT OF STOCK</p>
+                                    </div>
+                                </div>
+                                <div class="card ver-card">
+                                    <div class="img-container">
+                                        <img class="img-resp" src="./Assets/Images/book.jpg" alt="card image">
+                                    </div>
+                                    <div class="text-card">
+                                        <p class="sm-booky-title bold">The Chronicles of Narnia </p>
+                                        <p class="xsm-p grey-txt">from C.S.Lewis</p>
+                                    </div>
+                                    <i class="close-icon fas fa-times-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253C%21--%2520card%2520with%2520overlay%2520--%253E%250A%253Cdiv%2520class%253D%2522card%2520ver-card%2520overlay%2522%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522img-container%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cimg%2520src%253D%2522...%2522%2520alt%253D%2522card%2520image%2522%253E%250A%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522text-card%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-booky-title%2520bold%2522%253EThe%2520Chronicles%2520of%2520Narnia%2520%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522xsm-p%2520grey-txt%2522%253Efrom%2520C.S.Lewis%253C%252Fp%253E%250A%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522overlay-layer%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522rg-title%2522%253EOUT%2520OF%2520STOCK%253C%252Fp%253E%250A%2520%2520%2520%2520%253C%252Fdiv%253E%250A%253C%252Fdiv%253E%250A%250A%253C%21--%2520card%2520with%2520dismissible%2520--%253E%250A%253Cdiv%2520class%253D%2522card%2520ver-card%2522%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522img-container%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cimg%2520src%253D%2522...%2522%2520alt%253D%2522card%2520image%2522%253E%250A%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522text-card%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-booky-title%2520bold%2522%253EThe%2520Chronicles%2520of%2520Narnia%2520%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522xsm-p%2520grey-txt%2522%253Efrom%2520C.S.Lewis%253C%252Fp%253E%250A%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%253Ci%2520class%253D%2522close-icon%2520fas%2520fa-times-circle%2522%253E%253C%252Fi%253E%250A%253C%252Fdiv%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- CARDS END -->
+
+
+
+
+
+
+                <!-- INPUT START -->
+                <section id="inputs">
+                    <h1 class="lg-title">Inputs</h1>
+                    <p class="rg-p mg-t-10">
+                        Inputs are fields that allow the user to enter information.
+                    </p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Example of Inputs</h2>
+                        <div class="center-block inp-ex">
+                            <div>
+                                <label class="input-label sm-title" for="name">Name</label>
+                                <input class="user-input" id="name" type="text" />
+                            </div>
+                            <div class="mg-t-10">
+                                <label class="input-label sm-title" for="password">Password</label>
+                                <input class="user-input" id="password" type="password" placeholder="6+ characters" />
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%253E%250A%2520%2520%253Clabel%2520class%253D%2522input-label%2520sm-title%2522%2520for%253D%2522name%2522%253EName%253C%252Flabel%253E%250A%2520%2520%253Cinput%2520class%253D%2522user-input%2522%2520id%253D%2522name%2522%2520type%253D%2522text%2522%2520%252F%253E%250A%253C%252Fdiv%253E%250A%253Cdiv%253E%250A%2520%2520%253Clabel%2520class%253D%2522input-label%2520sm-title%2522%2520for%253D%2522password%2522%253EPassword%253C%252Flabel%253E%250A%2520%2520%253Cinput%2520class%253D%2522user-input%2522%2520id%253D%2522password%2522%2520type%253D%2522password%2522%2520placeholder%253D%25226%252B%2520characters%2522%2520%252F%253E%250A%253C%252Fdiv%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Inputs with Validation</h2>
+                        <div class="center-block inp-ex">
+                            <div class="error">
+                                <label class="input-label sm-title" for="error-name">Name</label>
+                                <input class="user-input" id="error-name" type="text" />
+                            </div>
+                            <div class="mg-t-10 success">
+                                <label class="input-label sm-title" for="success-name">Password</label>
+                                <input class="user-input" id="success-name" type="password" />
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253C%21--%2520error%2520input%2520fields%2520--%253E%250A%253Cdiv%2520class%253D%2522error%2522%253E%250A%2520%2520%253Clabel%2520class%253D%2522input-label%2520sm-title%2522%2520for%253D%2522error-name%2522%253EName%253C%252Flabel%253E%250A%2520%2520%253Cinput%2520class%253D%2522user-input%2522%2520id%253D%2522error-name%2522%2520type%253D%2522text%2522%2520%252F%253E%250A%253C%252Fdiv%253E%250A%2520%2520%2520%2520%250A%253C%21--%2520success%2520input%2520fields%2520--%253E%250A%253Cdiv%2520class%253D%2522success%2522%253E%250A%2520%2520%253Clabel%2520class%253D%2522input-label%2520sm-title%2522%2520for%253D%2522success-name%2522%253EPassword%253C%252Flabel%253E%250A%2520%2520%253Cinput%2520class%253D%2522user-input%2522%2520id%253D%2522success-name%2522%2520type%253D%2522password%2522%2520%252F%253E%250A%253C%252Fdiv%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- INPUT END -->
+
+
+
+
+
+                <!-- LISTS START -->
+                <section id="lists">
+                    <h1 class="lg-title">Lists</h1>
+                    <p class="rg-p mg-t-10">Lists are columns or rows of elements such as text or cards that are widely
+                        used to
+                        organise information. Notifications and navbars are common examples.</p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Stacked unordered lists</h2>
+                        <div class="center-block">
+                            <div class="mg-t-30 flex-row list-ex">
+                                <ul class="styled-list">
+                                    <li>list item 1</li>
+                                    <li>list item 2</li>
+                                    <li>list item 3</li>
+                                </ul>
+                                <ul class="styled-list list-style-circle">
+                                    <li>list item 1</li>
+                                    <li>list item 2</li>
+                                    <li>list item 3</li>
+                                </ul>
+                                <ul class="styled-list list-style-square">
+                                    <li>list item 1</li>
+                                    <li>list item 2</li>
+                                    <li>list item 3</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Stacked ordered lists</h2>
+                        <div class="center-block">
+                            <div class="mg-t-30 flex-row list-ex">
+                                <ol class="styled-list">
+                                    <li>list item 1</li>
+                                    <li>list item 2</li>
+                                    <li>list item 3</li>
+                                </ol>
+                                <ol class="styled-list list-style-roman">
+                                    <li>list item 1</li>
+                                    <li>list item 2</li>
+                                    <li>list item 3</li>
+                                </ol>
+                                <ol class="styled-list list-style-letter">
+                                    <li>list item 1</li>
+                                    <li>list item 2</li>
+                                    <li>list item 3</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Col%2520class%253D%2522styled-list%2522%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25201%253C%252Fli%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25202%253C%252Fli%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25203%253C%252Fli%253E%250A%253C%252Fol%253E%250A%253Col%2520class%253D%2522styled-list%2520list-style-roman%2522%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25201%253C%252Fli%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25202%253C%252Fli%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25203%253C%252Fli%253E%250A%253C%252Fol%253E%250A%253Col%2520class%253D%2522styled-list%2520list-style-letter%2522%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25201%253C%252Fli%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25202%253C%252Fli%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25203%253C%252Fli%253E%250A%253C%252Fol%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">No Bullets list</h2>
+                        <div class="center-block">
+                            <div class="mg-t-30 flex-row list-ex">
+                                <ul class="styled-list list-style-none">
+                                    <li>list item 1</li>
+                                    <li>list item 2</li>
+                                    <li>list item 3</li>
+                                </ul>
+                                <ul class="list-style-none list-inline">
+                                    <li>list item 1</li>
+                                    <li>list item 2</li>
+                                    <li>list item 3</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cul%2520class%253D%2522styled-list%2520list-style-none%2522%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25201%253C%252Fli%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25202%253C%252Fli%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25203%253C%252Fli%253E%250A%253C%252Ful%253E%250A%253Cul%2520class%253D%2522list-style-none%2520list-inline%2522%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25201%253C%252Fli%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25202%253C%252Fli%253E%250A%2520%2520%2520%2520%253Cli%253Elist%2520item%25203%253C%252Fli%253E%250A%253C%252Ful%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- LISTS END -->
+
+
+
+
+
+
+                <!-- NAVBAR START -->
+                <section id="navbar">
+                    <h1 class="lg-title">NavBar</h1>
+                    <p class="rg-p mg-t-10">
+                        The NavBar is used to display the most important and often used sections of a website at the top
+                        of the page for the user's convenience.
+                    </p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Simple Navbar Example</h2>
+                        <div class="mg-t-30">
+                            <nav class="navbar">
+                                <div class="nav-logo">
+                                    <img src="Assets/Logo/logo-64.png" alt="logo" />
+                                </div>
+                                <div class="nav-space"></div>
+                                <div class="nav-items">
+                                    <a class="nav-link sm-title hide-md" href="">Home</a>
+                                    <a class="nav-link sm-title active hide-md" href="">Documentation</a>
+                                    <button id="dark-bg-icon" class="btn icon-btn show-md">
+                                        <i class="fas fa-solid fa-bars"></i>
+                                    </button>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cnav%2520class%253D%2522navbar%2522%253E%250A%2520%2520%253Cdiv%2520class%253D%2522nav-logo%2522%253E%250A%2520%2520%2520%2520%253Cimg%2520src%253D%2522...%2522%2520alt%253D%2522logo%2522%2520%252F%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522nav-space%2522%253E%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522nav-items%2522%253E%250A%2520%2520%2520%2520%253Ca%2520class%253D%2522nav-link%2520sm-title%2522%2520href%253D%2522%2522%253EHome%253C%252Fa%253E%250A%2520%2520%2520%2520%253Ca%2520class%253D%2522nav-link%2520sm-title%2520active%2522%2520href%253D%2522%2522%253EDocumentation%253C%252Fa%253E%250A%2520%2520%253C%252Fdiv%253E%250A%253C%252Fnav%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Navbar Example</h2>
+                        <div class="mg-t-30">
+                            <nav class="navbar">
+                                <div class="nav-logo">
+                                    <img src="Assets/Logo/logo-64.png" alt="logo" />
+                                </div>
+                                <div class="nav-items">
+                                    <a class="nav-link sm-title hide-md" href="">Home</a>
+                                    <a class="nav-link sm-title active hide-md" href="">Documentation</a>
+                                </div>
+                                <div class="nav-space"></div>
+                                <div class="nav-icon-items">
+                                    <div class="nav-search-bar hide-sm">
+                                        <input class="search-bar" type="text" placeholder="Search..">
+                                        <i class="fa fa-brands fa-searchengin"></i>
+                                    </div>
+                                    <button id="dark-bg-icon" class="btn icon-btn hide-md">
+                                        <i class="fa fa-solid fa-user"></i>
+                                    </button>
+                                    <button id="dark-bg-icon" class="btn icon-btn hide-md">
+                                        <i class="fa fa-solid fa-heart"></i>
+                                    </button>
+                                    <button id="dark-bg-icon" class="btn icon-btn hide-md">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                    <button id="dark-bg-icon" class="btn icon-btn show-md">
+                                        <i class="fas fa-solid fa-bars"></i>
+                                    </button>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cnav%2520class%253D%2522navbar%2522%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522nav-logo%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cimg%2520src%253D%2522...%2522%2520alt%253D%2522logo%2522%2520%252F%253E%250A%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522nav-items%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Ca%2520class%253D%2522nav-link%2520sm-title%2522%2520href%253D%2522%2522%253EHome%253C%252Fa%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Ca%2520class%253D%2522nav-link%2520sm-title%2520active%2522%2520href%253D%2522%2522%253EDocumentation%253C%252Fa%253E%250A%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522nav-space%2522%253E%253C%252Fdiv%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522nav-icon-items%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522nav-search-bar%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cinput%2520class%253D%2522search-bar%2522%2520type%253D%2522text%2522%2520placeholder%253D%2522Search..%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fa%2520fa-brands%2520fa-searchengin%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cbutton%2520id%253D%2522dark-bg-icon%2522%2520class%253D%2522btn%2520icon-btn%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fa%2520fa-solid%2520fa-user%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253C%252Fbutton%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cbutton%2520id%253D%2522dark-bg-icon%2522%2520class%253D%2522btn%2520icon-btn%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fa%2520fa-solid%2520fa-heart%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253C%252Fbutton%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cbutton%2520id%253D%2522dark-bg-icon%2522%2520class%253D%2522btn%2520icon-btn%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fas%2520fa-shopping-cart%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253C%252Fbutton%253E%250A%2520%2520%2520%2520%253C%252Fdiv%253E%250A%253C%252Fnav%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- NAVBAR END -->
+
+
+
+
+                <!-- MODAL START -->
+                <section id="modal">
+                    <h1 class="lg-title">Modal</h1>
+                    <p class="rg-p mg-t-10">Modals are used to show important information to the user and is closed only
+                        when
+                        the user selects an option thats present on the modal.</p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Modal Example</h2>
+                        <div class="center-block">
+                            <button id="modal-btn-demo" class="btn primary-btn solid mg-t-30">
+                                Click Me for Demo
+                            </button>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522modal-wrapper%2522%2520id%253D%2522modal-wrapper%2522%253E%250A%2520%2520%253Cdiv%2520class%253D%2522modal-container%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522modal-title%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Ch4%2520class%253D%2522rg-title%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520Modal%2520Title%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253C%252Fh4%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fa%2520fa-times%2522%2520aria-hidden%253D%2522true%2522%2520id%253D%2522modal-btn-close%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-p%2520mg-t-20%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520Lorem%2520...%250A%2520%2520%2520%2520%2520%2520%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522modal-btn-wrapper%2520mg-t-20%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cbutton%2520class%253D%2522btn%2520primary-btn%2520solid%2522%2520id%253D%2522modal-btn-ok%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520Go%2520Ahead%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253C%252Fbutton%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cbutton%2520class%253D%2522btn%2520secondary-outlined-btn%2520modal-btn%2522%2520id%253D%2522modal-btn-cancel%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520Cancel%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253C%252Fbutton%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253C%252Fdiv%253E%250A%253C%252Fdiv%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- MODAL START -->
+
+
+
+
+                <!-- TOAST START -->
+                <section id="toast">
+                    <h1 class="lg-title">Toast</h1>
+                    <p class="rg-p mg-t-10">
+                        Toasts are used to acknowledge the outcome of an action. Using a toast helps to draw the user's
+                        attention to the outcome of their action.
+                    </p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Toast Example</h2>
+                        <div class="center-block">
+                            <div class="flex-col mg-t-30">
+                                <div class="toast success-toast">
+                                    <div class="flex-row">
+                                        <i class="fas fa-check-circle"></i>
+                                        <p class="sm-p bold">Success toast</p>
+                                    </div>
+                                    <i class="fas fa-times close-toast"></i>
+                                </div>
+                                <div class="toast warning-toast">
+                                    <div class="flex-row">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <p class="sm-p bold">Warning toast</p>
+                                    </div>
+                                    <i class="fas fa-times close-toast"></i>
+                                </div>
+                                <div class="toast danger-toast">
+                                    <div class="flex-row">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <p class="sm-p bold">Error toast</p>
+                                    </div>
+                                    <i class="fas fa-times close-toast"></i>
+                                </div>
+                                <div class="flex-row">
+                                    <button id="show-bottom-toast" class="btn primary-btn solid">
+                                        Show Bottom Toast
+                                    </button>
+                                    <button id="show-top-toast" class="btn primary-btn solid">
+                                        Show Top Toast
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <iframe
+                            src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522toast%2520success-toast%2522%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522flex-row%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fas%2520fa-check-circle%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-p%2520bold%2522%253ESuccess%2520toast%253C%252Fp%253E%250A%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%253Ci%2520class%253D%2522fas%2520fa-times%2522%253E%253C%252Fi%253E%250A%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522toast%2520warning-toast%2522%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522flex-row%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fas%2520fa-exclamation-circle%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-p%2520bold%2522%253EWarning%2520toast%253C%252Fp%253E%250A%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%253Ci%2520class%253D%2522fas%2520fa-times%2522%253E%253C%252Fi%253E%250A%253C%252Fdiv%253E%250A%253Cdiv%2520class%253D%2522toast%2520danger-toast%2522%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522flex-row%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Ci%2520class%253D%2522fas%2520fa-exclamation-triangle%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-p%2520bold%2522%253EError%2520toast%253C%252Fp%253E%250A%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%2520%2520%253Ci%2520class%253D%2522fas%2520fa-times%2522%253E%253C%252Fi%253E%250A%253C%252Fdiv%253E"
+                            class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                        </iframe>
+                    </div>
+                </section>
+                <!-- TOAST END -->
+
+
+
+
+
+                <!-- SLIDER START -->
+                <section id="slider">
+                    <h1 class="lg-title">Slider</h1>
+                    <p class="rg-p mg-t-10">
+                        Slider allows the user to select a range of values. Typically used to filter items.
+                    </p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Slider Example</h2>
+                    </div>
+                    <div class="center-block">
+                        <div class="flex-col mg-t-30">
+                            <input id="range-slider" type="range" min="0" max="100" value="50">
+                            <p id="slider-value" class="sm-p">value: </p>
+                        </div>
+                    </div>
+                    <div class="code-example">
+                        <iframe
+                            src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cinput%2520id%253D%2522range-slider%2522%2520type%253D%2522range%2522%2520min%253D%25220%2522%2520max%253D%2522100%2522%2520value%253D%252250%2522%253E%250A%253Cp%2520id%253D%2522slider-value%2522%2520class%253D%2522sm-p%2520bold%2522%253Evalue%253A%2520%253C%252Fp%253E"
+                            class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                        </iframe>
+                    </div>
+                </section>
+                <!-- SLIDER END -->
+
+
+
+                <!-- RATING START -->
+                <section id="rating">
+                    <h1 class="lg-title">Rating</h1>
+                    <p class="rg-p mg-t-10">The Rating component provides an interactive mechanism for users to submit
+                        their
+                        feedback on an object.</p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Rating Example</h2>
+                        <div class="center-block">
+                            <div class="rating-stars mg-t-30">
+                                <i id="star-1" class="fas fa-star"></i>
+                                <i id="star-2" class="fas fa-star"></i>
+                                <i id="star-3" class="fas fa-star"></i>
+                                <i id="star-4" class="fas fa-star"></i>
+                                <i id="star-5" class="fas fa-star"></i>
+                                <p class="sm-p" id="rating-val">Rating: </p>
+                            </div>
+                        </div>
+                        <div class="center-block">
+                            <button id="rating-reset-btn" class="btn primary-btn solid mg-t-20">Reset
+                                Rating</button>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522rating-row%2522%253E%250A%2520%2520%2520%2520%253Ci%2520id%253D%2522star-1%2522%2520class%253D%2522fas%2520fa-star%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%253Ci%2520id%253D%2522star-2%2522%2520class%253D%2522fas%2520fa-star%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%253Ci%2520id%253D%2522star-3%2522%2520class%253D%2522fas%2520fa-star%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%253Ci%2520id%253D%2522star-4%2522%2520class%253D%2522fas%2520fa-star%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%253Ci%2520id%253D%2522star-5%2522%2520class%253D%2522fas%2520fa-star%2522%253E%253C%252Fi%253E%250A%2520%2520%2520%2520%253Cp%2520class%253D%2522sm-p%2522%2520id%253D%2522rating-val%2522%253ERating%253A%2520%253C%252Fp%253E%250A%253C%252Fdiv%253E"
+                                loading="lazy" class="code-snip" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- RATING END -->
+
+
+
+
+                <!-- TYPOGRAPHY START -->
+                <section id="typography">
+                    <h1 class="lg-title">Typography</h1>
+                    <p class="rg-p mg-t-10">
+                        The most commonly used types of text, styles and their sizes are listed below.
+                    </p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Example of Standard Title Text</h2>
+                        <div class="center-items">
+                            <div class="typ-ex-grid mg-t-30">
+                                <h1 class="lg-title bold d-md-none">Large Title</h1>
+                                <div class="tag">
+                                    <p>3 rem</p>
+                                </div>
+                                <h1 class="rg-title bold d-md-none">Regular Title</h1>
+                                <div class="tag">
+                                    <p> 2 rem</p>
+                                </div>
+                                <h2 class="md-title bold d-md-none"> Medium Title</h2>
+                                <div class="tag">
+                                    <p>1.5 rem</p>
+                                </div>
+                                <h3 class="sm-title bold d-md-none">Small Title</h3>
+                                <div class="tag">
+                                    <p>1.2 rem</p>
+                                </div>
+                                <h4 class="xsm-title bold d-md-none">Extra Small Title</h4>
+                                <div class="tag">
+                                    <p>12 px</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Ch1%2520class%253D%2522lg-title%2520bold%2522%253ELarge%2520Title%253C%252Fh1%253E%250A%253Ch1%2520class%253D%2522rg-title%2520bold%2522%253ERegular%2520Title%253C%252Fh1%253E%250A%253Ch2%2520class%253D%2522md-title%2520bold%2522%253E%2520Medium%2520Title%253C%252Fh2%253E%250A%253Ch3%2520class%253D%2522sm-title%2520bold%2522%253ESmall%2520Title%253C%252Fh3%253E%250A%253Ch4%2520class%253D%2522xsm-title%2520bold%2522%253EExtra%2520Small%2520Title%253C%252Fh4%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Example of Stylish Title Text</h2>
+                        <div class="center-items">
+                            <div class="typ-ex-grid mg-t-30">
+                                <h1 class="lg-booky-title bold">Large Title</h1>
+                                <div class="tag">
+                                    <p>2.5 rem</p>
+                                </div>
+                                <h2 class="rg-booky-title bold">Regular Title</h2>
+                                <div class="tag">
+                                    <p>2 rem</p>
+                                </div>
+                                <h3 class="md-booky-title bold"> Medium Title</h3>
+                                <div class="tag">
+                                    <p>1.5 rem</p>
+                                </div>
+                                <h4 class="sm-booky-title bold">Small Title</h4>
+                                <div class="tag">
+                                    <p>1.2 rem</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Ch1%2520class%253D%2522lg-booky-title%2520bold%2522%253ELarge%2520Booky%2520Title%253C%252Fh1%253E%250A%253Ch2%2520class%253D%2522md-booky-title%2520bold%2522%253ERegular%2520Booky%2520Title%253C%252Fh2%253E%250A%253Ch3%2520class%253D%2522md-booky-title%2520bold%2522%253E%2520Medium%2520Booky%2520Title%253C%252Fh3%253E%250A%253Ch4%2520class%253D%2522sm-booky-title%2520bold%2522%253ESmall%2520Booky%2520Title%253C%252Fh4%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Example of Paragraph Text</h2>
+                        <div class="center-items">
+                            <div class="typ-ex-grid mg-t-30">
+                                <p class="rg-p">Regular Paragraph text</p>
+                                <div class="tag">
+                                    <p>1.4 rem</p>
+                                </div>
+                                <p class="sm-p">Small Paragraph Text</p>
+                                <div class="tag">
+                                    <p>1.2 rem</p>
+                                </div>
+                                <p class="xsm-p">Extra Small Paragraph Text</p>
+                                <div class="tag">
+                                    <p>12 px</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cp%2520class%253D%2522rg-p%2522%253ERegular%2520Paragraph%2520text%253C%252Fp%253E%250A%253Cp%2520class%253D%2522sm-p%2522%253ESmall%2520Paragraph%2520Text%253C%252Fp%253E%250A%253Cp%2520class%253D%2522xsm-p%2522%253EExtra%2520Small%2520Paragraph%2520Text%253C%252Fp%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title bold">Example of Other Text Styles</h2>
+                        <div class="center-block">
+                            <div class="flex-row mg-t-30">
+                                <p class="sm-p light-grey-txt">TEXT</p>
+                                <p class="sm-p grey-txt">TEXT</p>
+                                <p class="sm-p bold">TEXT</p>
+                                <p class="sm-p violet-txt">TEXT</p>
+                                <p class="sm-p orange-txt">TEXT</p>
+                                <p class="sm-p striked-txt">TEXT</p>
+                            </div>
+                            <div class="mg-t-10">
+                                <p class="sm-p center-txt">CENTERED TEXT</p>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cp%2520class%253D%2522sm-p%2520light-grey-txt%2522%253ETEXT%253C%252Fp%253E%250A%253Cp%2520class%253D%2522sm-p%2520grey-txt%2522%253ETEXT%253C%252Fp%253E%250A%253Cp%2520class%253D%2522sm-p%2520bold%2522%253ETEXT%253C%252Fp%253E%250A%253Cp%2520class%253D%2522sm-p%2520violet-txt%2522%253ETEXT%253C%252Fp%253E%250A%253Cp%2520class%253D%2522sm-p%2520orange-txt%2522%253ETEXT%253C%252Fp%253E%250A%253Cp%2520class%253D%2522sm-p%2520striked-txt%2522%253ETEXT%253C%252Fp%253E%250A%253Cp%2520class%253D%2522sm-p%2520center-txt%2522%253ECENTERED%2520TEXT%253C%252Fp%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- TYPOGRAPHY END -->
+
+
+
+
+
+                <!-- GRIDS START -->
+                <section id="grid">
+                    <h1 class="lg-title">Grid</h1>
+                    <p class="rg-p mg-t-10">
+                        Grids can be used to layout your page or a section of it. Some commonly used grid layouts are
+                        given below. Make sure to give your custom constraints to the image.
+                    </p>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">50-50 Grid Layout</h2>
+                        <div class="grid-layout-5050 mg-t-30">
+                            <div class="img-wrapper">
+                                <img class="img-resp" src="./Assets/Images/avatar-img.jpg" alt="grid image">
+                            </div>
+                            <div class="text-wrapper center-items">
+                                <div class="flex-col">
+                                    <p class="rg-title">Lorem ipsum </p>
+                                    <button class="btn primary-outlined-btn center-block">Explore</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522grid-layout-5050%2522%253E%250A%2520%2520%253Cdiv%2520class%253D%2522img-wrapper%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cimg%2520class%253D%2522img-resp%2522%2520src%253D%2522...%2522%2520alt%253D%2522grid%2520image%2522%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522text-wrapper%2520center-items%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522flex-col%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522rg-title%2522%253ELorem%2520ipsum%2520%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%2520%2520%253Cbutton%2520class%253D%2522btn%2520primary-outlined-btn%2520center-block%2522%253EExplore%253C%252Fbutton%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253C%252Fdiv%253E%250A%253C%252Fdiv%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">70-30 Grid Layout</h2>
+                        <div class="grid-layout-7030 mg-t-30">
+                            <div class="img-wrapper">
+                                <img class="img-resp" src="./Assets/Images/avatar-img.jpg" alt="grid image">
+                            </div>
+                            <div class="text-wrapper center-items">
+                                <div class="flex-col">
+                                    <p class="rg-title">Lorem ipsum</p>
+                                    <button class="btn primary-outlined-btn center-block">Explore</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522grid-layout-7030%2522%253E%250A%2520%2520%253Cdiv%2520class%253D%2522img-wrapper%2522%253E%250A%2520%2520%2520%2520%253Cimg%2520class%253D%2522img-resp%2522%2520src%253D%2522...%2522%2520alt%253D%2522grid%2520image%2522%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522text-wrapper%2520center-items%2522%253E%250A%2520%2520%2520%2520%253Cdiv%2520class%253D%2522flex-col%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522rg-title%2522%253ELorem%2520ipsum%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cbutton%2520class%253D%2522btn%2520primary-outlined-btn%2520center-block%2522%253EExplore%253C%252Fbutton%253E%250A%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253C%252Fdiv%253E%250A%253C%252Fdiv%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="mg-t-40">
+                        <h2 class="md-booky-title">Three Column Grid Layout</h2>
+                        <div class="grid-layout-3col mg-t-30">
+                            <div class="text-wrapper center-items">
+                                <div class="flex-col">
+                                    <p class="md-booky-title bold">Lorem ipsum </p>
+                                    <button class="btn primary-outlined-btn center-block">Explore</button>
+                                </div>
+                            </div>
+                            <div class="img-wrapper">
+                                <img class="img-resp" src="./Assets/Images/avatar-img.jpg" alt="grid image">
+                            </div>
+                            <div class="text-wrapper center-items">
+                                <div class="flex-col">
+                                    <p class="md-booky-title bold">Lorem ipsum </p>
+                                    <button class="btn warning-outlined-btn center-block">Explore</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="code-example">
+                            <iframe
+                                src="https://carbon.now.sh/embed?bg=rgba%28189%2C213%2C234%2C0%29&t=vscode&wt=sharp&l=auto&width=859&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=18px&lh=144%25&si=false&es=2x&wm=false&code=%253Cdiv%2520class%253D%2522grid-layout-3col%2522%253E%250A%2520%2520%253Cdiv%2520class%253D%2522text-wrapper%2520center-items%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522flex-col%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522md-booky-title%2522%253ELorem%2520ipsum%2520%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cbutton%2520class%253D%2522btn%2520primary-outlined-btn%2520center-block%2522%253EExplore%253C%252Fbutton%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522img-wrapper%2522%253E%250A%2520%2520%2509%253Cimg%2520class%253D%2522img-resp%2522%2520src%253D%2522...%2522%2520alt%253D%2522grid%2520image%2522%253E%250A%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253Cdiv%2520class%253D%2522text-wrapper%2520center-items%2522%253E%250A%2520%2520%2520%2520%2520%2520%253Cdiv%2520class%253D%2522flex-col%2522%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cp%2520class%253D%2522md-booky-title%2522%253ELorem%2520ipsum%2520%253C%252Fp%253E%250A%2520%2520%2520%2520%2520%2520%2520%2520%253Cbutton%2520class%253D%2522btn%2520warning-outlined-btn%2520center-block%2522%253EExplore%253C%252Fbutton%253E%250A%2520%2520%2520%2520%2520%2520%253C%252Fdiv%253E%250A%2520%2520%253C%252Fdiv%253E%250A%253C%252Fdiv%253E"
+                                class="code-snip" loading="lazy" sandbox="allow-scripts allow-same-origin">
+                            </iframe>
+                        </div>
+                    </div>
+                </section>
+                <!-- GRIDS END -->
+
+
+
+
+
+
+
+            </div>
+            <footer class="docs-footer comp-footer">
+                <p class="sm-p mg-t-15">Made with 💖 by Shivani</p>
+                <div class="flex-row mg-t-10">
+                    <a target="_blank" rel="noopener" href="https://twitter.com/Shivani07517015">
+                        <button class="btn icon-btn center-items">
+                            <i class="fa fa-brands fa-twitter"></i>
+                        </button>
+                    </a>
+                    <a target="_blank" rel="noopener" href="https://medium.com/@shivanipothirajan">
+                        <button class="btn icon-btn center-items">
+                            <i class="fa fa-brands fa-medium"></i>
+                        </button>
+                    </a>
+                    <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/shivani-pothirajan-2b276996/">
+                        <button class="btn icon-btn center-items">
+                            <i class="fa fa-brands fa-linkedin"></i>
+                        </button>
+                    </a>
+                    <a target="_blank" rel="noopener" href="https://github.com/Shivani-1524">
+                        <button class="btn icon-btn center-items">
+                            <i class="fa fa-brands fa-github"></i>
+                        </button>
+                    </a>
+                </div>
+            </footer>
+        </div>
+        <div id="fab-totop" class="fab bottom-right custom">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </main>
+
+
+
+
+    <!-- TOAST-DEMO-START -->
+    <div id="bottom-toast" class="toast success-toast">
+        <div class="flex-row">
+            <i class="fas fa-check-circle"></i>
+            <p class="sm-p bold">Success toast</p>
+        </div>
+        <i id="dismiss-btmtoast-btn" class="close-toast fas fa-times"></i>
+    </div>
+    <div id="top-toast" class="toast danger-toast">
+        <div class="flex-row">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p class="sm-p bold">Error toast</p>
+        </div>
+        <i id="dismiss-toptoast-btn" class="close-toast fas fa-times"></i>
+    </div>
+    <!-- TOAST-DEMO-END -->
+
+    <!-- MODAL COMPONENT START -->
+    <div class="modal-wrapper" id="modal-wrapper">
+        <div class="modal-container">
+            <div class="modal-title">
+                <h4 class="rg-title">
+                    Modal Title
+                </h4>
+                <i class="fa fa-times" aria-hidden="true" id="modal-btn-close"></i>
+            </div>
+            <p class="sm-p mg-t-20">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda eaque modi adipisci cumque vel,
+                ullam, cupiditate velit exercitationem ipsum fugiat quam eum
+            </p>
+            <div class="modal-btn-wrapper mg-t-20">
+                <button class="btn primary-btn solid" id="modal-btn-ok">
+                    Go Ahead
+                </button>
+                <button class="btn secondary-outlined-btn modal-btn" id="modal-btn-cancel">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL COMPONENT END -->
+
+    <script src="Components/Toast/toast.js"></script>
+    <script src="Components/Slider/slider.js"></script>
+    <script src="Components/Modal/modal.js"></script>
+    <script src="Components/Rating/rating.js"></script>
+    <script src="Components/Button/button.js"></script>
+    <script src="Components/FloatingButton/floatingbtn.js"></script>
+</body>
+
+</html>

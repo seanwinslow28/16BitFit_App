@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY GEY FRIEND</title>
+    <link rel="icon" href="graphics/favicon.ico" />
+    <meta property="og:image" content="graphics/metaimage.png">
+    <meta property="og:description" content="My Generic Egg Yolk Friend (aka MY GEY FRIEND) is a moody tamagotchi pet, susceptible to poor mental health">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <script defer src="js/objOriented.js"></script>
+    <script defer src="js/clock.js"></script>
+</head>
+
+<body>
+    <main class="tamagotchi-device">
+        <header>MY GENERIC<br /> EGG YOLK FRIEND</header>
+
+        <section class="screen">
+            <marquee scrollamount="4">
+                <p>
+                    <span>__</span>
+                    <span id="clock" onload="updateTime()"></span>
+                    <span> __ HAPPY: </span><span id="happy"></span><span>%</span>
+                    <span> __ TUMMY: </span><span id="tummy"></span><span>%</span>
+                    <span> __ ENERGY: </span><span id="energy"></span><span>%</span>
+                    <span>__</span>
+                </p>
+            </marquee>
+            <div class="pet-container pacing">
+                <div class="pet"></div>
+            </div>
+        </section>
+
+        <section class="button-container">
+            <div>
+                <button id="play"></button>
+                <p id="play-text" class="button-text" style="margin-left: -2px;">PLAY</p>
+            </div>
+            <div class="middle-button">
+                <button id="feed"></button>
+                <p id="feed-text" class="button-text" style="margin-left: -4px;">FEED</p>
+            </div>
+            <div>
+                <button id="sleep"></button>
+                <p class="button-text" style="margin-left: -5px;">SLEEP</p>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

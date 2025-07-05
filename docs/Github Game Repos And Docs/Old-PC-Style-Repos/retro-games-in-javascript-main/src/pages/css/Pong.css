@@ -1,0 +1,30 @@
+/* src/css/Pong.css */
+.pong-container {
+  text-align: center;
+  color: white;
+}
+
+.pong-container button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background-color: #61dafb;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.pong-container button:hover {
+  background-color: #21a1f1;
+}
+
+h4 {
+  margin: 0;
+}
+
+canvas {
+  margin-top: 10px;
+  border: 2px solid white;
+}

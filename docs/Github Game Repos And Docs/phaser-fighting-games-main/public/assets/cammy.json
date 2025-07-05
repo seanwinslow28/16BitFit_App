@@ -1,0 +1,167 @@
+{
+	"textures": [
+		{
+			"image": "cammy.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 1178,
+				"h": 967
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Cammy_60_02",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 320,
+						"h": 494
+					},
+					"spriteSourceSize": {
+						"x": 25,
+						"y": 11,
+						"w": 295,
+						"h": 483
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 295,
+						"h": 483
+					}
+				},
+				{
+					"filename": "Cammy_60_03",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 320,
+						"h": 494
+					},
+					"spriteSourceSize": {
+						"x": 21,
+						"y": 14,
+						"w": 298,
+						"h": 480
+					},
+					"frame": {
+						"x": 298,
+						"y": 1,
+						"w": 298,
+						"h": 480
+					}
+				},
+				{
+					"filename": "Cammy_60_05",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 320,
+						"h": 494
+					},
+					"spriteSourceSize": {
+						"x": 21,
+						"y": 15,
+						"w": 298,
+						"h": 479
+					},
+					"frame": {
+						"x": 598,
+						"y": 1,
+						"w": 298,
+						"h": 479
+					}
+				},
+				{
+					"filename": "Cammy_60_01",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 320,
+						"h": 494
+					},
+					"spriteSourceSize": {
+						"x": 24,
+						"y": 16,
+						"w": 295,
+						"h": 478
+					},
+					"frame": {
+						"x": 1,
+						"y": 486,
+						"w": 295,
+						"h": 478
+					}
+				},
+				{
+					"filename": "Cammy_60_06",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 320,
+						"h": 494
+					},
+					"spriteSourceSize": {
+						"x": 25,
+						"y": 11,
+						"w": 295,
+						"h": 483
+					},
+					"frame": {
+						"x": 298,
+						"y": 483,
+						"w": 295,
+						"h": 483
+					}
+				},
+				{
+					"filename": "Cammy_60_07",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 320,
+						"h": 494
+					},
+					"spriteSourceSize": {
+						"x": 25,
+						"y": 16,
+						"w": 294,
+						"h": 478
+					},
+					"frame": {
+						"x": 595,
+						"y": 483,
+						"w": 294,
+						"h": 478
+					}
+				},
+				{
+					"filename": "Cammy_60_04",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 320,
+						"h": 494
+					},
+					"spriteSourceSize": {
+						"x": 34,
+						"y": 21,
+						"w": 286,
+						"h": 473
+					},
+					"frame": {
+						"x": 891,
+						"y": 482,
+						"w": 286,
+						"h": 473
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:e976e6a5815ee04112aa8f51869439c1:44550c54442ce1070b11c2d455db8501:89a045826339ebf5eb83c0b302c7e76b$"
+	}
+}

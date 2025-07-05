@@ -1,0 +1,46 @@
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+.center-block.inp-ex {
+  margin-top: 30px;
+  width: 50%;
+  min-width: 250px;
+}
+
+.input-label.sm-title {
+  display: block;
+  font-weight: 700;
+}
+
+.user-input {
+  background-color: var(--extra-light-grey);
+  margin-top: 7px;
+  width: 100%;
+  min-height: 40px;
+  border-radius: 7px;
+  border: none;
+  padding: 0px 10px;
+}
+
+.user-input:focus,
+.user-input:active {
+  background-color: var(--white);
+  border: 2px solid var(--light-grey);
+}
+
+.user-input:hover {
+  background-color: var(--white);
+  transition: all 0.2s ease-in;
+  border: 2px solid var(--light-grey);
+}
+
+.error .user-input {
+  border: 2px solid var(--red-color);
+  background-color: var(--light-red-color);
+}
+.success .user-input {
+  border: 2px solid var(--light-green-color);
+  background-color: var(--white);
+}

@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Libre+Baskerville:wght@400;700&family=Open+Sans:wght@300;400;500;600;700&display=swap");
+
+@import "./SideNav/sidenav.css";
+@import "./Footer/footer.css";
+@import "./Navbar/navbar.css";
+@import "./Button/button.css";
+@import "./Alert/alert.css";
+@import "./Avatar/avatar.css";
+@import "./Badge/badge.css";
+@import "./Card/card.css";
+@import "./FloatingButton/floatingbtn.css";
+@import "./Grids/grids.css";
+@import "./Image/image.css";
+@import "./Input/input.css";
+@import "./Slider/slider.css";
+@import "./Toast/toast.css";
+@import "./Typography/typography.css";
+@import "./Lists/lists.css";
+@import "./Modal/modal.css";
+@import "./Rating/rating.css";
+@import "./Footer/footer.css";
+
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--white);
+}
+
+:root {
+  --primary-color: #141414;
+  --violet-color: #8f4bfd;
+  --orange-color: #f4550b;
+  --violet-color-light: #dbd1f5;
+  --yellow-color: #fab41c;
+  --yellow-color-light: #fdddc2;
+  --red-color: #ff5a5f;
+  --light-red-color: #fcdfdf;
+  --green-color: #00a699;
+  --light-green-color: #00a69886;
+  --white: #f7f7ff;
+  --grey: #989898;
+  --light-grey: #d3d3d3;
+  --extra-light-grey: #e7e3e3bd;
+  --dark-grey: #484848;
+  --neon-color: #bbff8d;
+  --neon-color-light: #bbff8da6;
+  --neon-green-color: #0ce51c;
+  --hot-pink-color: #f31d69;
+  --creamy-color: #e8e7e0;
+
+  --box-shadow-dark: #666;
+  --box-shadow-light: #838282d2;
+
+  font-size: 13px;
+}
+
+/* utilities */
+.mg-t-50 {
+  margin-top: 50px;
+}
+.mg-t-40 {
+  margin-top: 40px;
+}
+.mg-t-30 {
+  margin-top: 30px;
+}
+.mg-t-20 {
+  margin-top: 20px;
+}
+.mg-t-15 {
+  margin-top: 15px;
+}
+.mg-t-10 {
+  margin-top: 10px;
+}
+.mg-t-5 {
+  margin-top: 10px;
+}
+
+/* layout */
+.center-block {
+  display: block;
+  width: fit-content;
+  margin: auto;
+}
+
+.row-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.center-items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.code-example {
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 40px;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: max-content;
+  overflow: scroll;
+  background-color: var(--violet-color-light);
+}
+.code-example .code-snip {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  transform: scale(1);
+  overflow: hidden;
+}
+
+.pos-abs {
+  position: absolute;
+}
+
+.pos-rel {
+  position: relative;
+}
+
+#dark-bg-icon {
+  color: var(--white);
+}
+#dark-bg-icon:hover {
+  background-color: transparent;
+}
+
+@media only screen and (max-width: 600px) {
+  :root {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@azerion/phaser-nineslice",
+  "author": "Azerion",
+  "version": "2.0.1",
+  "description": "NineSlice plugin for Phaser.io!",
+  "contributors": [
+    {
+      "name": "Ale Bles",
+      "email": "a.bles@azerion.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:azerion/phaser-nineslice.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/azerion/phaser-nineslice/raw/master/LICENSE"
+    }
+  ],
+  "config": {
+    "name": "phaser-nineslice"
+  },
+  "devDependencies": {
+    "grunt": "1.0.x",
+    "grunt-banner": "^0.6.0",
+    "grunt-contrib-clean": "0.6.0",
+    "grunt-contrib-connect": "^0.11.2",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-ts": "^6.0.0-beta.16",
+    "phaser": "2.6.2",
+    "typescript": "2.4.x"
+  }
+}

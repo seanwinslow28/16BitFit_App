@@ -1,0 +1,44 @@
+.modal-wrapper {
+  position: fixed;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, 0.7);
+  z-index: 10;
+  color: var(--white);
+}
+
+.btn.modal-btn {
+  color: var(--white);
+}
+
+.modal-container {
+  position: relative;
+  width: 50%;
+  height: fit-content;
+  background-color: var(--primary-color);
+  padding: 15px;
+}
+
+.modal-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.5rem;
+}
+
+.modal-title i {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px 15px;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+.modal-title i:hover {
+  color: var(--hot-pink-color);
+}

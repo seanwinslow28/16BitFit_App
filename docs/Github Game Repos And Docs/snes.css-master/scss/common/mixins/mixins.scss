@@ -1,0 +1,144 @@
+@import '../variables/pixels';
+@import '../variables/colors';
+
+$border-image: var(--border-image);
+
+@mixin pixelize($matrix, $size, $colors) {
+  $ret: '';
+
+  @for $i from 1 through length($matrix) {
+    $row: nth($matrix, $i);
+
+    @for $j from 1 through length($row) {
+      $dot: nth($row, $j);
+
+      @if $dot != 0 {
+        @if $ret != '' {
+          $ret: $ret + ',';
+        }
+
+        $color: nth($colors, $dot);
+        $ret: $ret + ($j * $size) + ' ' + ($i * $size) + ' ' + $color;
+      }
+    }
+  }
+
+  box-shadow: unquote($ret + ';');
+}
+
+@mixin pixelated-border {
+  $border-width: $pixel-regular * 2;
+  $border-image-slice: $pixel-regular * 3;
+  border: solid;
+  border-image: $border-image;
+  border-image-slice: 12;
+  border-width: $border-width;
+  border-image-outset: $pixel-regular;
+  border-image-repeat: initial;
+}
+
+@mixin generate-shadow-shine {
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    display: block;
+    z-index: 0;
+    width: calc(100% + (#{$pixel-regular} * 3));
+    height: calc(#{$pixel-regular} * 3);
+  }
+
+  &::before {
+    background-color: $button-shadow;
+    left: calc(0% - #{$pixel-regular});
+    top: calc(100% - (#{$pixel-regular}));
+    clip-path: generate-clip-path($shadow-shine);
+  }
+
+  &::after {
+    background-color: $button-shine;
+    right: calc(0% - #{$pixel-regular});
+    bottom: calc(100% - (#{$pixel-regular}));
+    transform: rotate(0.5turn);
+    clip-path: generate-clip-path($shadow-shine);
+  }
+
+  &:not(:disabled) {
+    &:hover {
+      &::before {
+        background-color: $button-hover-shadow;
+      }
+      &::after {
+        background-color: $button-hover-shine;
+      }
+    }
+  }
+
+  &:disabled {
+    &::before {
+      background-color: $button-shine;
+    }
+    &::after {
+      background-color: $button-shadow;
+    }
+  }
+}
+
+@mixin generate-shadow-shine-active {
+  &:not(:disabled) {
+    &:active {
+      &::before {
+        background-color: $button-shine;
+      }
+      &::after {
+        background-color: $button-shadow;
+      }
+    }
+  }
+}
+
+@mixin render-icon(
+  $icon-pixel-dimmension,
+  $icon-width,
+  $icon-height,
+  $sprite,
+  $sprite-colors
+) {
+  $icon-x-center-formula: ($icon-pixel-dimmension * $icon-width) / 2;
+  $icon-y-center-formula: ($icon-pixel-dimmension * $icon-height) / 2;
+  $icon-margin-y: $icon-y-center-formula - $icon-pixel-dimmension;
+  $icon-margin-x: $icon-x-center-formula - $icon-pixel-dimmension;
+
+  position: relative;
+
+  margin: $icon-margin-y $icon-margin-x;
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: -#{$icon-y-center-formula};
+    left: -#{$icon-x-center-formula};
+    @include pixelize($sprite, $icon-pixel-dimmension, $sprite-colors);
+  }
+}
+
+@mixin render-icon-before(
+  $icon-pixel-dimmension,
+  $icon-width,
+  $icon-height,
+  $sprite,
+  $sprite-colors
+) {
+  $icon-x-center-formula: ($icon-pixel-dimmension * $icon-width) / 2;
+  $icon-y-center-formula: ($icon-pixel-dimmension * $icon-height) / 2;
+  $icon-margin-y: $icon-y-center-formula - $icon-pixel-dimmension;
+  $icon-margin-x: $icon-x-center-formula - $icon-pixel-dimmension;
+
+  margin: $icon-margin-y $icon-margin-x;
+
+  content: '';
+  width: $icon-pixel-dimmension;
+  height: $icon-pixel-dimmension;
+  @include pixelize($sprite, $icon-pixel-dimmension, $sprite-colors);
+}
