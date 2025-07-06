@@ -15,6 +15,7 @@ import {
   Dimensions,
   Animated,
   Image,
+  ImageBackground,
 } from 'react-native';
 import PhaserGame from './PhaserGame';
 
@@ -59,24 +60,13 @@ const App = () => {
   // GameBoy Shell Components
   const GameBoyShell = ({children}) => (
     <View style={styles.gameBoyShell}>
-      {/* Top Speaker */}
-      <View style={styles.topSection}>
-        <View style={styles.speakerGrill}>
-          {Array(6).fill(0).map((_, i) => (
-            <View key={i} style={styles.speakerHole} />
-          ))}
-        </View>
-      </View>
-
       {/* Screen Area */}
       <View style={styles.screenArea}>
-        <Text style={styles.gameBoyLabel}>16BitFit</Text>
         <View style={styles.screenFrame}>
           <View style={styles.screen}>
             {children}
           </View>
         </View>
-        <View style={styles.powerLED} />
       </View>
 
       {/* Controls */}
@@ -93,11 +83,11 @@ const App = () => {
         </View>
 
         <View style={styles.rightControls}>
-          <TouchableOpacity style={[styles.actionButton, styles.buttonA]}>
-            <Text style={styles.buttonLabel}>A</Text>
-          </TouchableOpacity>
           <TouchableOpacity style={[styles.actionButton, styles.buttonB]}>
             <Text style={styles.buttonLabel}>B</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.actionButton, styles.buttonA]}>
+            <Text style={styles.buttonLabel}>A</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -232,36 +222,23 @@ const App = () => {
 
   // Screen Components
   const HomeScreen = () => (
-    <ScrollView style={styles.screenContent}>
-      <Avatar />
-      
-      {/* Quick Stats */}
-      <View style={styles.quickStats}>
-        <StatBar current={playerStats.xp} max={playerStats.xpToNext} color="#FFD700" label="XP" />
-        <StatBar current={playerStats.health} max={100} color="#FF4444" label="HP" />
-      </View>
-
-      {/* Daily Progress */}
-      <View style={styles.dailyProgress}>
-        <Text style={styles.sectionTitle}>Today's Progress</Text>
-        <View style={styles.progressItems}>
-          <Text style={[styles.progressItem, dailyActions.workoutLogged && styles.completed]}>
-            🏋️ Workout {dailyActions.workoutLogged ? '✅' : '⏰'}
-          </Text>
-          <Text style={[styles.progressItem, dailyActions.mealLogged && styles.completed]}>
-            🍎 Nutrition {dailyActions.mealLogged ? '✅' : '⏰'}
-          </Text>
+    <View style={styles.homeScreenContainer}>
+      <ImageBackground 
+        source={require('./assets/Backgrounds/Background_Empty.png')}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        <View style={styles.centeredAvatarContainer}>
+          <View style={styles.centeredAvatarSprite}>
+            <Image 
+              source={require('./assets/Sprites/Idle_Pose.png')}
+              style={styles.fullBodySprite}
+              resizeMode="contain"
+            />
+          </View>
         </View>
-      </View>
-
-      {/* Boss Alert */}
-      {bossAvailable && (
-        <TouchableOpacity style={styles.bossAlert} onPress={startBossBattle}>
-          <Text style={styles.bossAlertText}>⚔️ BOSS AVAILABLE!</Text>
-          <Text style={styles.bossAlertSubtext}>Level {playerStats.level} Challenge</Text>
-        </TouchableOpacity>
-      )}
-    </ScrollView>
+      </ImageBackground>
+    </View>
   );
 
   const WorkoutScreen = () => (
@@ -478,9 +455,9 @@ const styles = StyleSheet.create({
   gameBoyShell: {
     flex: 1,
     backgroundColor: '#2563eb',
-    borderRadius: 20,
-    margin: 10,
-    padding: 15,
+    borderRadius: 0,
+    margin: 0,
+    padding: 0,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 8},
     shadowOpacity: 0.3,
@@ -503,10 +480,11 @@ const styles = StyleSheet.create({
   },
   screenArea: {
     backgroundColor: '#2d1b69',
-    borderRadius: 15,
-    padding: 15,
-    marginBottom: 20,
+    borderRadius: 0,
+    padding: 0,
+    marginBottom: 10,
     position: 'relative',
+    flex: 1,
   },
   gameBoyLabel: {
     color: '#c084fc',
@@ -518,13 +496,14 @@ const styles = StyleSheet.create({
   },
   screenFrame: {
     backgroundColor: '#1e1b4b',
-    borderRadius: 10,
-    padding: 8,
-    minHeight: height * 0.65,
+    borderRadius: 0,
+    padding: 0,
+    flex: 1,
+    minHeight: height * 0.60,
   },
   screen: {
     backgroundColor: '#0f172a',
-    borderRadius: 8,
+    borderRadius: 0,
     flex: 1,
     position: 'relative',
   },
@@ -541,8 +520,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    marginBottom: 15,
+    paddingHorizontal: 30,
+    marginBottom: 5,
+    marginTop: 5,
+    backgroundColor: '#2563eb',
   },
   leftControls: {
     alignItems: 'center',
@@ -586,8 +567,9 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 5,
   },
   rightControls: {
-    flexDirection: 'column',
-    gap: 10,
+    flexDirection: 'row',
+    gap: 15,
+    alignItems: 'center',
   },
   actionButton: {
     width: 50,
@@ -599,12 +581,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttonA: {
-    alignSelf: 'flex-end',
-  },
-  buttonB: {
-    alignSelf: 'flex-start',
-  },
+
   buttonLabel: {
     color: '#fff',
     fontWeight: 'bold',
@@ -613,27 +590,30 @@ const styles = StyleSheet.create({
   bottomControls: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 40,
+    gap: 30,
+    marginTop: 5,
+    backgroundColor: '#2563eb',
+    paddingVertical: 10,
   },
   selectButton: {
     backgroundColor: '#1d4ed8',
-    paddingHorizontal: 20,
-    paddingVertical: 8,
-    borderRadius: 15,
-    borderWidth: 2,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
     borderColor: '#1e40af',
   },
   startButton: {
     backgroundColor: '#1d4ed8',
-    paddingHorizontal: 20,
-    paddingVertical: 8,
-    borderRadius: 15,
-    borderWidth: 2,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
     borderColor: '#1e40af',
   },
   selectButtonText: {
     color: '#fff',
-    fontSize: 10,
+    fontSize: 8,
     fontWeight: 'bold',
   },
 
@@ -641,6 +621,32 @@ const styles = StyleSheet.create({
   screenContent: {
     flex: 1,
     padding: 10,
+  },
+  homeScreenContainer: {
+    flex: 1,
+  },
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  screenContentWithBackground: {
+    flex: 1,
+    padding: 10,
+  },
+  centeredAvatarContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 40,
+  },
+  centeredAvatarSprite: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fullBodySprite: {
+    width: 200,
+    height: 300,
   },
   screenTitle: {
     color: '#FFD700',
@@ -654,7 +660,7 @@ const styles = StyleSheet.create({
   // Avatar Styles
   avatarContainer: {
     alignItems: 'center',
-    backgroundColor: '#1e293b',
+    backgroundColor: 'rgba(30, 41, 59, 0.9)',
     borderRadius: 10,
     padding: 20,
     marginBottom: 15,
@@ -679,7 +685,7 @@ const styles = StyleSheet.create({
     height: 60,
     overflow: 'hidden',
     borderRadius: 8,
-    backgroundColor: '#374151',
+    backgroundColor: 'rgba(55, 65, 81, 0.8)',
     marginBottom: 5,
   },
   fullSizeSpriteContainer: {
@@ -762,7 +768,7 @@ const styles = StyleSheet.create({
 
   // Stats Styles
   quickStats: {
-    backgroundColor: '#1e293b',
+    backgroundColor: 'rgba(30, 41, 59, 0.9)',
     borderRadius: 10,
     padding: 15,
     marginBottom: 15,
@@ -810,7 +816,7 @@ const styles = StyleSheet.create({
 
   // Daily Progress Styles
   dailyProgress: {
-    backgroundColor: '#1e293b',
+    backgroundColor: 'rgba(30, 41, 59, 0.9)',
     borderRadius: 10,
     padding: 15,
     marginBottom: 15,
