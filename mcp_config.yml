@@ -1,0 +1,131 @@
+name: 16BitFit MCP Server
+version: 1.0.0
+description: Claude MCP Server for 16BitFit Game Development Agents
+
+server:
+  host: 0.0.0.0
+  port: 5000
+  
+agents:
+  - name: phaser-fighter-agent
+    description: Handles Phaser.js game mechanics, combat systems, and battle physics
+    file: agents/phaser-fighter-agent.md
+    capabilities:
+      - Battle System Implementation
+      - Phaser.js Game Development
+      - Combat Mechanics
+      - Physics System
+      - Animation Control
+      - Input Handling
+      
+  - name: ui-overlay-agent
+    description: Manages UI overlays, GameBoy-style interfaces, and display systems
+    file: agents/ui-overlay-agent.md
+    capabilities:
+      - UI Layout Management
+      - GameBoy Style Interface
+      - Overlay Systems
+      - Component Architecture
+      - State Management
+      - Visual Effects
+      
+  - name: enemy-ai-agent
+    description: Controls enemy AI behavior, battle logic, and difficulty scaling
+    file: agents/enemy-ai-agent.md
+    capabilities:
+      - AI Behavior Trees
+      - Battle Strategy
+      - Difficulty Scaling
+      - Pattern Recognition
+      - Decision Making
+      - Performance Optimization
+      
+  - name: asset-loader-agent
+    description: Elite asset loading and preloader system for mobile optimization
+    file: agents/asset-loader-agent.md
+    capabilities:
+      - Modular Asset Loading
+      - Mobile-Optimized Preloaders
+      - Dynamic Asset Management
+      - Memory-Efficient Caching
+      - Multi-Agent Asset Coordination
+      - Performance Monitoring
+      
+  - name: mobile-performance-agent
+    description: Advanced mobile optimization and performance monitoring
+    file: agents/mobile-performance-agent.md
+    capabilities:
+      - FPS Profiling and Monitoring
+      - Memory Management and Cleanup
+      - Object Pooling Systems
+      - Performance Optimization Utilities
+      - Mobile Device Compatibility
+      - Real-Time Performance Analysis
+      
+  - name: story-narrative-agent
+    description: Advanced narrative design and story integration
+    file: agents/story-narrative-agent.md
+    capabilities:
+      - Interactive Dialogue Systems
+      - Character Development and Relationships
+      - Cutscene Design and Direction
+      - Narrative-Gameplay Integration
+      - Motivational Storytelling
+      - Branching Story Logic
+      
+  - name: pixel-art-scaler-agent
+    description: Precision visual fidelity and scaling systems
+    file: agents/pixel-art-scaler-agent.md
+    capabilities:
+      - Pixel-Perfect Rendering Systems
+      - Multi-Resolution Scaling
+      - Layout Grid Management
+      - Visual Quality Assurance
+      - Cross-Device Compatibility
+      - Visual Fidelity Optimization
+      
+  - name: game-state-agent
+    description: Robust state management and progression systems
+    file: agents/game-state-agent.md
+    capabilities:
+      - Finite State Machine Design
+      - Save/Load System Implementation
+      - Scene Transition Management
+      - Progression Logic and Unlocks
+      - Multi-Agent State Coordination
+      - Game Flow Control
+      
+  - name: meta-systems-agent
+    description: Final-phase systems integration agent for social features, cloud sync, and polish
+    file: agents/meta-systems-agent.md
+    capabilities:
+      - Guild & Social Systems
+      - Cloud Sync Specialist
+      - Achievement & Reward Designer
+      - Sound & Haptics Coordinator
+      - UX Finisher
+      - Supabase Integration
+      - Onboarding Flow Management
+      - Performance Polish
+
+tools:
+  - name: read_agent
+    description: Read agent configuration and capabilities
+    
+  - name: update_agent
+    description: Update agent knowledge and capabilities
+    
+  - name: execute_agent
+    description: Execute agent-specific functions
+
+environment:
+  NODE_ENV: development
+  AGENT_DIR: ./agents
+  DEBUG: true
+
+logging:
+  level: info
+  format: json
+  outputs:
+    - console
+    - file: logs/mcp_server.log 

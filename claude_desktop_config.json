@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "16bitfit-mcp": {
+      "command": "python3",
+      "args": ["/Users/seanwinslow/Desktop/16BitFit/16BitFit_App/mcp_server.py"],
+      "env": {
+        "MCP_CONFIG": "/Users/seanwinslow/Desktop/16BitFit/16BitFit_App/mcp_config.yml",
+        "AGENT_DIR": "/Users/seanwinslow/Desktop/16BitFit/16BitFit_App/agents"
+      }
+    }
+  }
+} 

@@ -1,0 +1,166 @@
+# React Native
+
+# Xcode
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace
+
+# Android/IntelliJ
+build/
+.idea
+.gradle
+local.properties
+*.iml
+*.hprof
+
+# Keystore files
+*.keystore
+*.jks
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# BUCK
+buck-out/
+\.buckd/
+*.keystore
+!debug.keystore
+
+# Bundle artifacts
+*.jsbundle
+
+# CocoaPods
+/ios/Pods/
+
+# Expo
+.expo/
+dist/
+web-build/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Metro
+.metro-health-check*
+
+# Debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Testing
+coverage/
+.nyc_output
+
+# Database files (for local development)
+*.db
+*.sqlite
+*.sqlite3
+
+# Assets working files
+*.psd
+*.ai
+*.sketch
+
+# Documentation builds
+docs/_build/
+
+# Cache directories
+.cache/
+.tmp/
+
+# React Native Flipper
+ios/Flipper/
+
+# Bundle analyzer
+bundle-analyzer-report.html
+
+# Patches
+patches/
+
+# TypeScript
+*.tsbuildinfo
+
+# ESLint
+.eslintcache
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Firebase
+.firebaserc
+firebase-debug.log
+firebase-debug.*.log
+
+# Sentry
+.sentryclirc
+
+# Flipper
+.flipper/
+
+# Maestro E2E Testing
+.maestro/
+
+# Ruby / CocoaPods
+Gemfile.lock
+/vendor/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output *.DS_Store
