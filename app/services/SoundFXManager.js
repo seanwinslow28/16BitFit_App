@@ -103,8 +103,8 @@ class SoundFXManager {
         staysActiveInBackground: true,
         playsInSilentModeIOS: true,
         shouldDuckAndroid: true,
-        interruptionModeIOS: Audio.InterruptionModeIOS.DuckOthers,
-        interruptionModeAndroid: Audio.InterruptionModeAndroid.DuckOthers,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
       });
 
       // Load saved settings

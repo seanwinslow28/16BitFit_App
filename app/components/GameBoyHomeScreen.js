@@ -23,8 +23,6 @@ import CircularCharacterArena from './CircularCharacterArena';
 import GameBoyActionButton from './GameBoyActionButton';
 import SoundFXManager from '../services/SoundFXManager';
 import SettingsManager from '../services/SettingsManager';
-import { FloatingSettingsButton } from './SettingsButton';
-import NetworkTestButton from './NetworkTestButton';
 import {
   LevelUpEffect,
   DamageEffect,
@@ -65,6 +63,7 @@ export default function GameBoyHomeScreen({
   // Player data
   playerStats = {},
   avatarState = {},
+  isBlinking = false,
   dailyActions = {},
   
   // Health integration
@@ -82,6 +81,23 @@ export default function GameBoyHomeScreen({
   // Settings
   fontFamily = 'monospace',
 }) {
+  // Get the correct sprite based on avatar state
+  const getCharacterSprite = () => {
+    switch (avatarState.currentAnimation) {
+      case 'flex':
+        return require('../assets/Sprites/Flex_Pose.png');
+      case 'eat':
+        return require('../assets/Sprites/Over_Eating_Pose.png');
+      case 'workout':
+        return require('../assets/Sprites/Post_Workout_Pose.png');
+      case 'sad':
+        return require('../assets/Sprites/Sad_Pose.png');
+      case 'thumbsUp':
+        return require('../assets/Sprites/Thumbs_Up_Pose.png');
+      default:
+        return require('../assets/Sprites/Idle_Pose.png'); // Default idle pose
+    }
+  };
   // Load retro font
   const { fontsLoaded } = usePressStart2P();
   const insets = useSafeAreaInsets();
@@ -228,7 +244,6 @@ export default function GameBoyHomeScreen({
           {/* Header Bar */}
           <View style={styles.headerBar}>
             <Text style={[styles.logoText, pixelFont]}>16BIT FIT</Text>
-            <NetworkTestButton style={styles.networkTestButton} />
           </View>
           
           {/* Main Game Window */}
@@ -247,6 +262,8 @@ export default function GameBoyHomeScreen({
               <CircularCharacterArena
                 level={playerStats.level || 1}
                 progress={(playerStats.xp || 0) / 100}
+                characterSprite={getCharacterSprite()}
+                isBlinking={isBlinking}
                 onCharacterTap={() => {
                   setShowTapRing(true);
                   onCharacterTap();
@@ -400,8 +417,6 @@ export default function GameBoyHomeScreen({
         </View>
       </View>
       
-      {/* Settings Button */}
-      <FloatingSettingsButton onNavigate={onNavigate} />
     </LinearGradient>
   );
 }
@@ -553,7 +568,8 @@ const styles = StyleSheet.create({
     borderTopColor: COLORS.deviceFrame,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    paddingHorizontal: 8, // Add horizontal padding for 5 buttons
     paddingBottom: 10,
     paddingTop: 5,
   },

@@ -31,11 +31,13 @@ const CircularCharacterArena = ({
   onCharacterTap = () => {},
   showEffects = true,
   size = 360,
+  isBlinking = false,
 }) => {
   // Animation values
   const floatAnim = useRef(new Animated.Value(0)).current;
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const glowAnim = useRef(new Animated.Value(0.8)).current;
+  const blinkAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     // Character floating animation
@@ -87,6 +89,35 @@ const CircularCharacterArena = ({
     ).start();
   }, []);
 
+  // Blinking animation effect
+  useEffect(() => {
+    if (isBlinking) {
+      // Create rapid blinking effect
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(blinkAnim, {
+            toValue: 0,
+            duration: 100,
+            useNativeDriver: true,
+          }),
+          Animated.timing(blinkAnim, {
+            toValue: 1,
+            duration: 100,
+            useNativeDriver: true,
+          }),
+        ]),
+        { iterations: 3 } // Blink 3 times
+      ).start();
+    } else {
+      // Reset to fully visible
+      Animated.timing(blinkAnim, {
+        toValue: 1,
+        duration: 100,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [isBlinking]);
+
   // Helper function to get character sprite
   const getCharacterSprite = () => {
     if (characterSprite) return characterSprite;
@@ -133,9 +164,14 @@ const CircularCharacterArena = ({
             ]}
           >
             {/* Character Sprite */}
-            <Image 
-              source={getCharacterSprite()}
-              style={styles.characterSprite}
+            <Animated.Image 
+              source={characterSprite || getCharacterSprite()}
+              style={[
+                styles.characterSprite,
+                {
+                  opacity: isBlinking ? blinkAnim : 1,
+                }
+              ]}
               resizeMode="contain"
             />
           </Animated.View>

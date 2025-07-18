@@ -28,7 +28,7 @@ import EnhancedOnboardingManager from './services/EnhancedOnboardingManager';
 import OnboardingOverlay from './components/OnboardingOverlay';
 import EnhancedOnboardingOverlay from './components/EnhancedOnboardingOverlay';
 import { useHighlight } from './components/InteractiveHighlight';
-import CoachTip from './components/CoachTip';
+// import CoachTip from './components/CoachTip'; // Removed coach tips
 import DailyBonusManager from './services/DailyBonusManager';
 import DailyBonusNotification from './components/DailyBonusNotification';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -61,7 +61,7 @@ import UnlockSystem from './components/UnlockSystem';
 import RewardSystem from './components/RewardSystem';
 import CloudSyncManager from './services/CloudSyncManager';
 import AchievementManager from './services/AchievementManager';
-import AchievementNotification from './components/AchievementNotification';
+// import AchievementNotification from './components/AchievementNotification'; // Removed achievement popups
 import SettingsManager from './services/SettingsManager';
 import { Colors } from './constants/DesignSystem';
 import { useFontLoader } from './constants/Fonts';
@@ -92,28 +92,29 @@ const AppContent = () => {
   useEffect(() => {
     NotificationQueue.initialize();
     
-    // Register notification callbacks
-    NotificationQueue.registerCallback('coachTip', (notification, duration) => {
-      setCoachTip(notification.data);
-      setTimeout(() => setCoachTip(null), duration);
-    });
-    
-    NotificationQueue.registerCallback('achievement', (notification, duration) => {
-      setAchievementNotification({
-        visible: true,
-        achievement: notification.data,
-      });
-      setTimeout(() => setAchievementNotification({ visible: false, achievement: null }), duration);
-    });
+    // Notification callbacks disabled - no popups
+    // NotificationQueue.registerCallback('coachTip', (notification, duration) => {
+    //   setCoachTip(notification.data);
+    //   setTimeout(() => setCoachTip(null), duration);
+    // });
+    // 
+    // NotificationQueue.registerCallback('achievement', (notification, duration) => {
+    //   setAchievementNotification({
+    //     visible: true,
+    //     achievement: notification.data,
+    //   });
+    //   setTimeout(() => setAchievementNotification({ visible: false, achievement: null }), duration);
+    // });
     
     NotificationQueue.registerCallback('dailyBonus', (notification, duration) => {
       setDailyBonusNotification(notification.data);
       setTimeout(() => setDailyBonusNotification(null), duration);
     });
     
-    NotificationQueue.registerCallback('toast', (notification, duration) => {
-      showToast(notification.message, notification.subtype, duration);
-    });
+    // Toast notifications disabled - no popups
+    // NotificationQueue.registerCallback('toast', (notification, duration) => {
+    //   showToast(notification.message, notification.subtype, duration);
+    // });
   }, []);
   
   // Game State
@@ -179,6 +180,13 @@ const AppContent = () => {
   const [unlockedCustomItems, setUnlockedCustomItems] = useState([
     'body_default', 'hair_default', 'outfit_default', 'gear_none', 'effect_none'
   ]);
+  const [equippedCustomizations, setEquippedCustomizations] = useState({
+    body: 'body_default',
+    hair: 'hair_default',
+    outfit: 'outfit_default',
+    accessories: 'gear_none',
+    effects: 'effect_none',
+  });
   
   // Achievement tracking
   const [earnedAchievements, setEarnedAchievements] = useState([]);
@@ -198,6 +206,10 @@ const AppContent = () => {
   
   // Daily bonus state
   const [dailyBonusNotification, setDailyBonusNotification] = useState(null);
+  const [showDailyBonus, setShowDailyBonus] = useState(false);
+  
+  // Animation states
+  const [isBlinking, setIsBlinking] = useState(false);
   
   // Loading and error states
   const [isLoading, setIsLoading] = useState(true);
@@ -310,20 +322,10 @@ const AppContent = () => {
       // Check for boss availability
       if (newLevel % 5 === 0) {
         setBossAvailable(true);
-        const tip = await EnhancedOnboardingManager.getCoachTip('home', 'level_5');
-        if (tip) setCoachTip(tip);
+        // Coach tips removed
       }
       
-      // Show achievement notification for level up with animation
-      setAchievementNotification({
-        visible: true,
-        achievement: {
-          name: `Level ${newLevel}!`,
-          description: 'Your character has grown stronger!',
-          icon: '⭐',
-          points: 50,
-        },
-      });
+      // Achievement popups removed - Level up is shown in the UI
       
       // Trigger special level up transition
       setCurrentTransitionType(ENHANCED_TRANSITIONS.POWER_ON);
@@ -409,7 +411,7 @@ const AppContent = () => {
     if (newEvolutionStage > playerStats.evolutionStage) {
       // Trigger evolution ceremony
       setEvolutionCeremony({
-        showCeremony: true,
+        showCeremony: false, // Ceremony disabled - no popups
         newEvolutionStage: newEvolutionStage,
         previousStage: playerStats.evolutionStage,
       });
@@ -478,10 +480,11 @@ const AppContent = () => {
         
         // Initialize daily bonus
         await DailyBonusManager.initialize();
-        if (DailyBonusManager.canClaimDailyBonus() && !EnhancedOnboardingManager.needsOnboarding()) {
-          // Show daily bonus after a short delay
-          setTimeout(() => setShowDailyBonus(true), 1000);
-        }
+        // Daily bonus disabled - no popups
+        // if (DailyBonusManager.canClaimDailyBonus() && !EnhancedOnboardingManager.needsOnboarding()) {
+        //   // Show daily bonus after a short delay
+        //   setTimeout(() => setShowDailyBonus(true), 1000);
+        // }
         
         // Initialize health integration
         await HealthIntegration.initialize();
@@ -532,15 +535,12 @@ const AppContent = () => {
     EnhancedOnboardingManager.registerCallback('complete_onboarding', async () => {
       setShowOnboarding(false);
       // Check for daily bonus after onboarding
-      if (DailyBonusManager.canClaimDailyBonus()) {
-        setTimeout(() => setShowDailyBonus(true), 500);
-      } else {
-        // Show first coach tip
-        const tip = await EnhancedOnboardingManager.getCoachTip('home', 'first_visit');
-        if (tip) {
-          setCoachTip(tip);
-        }
-      }
+      // Daily bonus disabled - no popups
+      // if (DailyBonusManager.canClaimDailyBonus()) {
+      //   setTimeout(() => setShowDailyBonus(true), 500);
+      // } else {
+      //   // Coach tips removed
+      // }
     });
   }, []);
 
@@ -693,17 +693,17 @@ const AppContent = () => {
         AudioService.playHealthSync();
         AudioService.playStatChange(true);
         
-        // Show sync notification
-        Alert.alert(
-          'Health Data Synced! 🏃‍♂️',
-          `Your health activities have boosted your character stats!\\n\\n${
-            Object.entries(syncResult.statBonuses)
-              .filter(([_, value]) => value > 0)
-              .map(([stat, value]) => `${stat}: +${value}`)
-              .join('\\n')
-          }`,
-          [{ text: 'Awesome!', onPress: () => triggerAnimation('flex', 3000) }]
-        );
+        // Alert notifications disabled - no popups
+        // Alert.alert(
+        //   'Health Data Synced! 🏃‍♂️',
+        //   `Your health activities have boosted your character stats!\\n\\n${
+        //     Object.entries(syncResult.statBonuses)
+        //       .filter(([_, value]) => value > 0)
+        //       .map(([stat, value]) => `${stat}: +${value}`)
+        //       .join('\\n')
+        //   }`,
+        //   [{ text: 'Awesome!', onPress: () => triggerAnimation('flex', 3000) }]
+        // );
       }
     } catch (error) {
       console.error('Health sync failed:', error);
@@ -711,14 +711,17 @@ const AppContent = () => {
   };
 
   const showHealthPermissions = () => {
-    Alert.alert(
-      'Health Integration',
-      'Connect your Apple Health or Google Fit data to automatically boost your character stats based on real-world activities!',
-      [
-        { text: 'Maybe Later', style: 'cancel' },
-        { text: 'Connect', onPress: () => HealthIntegration.requestPermissions() },
-      ]
-    );
+    // Alert notifications disabled - no popups
+    // Alert.alert(
+    //   'Health Integration',
+    //   'Connect your Apple Health or Google Fit data to automatically boost your character stats based on real-world activities!',
+    //   [
+    //     { text: 'Maybe Later', style: 'cancel' },
+    //     { text: 'Connect', onPress: () => HealthIntegration.requestPermissions() },
+    //   ]
+    // );
+    // For now, just request permissions directly
+    HealthIntegration.requestPermissions();
   };
 
   // Backend Integration Functions
@@ -824,15 +827,15 @@ const AppContent = () => {
       // Initialize achievement system
       await AchievementManager.initialize();
       
-      // Set up achievement notifications
-      AchievementManager.onNotification((notification) => {
-        if (notification.type === 'achievement') {
-          setAchievementNotification({
-            visible: true,
-            achievement: notification.achievement,
-          });
-        }
-      });
+      // Achievement notifications disabled - no popups
+      // AchievementManager.onNotification((notification) => {
+      //   if (notification.type === 'achievement') {
+      //     setAchievementNotification({
+      //       visible: true,
+      //       achievement: notification.achievement,
+      //     });
+      //   }
+      // });
       
       // Initialize other services
       initializeBackend();
@@ -966,12 +969,12 @@ const AppContent = () => {
         });
         setUnlockedCustomItems(newUnlockedItems);
         
-        // Show notification
-        Alert.alert(
-          '🎉 New Customization Unlocked!',
-          newUnlocks.map(item => `${item.icon} ${item.name}`).join('\n'),
-          [{ text: 'Awesome!' }]
-        );
+        // Alert notifications disabled - no popups
+        // Alert.alert(
+        //   '🎉 New Customization Unlocked!',
+        //   newUnlocks.map(item => `${item.icon} ${item.name}`).join('\n'),
+        //   [{ text: 'Awesome!' }]
+        // );
       }
     }
   }, [playerStats.level]);
@@ -1236,7 +1239,7 @@ const AppContent = () => {
     
     // Show visual feedback
     setWorkoutFeedback({
-      showFeedback: true,
+      showFeedback: false, // Feedback disabled - no popups
       statChanges,
       workoutType: type,
       xpGained: xpBonus,
@@ -1254,7 +1257,8 @@ const AppContent = () => {
     setTimeout(() => checkLevelUp(), 500);
     
     setDailyActions(prev => ({...prev, workoutLogged: true}));
-    triggerAnimation(animationType, 3000);
+    // Use level-up blink for positive actions
+    triggerAnimation(animationType, 3000, true);
     
     // Check for achievements
     const achievementResult = RewardSystem.checkAchievements(updatedStats, earnedAchievements);
@@ -1282,11 +1286,12 @@ const AppContent = () => {
       
       // Show notification
       const message = RewardSystem.generateRewardNotification(achievementResult.rewards);
-      Alert.alert(
-        '🏆 Achievement Unlocked!',
-        achievementResult.newAchievements.map(a => `${a.icon} ${a.name}`).join('\n') + '\n\n' + message,
-        [{ text: 'Awesome!' }]
-      );
+      // Alert notifications disabled - no popups
+      // Alert.alert(
+      //   '🏆 Achievement Unlocked!',
+      //   achievementResult.newAchievements.map(a => `${a.icon} ${a.name}`).join('\n') + '\n\n' + message,
+      //   [{ text: 'Awesome!' }]
+      // );
     }
     
     // Audio feedback
@@ -1300,14 +1305,14 @@ const AppContent = () => {
       console.error('Failed to save workout progress:', error);
     }
     
-    // Show coach tip if appropriate
-    if (totalWorkouts === 0) {
-      const tip = await EnhancedOnboardingManager.getCoachTip('workout', 'first_workout');
-      if (tip) NotificationQueue.enqueueCoachTip(tip);
-    } else if (totalWorkouts % 5 === 0) {
-      const tip = await EnhancedOnboardingManager.getCoachTip('workout', 'variety');
-      if (tip) NotificationQueue.enqueueCoachTip(tip);
-    }
+    // Coach tips disabled - no popups
+    // if (totalWorkouts === 0) {
+    //   const tip = await EnhancedOnboardingManager.getCoachTip('workout', 'first_workout');
+    //   if (tip) NotificationQueue.enqueueCoachTip(tip);
+    // } else if (totalWorkouts % 5 === 0) {
+    //   const tip = await EnhancedOnboardingManager.getCoachTip('workout', 'variety');
+    //   if (tip) NotificationQueue.enqueueCoachTip(tip);
+    // }
     
     // Auto-hide feedback after 3 seconds
     setTimeout(() => {
@@ -1361,7 +1366,7 @@ const AppContent = () => {
           happiness: Math.max(playerStats.happiness - Math.floor(3 * levelMultiplier), 0),
           stamina: Math.max(playerStats.stamina - Math.floor(1 * levelMultiplier), 0),
         };
-        animationType = 'sad';
+        animationType = 'eat'; // Use eating pose for cheat meals
         xpGain = Math.floor(8); // Minimal XP regardless of level
         break;
       case 'hydration':
@@ -1383,7 +1388,7 @@ const AppContent = () => {
     
     // Show visual feedback
     setNutritionFeedback({
-      showFeedback: true,
+      showFeedback: false, // Feedback disabled - no popups
       statChanges,
       mealType: type,
       xpGained: xpGain,
@@ -1398,7 +1403,9 @@ const AppContent = () => {
     }));
     
     setDailyActions(prev => ({...prev, mealLogged: true}));
-    triggerAnimation(animationType, 2500);
+    // Use longer duration and damage blink for negative actions
+    const isNegative = type === 'junk';
+    triggerAnimation(animationType, isNegative ? 5000 : 2500, isNegative);
     
     // Audio feedback
     AudioService.playMealLogged(type === 'healthy' || type === 'protein' || type === 'hydration');
@@ -1418,6 +1425,38 @@ const AppContent = () => {
       type,
       statChanges,
       xpGain,
+      timestamp: Date.now(),
+    });
+  };
+
+  const skipWorkout = () => {
+    // Negative effects from skipping workout
+    const levelMultiplier = 1 + (playerStats.evolutionStage * 0.1);
+    
+    const statChanges = {
+      strength: Math.max(playerStats.strength - Math.floor(3 * levelMultiplier), 0),
+      stamina: Math.max(playerStats.stamina - Math.floor(4 * levelMultiplier), 0),
+      health: Math.max(playerStats.health - Math.floor(2 * levelMultiplier), 0),
+      happiness: Math.max(playerStats.happiness - Math.floor(5 * levelMultiplier), 0),
+    };
+    
+    // Update player stats
+    setPlayerStats(prev => ({
+      ...prev,
+      ...statChanges,
+      xp: prev.xp + 5, // Minimal XP for skipping
+      lastUpdate: Date.now(),
+    }));
+    
+    // Trigger sad animation
+    triggerAnimation('sad', 3000);
+    
+    // Audio feedback
+    AudioService.playStatChange(false);
+    
+    // Log the action
+    logUserAction('workout_skipped', {
+      statChanges,
       timestamp: Date.now(),
     });
   };
@@ -1831,7 +1870,7 @@ const AppContent = () => {
       
       // Show visual feedback immediately
       setBattleFeedback({
-        showFeedback: true,
+        showFeedback: false, // Feedback disabled - no popups
         battleResult,
         boss: currentBoss,
         rewards: won ? currentBoss.rewards : { happiness: -5, stamina: -3 },
@@ -2281,12 +2320,13 @@ const AppContent = () => {
           <GameBoyHomeScreen
             playerStats={playerStats}
             avatarState={avatarState}
+            isBlinking={isBlinking}
             dailyActions={dailyActions}
             stepProgress={stepProgress}
             healthStatus={healthStatus}
             onWorkout={() => logWorkout('cardio')}
             onEatHealthy={() => logMeal('healthy')}
-            onSkipWorkout={() => logMeal('junk')}
+            onSkipWorkout={() => skipWorkout()}
             onCheatMeal={() => logMeal('junk')}
             onCharacterTap={() => {
               AudioService.playButtonPress();
@@ -2304,7 +2344,7 @@ const AppContent = () => {
             healthStatus={healthStatus}
             onWorkout={() => logWorkout('cardio')}
             onEatHealthy={() => logMeal('healthy')}
-            onSkipWorkout={() => logMeal('junk')}
+            onSkipWorkout={() => skipWorkout()}
             onCheatMeal={() => logMeal('junk')}
             onCharacterTap={() => {
               AudioService.playButtonPress();
@@ -2571,15 +2611,15 @@ const AppContent = () => {
             fontFamily={fontsLoaded ? 'PressStart2P_400Regular' : 'monospace'}
           />
           
-          {/* Achievement Notification Overlay */}
-          <AchievementNotification
+          {/* Achievement Notification Overlay - DISABLED */}
+          {/* <AchievementNotification
             visible={achievementNotification.visible}
             achievement={achievementNotification.achievement}
             onComplete={() => setAchievementNotification({ visible: false, achievement: null })}
-          />
+          /> */}
           
-          {/* Enhanced Onboarding Overlay */}
-          <EnhancedOnboardingOverlay
+          {/* Enhanced Onboarding Overlay - DISABLED */}
+          {/* <EnhancedOnboardingOverlay
             visible={showOnboarding}
             onComplete={() => setShowOnboarding(false)}
             targetRefs={highlightRefs}
@@ -2587,15 +2627,15 @@ const AppContent = () => {
               // Could trigger specific UI highlights based on step
               console.log('Onboarding step:', step);
             }}
-          />
+          /> */}
           
-          {/* Coach Tips */}
-          <CoachTip
+          {/* Coach Tips - DISABLED */}
+          {/* <CoachTip
             visible={!!coachTip}
             tip={coachTip}
             position="bottom"
             onDismiss={() => setCoachTip(null)}
-          />
+          /> */}
           
           {/* Network Status Indicator */}
           <NetworkStatusIndicator
@@ -2607,8 +2647,8 @@ const AppContent = () => {
             }}
           />
           
-          {/* Toast Notifications */}
-          <ToastNotification />
+          {/* Toast Notifications - DISABLED */}
+          {/* <ToastNotification /> */}
           
           {/* Retry Modal for Network Errors */}
           <RetryModal
@@ -2645,8 +2685,8 @@ const AppContent = () => {
             isRetrying={isRetrying}
           />
           
-          {/* Daily Bonus Notification */}
-          <DailyBonusNotification
+          {/* Daily Bonus Notification - DISABLED */}
+          {/* <DailyBonusNotification
             visible={!!dailyBonusNotification}
             onDismiss={() => setDailyBonusNotification(null)}
             onClaim={async () => {
@@ -2662,16 +2702,17 @@ const AppContent = () => {
               setTimeout(() => checkLevelUp(), 500);
               
               // Show coach tip for streaks
-              const summary = DailyBonusManager.getSummary();
-              if (summary.currentStreak === 3) {
-                const tip = await EnhancedOnboardingManager.getCoachTip('home', 'streak_3');
-                if (tip) NotificationQueue.enqueueCoachTip(tip);
-              } else if (summary.currentStreak === 7) {
-                const tip = await EnhancedOnboardingManager.getCoachTip('home', 'streak_7');
-                if (tip) NotificationQueue.enqueueCoachTip(tip);
-              }
+              // const summary = DailyBonusManager.getSummary();
+              // Coach tips disabled - no popups
+              // if (summary.currentStreak === 3) {
+              //   const tip = await EnhancedOnboardingManager.getCoachTip('home', 'streak_3');
+              //   if (tip) NotificationQueue.enqueueCoachTip(tip);
+              // } else if (summary.currentStreak === 7) {
+              //   const tip = await EnhancedOnboardingManager.getCoachTip('home', 'streak_7');
+              //   if (tip) NotificationQueue.enqueueCoachTip(tip);
+              // }
             }}
-          />
+          /> */}
         </SafeAreaView>
       </SafeAreaProvider>
     );
@@ -2715,15 +2756,15 @@ const AppContent = () => {
             fontFamily={fontsLoaded ? 'PressStart2P_400Regular' : 'monospace'}
           />
           
-          {/* Achievement Notification Overlay */}
-          <AchievementNotification
+          {/* Achievement Notification Overlay - DISABLED */}
+          {/* <AchievementNotification
             visible={achievementNotification.visible}
             achievement={achievementNotification.achievement}
             onComplete={() => setAchievementNotification({ visible: false, achievement: null })}
-          />
+          /> */}
           
-          {/* Enhanced Onboarding Overlay */}
-          <EnhancedOnboardingOverlay
+          {/* Enhanced Onboarding Overlay - DISABLED */}
+          {/* <EnhancedOnboardingOverlay
             visible={showOnboarding}
             onComplete={() => setShowOnboarding(false)}
             targetRefs={highlightRefs}
@@ -2731,15 +2772,15 @@ const AppContent = () => {
               // Could trigger specific UI highlights based on step
               console.log('Onboarding step:', step);
             }}
-          />
+          /> */}
           
-          {/* Coach Tips */}
-          <CoachTip
+          {/* Coach Tips - DISABLED */}
+          {/* <CoachTip
             visible={!!coachTip}
             tip={coachTip}
             position="bottom"
             onDismiss={() => setCoachTip(null)}
-          />
+          /> */}
           
           {/* Network Status Indicator */}
           <NetworkStatusIndicator
@@ -2751,8 +2792,8 @@ const AppContent = () => {
             }}
           />
           
-          {/* Toast Notifications */}
-          <ToastNotification />
+          {/* Toast Notifications - DISABLED */}
+          {/* <ToastNotification /> */}
           
           {/* Retry Modal for Network Errors */}
           <RetryModal
@@ -2789,8 +2830,8 @@ const AppContent = () => {
             isRetrying={isRetrying}
           />
           
-          {/* Daily Bonus Notification */}
-          <DailyBonusNotification
+          {/* Daily Bonus Notification - DISABLED */}
+          {/* <DailyBonusNotification
             visible={!!dailyBonusNotification}
             onDismiss={() => setDailyBonusNotification(null)}
             onClaim={async () => {
@@ -2806,16 +2847,17 @@ const AppContent = () => {
               setTimeout(() => checkLevelUp(), 500);
               
               // Show coach tip for streaks
-              const summary = DailyBonusManager.getSummary();
-              if (summary.currentStreak === 3) {
-                const tip = await EnhancedOnboardingManager.getCoachTip('home', 'streak_3');
-                if (tip) NotificationQueue.enqueueCoachTip(tip);
-              } else if (summary.currentStreak === 7) {
-                const tip = await EnhancedOnboardingManager.getCoachTip('home', 'streak_7');
-                if (tip) NotificationQueue.enqueueCoachTip(tip);
-              }
+              // const summary = DailyBonusManager.getSummary();
+              // Coach tips disabled - no popups
+              // if (summary.currentStreak === 3) {
+              //   const tip = await EnhancedOnboardingManager.getCoachTip('home', 'streak_3');
+              //   if (tip) NotificationQueue.enqueueCoachTip(tip);
+              // } else if (summary.currentStreak === 7) {
+              //   const tip = await EnhancedOnboardingManager.getCoachTip('home', 'streak_7');
+              //   if (tip) NotificationQueue.enqueueCoachTip(tip);
+              // }
             }}
-          />
+          /> */}
         </GameBoyShell>
       </SafeAreaView>
     </SafeAreaProvider>

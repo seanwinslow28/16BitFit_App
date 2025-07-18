@@ -217,7 +217,7 @@ class SettingsManager {
   /**
    * Save settings to storage (alias for save)
    */
-  async saveSettings() {
+  saveSettings = async () => {
     return this.save();
   }
 
