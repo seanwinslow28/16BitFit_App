@@ -3,6 +3,9 @@
  * Handles all backend operations with Supabase
  */
 
+// Import URL polyfill for React Native compatibility
+import 'react-native-url-polyfill/auto';
+
 import { createClient } from '@supabase/supabase-js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

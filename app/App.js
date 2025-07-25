@@ -28,6 +28,7 @@ import EnhancedOnboardingManager from './services/EnhancedOnboardingManager';
 import OnboardingOverlay from './components/OnboardingOverlay';
 import EnhancedOnboardingOverlay from './components/EnhancedOnboardingOverlay';
 import { useHighlight } from './components/InteractiveHighlight';
+import { usePressStart2P } from './hooks/useFonts';
 // import CoachTip from './components/CoachTip'; // Removed coach tips
 import DailyBonusManager from './services/DailyBonusManager';
 import DailyBonusNotification from './components/DailyBonusNotification';
@@ -66,6 +67,8 @@ import SettingsManager from './services/SettingsManager';
 import { Colors } from './constants/DesignSystem';
 import { useFontLoader } from './constants/Fonts';
 import createStyles from './styles/AppStyles';
+import { preloadCommonAssets } from './services/ImageCache';
+import performanceMonitor from './services/PerformanceMonitor';
 import { ScreenTransitionProvider, useScreenTransition, TRANSITION_TYPES } from './services/ScreenTransitionManager';
 import ScreenEntranceAnimation, { ENTRANCE_TYPES } from './components/ScreenEntranceAnimation';
 import AnimatedLoadingScreen, { LOADING_TYPES } from './components/AnimatedLoadingScreen';
@@ -459,47 +462,141 @@ const AppContent = () => {
       setIsLoading(true);
       setLoadingMessage('INITIALIZING...');
       
+      // Global timeout to prevent app from hanging indefinitely
+      const globalTimeout = setTimeout(() => {
+        console.error('App initialization timeout - forcing completion');
+        setError({ type: 'timeout', message: 'Initialization took too long' });
+        setIsLoading(false);
+      }, 15000); // 15 second global timeout
+      
       try {
-        // Initialize settings manager
-        await SettingsManager.initialize();
-        console.log('Settings manager initialized');
-        
-        // Initialize network manager
-        await NetworkManager.initialize();
-        console.log('Network manager initialized');
-        
-        // Initialize sound system
-        await SoundFXManager.initialize();
-        console.log('Sound system initialized');
-        
-        // Initialize enhanced onboarding
-        await EnhancedOnboardingManager.initialize();
-        if (EnhancedOnboardingManager.needsOnboarding()) {
-          setShowOnboarding(true);
+        // Start performance monitoring in development
+        if (__DEV__) {
+          performanceMonitor.startMonitoring();
         }
         
-        // Initialize daily bonus
-        await DailyBonusManager.initialize();
+        // Preload common image assets
+        setLoadingMessage('Loading assets...');
+        await preloadCommonAssets();
+        
+        // Initialize settings manager with timeout
+        setLoadingMessage('Loading settings...');
+        try {
+          await Promise.race([
+            SettingsManager.initialize(),
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('Settings timeout')), 5000)
+            )
+          ]);
+          console.log('Settings manager initialized');
+        } catch (error) {
+          console.warn('Settings manager failed, using defaults:', error);
+        }
+        
+        // Initialize network manager with timeout
+        setLoadingMessage('Checking network...');
+        try {
+          await Promise.race([
+            NetworkManager.initialize(),
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('Network timeout')), 3000)
+            )
+          ]);
+          console.log('Network manager initialized');
+        } catch (error) {
+          console.warn('Network manager failed, using defaults:', error);
+        }
+        
+        // Initialize sound system with timeout
+        setLoadingMessage('Setting up audio...');
+        try {
+          await Promise.race([
+            SoundFXManager.initialize(),
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('Audio timeout')), 5000)
+            )
+          ]);
+          console.log('Sound system initialized');
+        } catch (error) {
+          console.warn('Sound system failed, continuing without audio:', error);
+        }
+        
+        // Initialize enhanced onboarding with timeout
+        setLoadingMessage('Preparing onboarding...');
+        try {
+          await Promise.race([
+            EnhancedOnboardingManager.initialize(),
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('Onboarding timeout')), 3000)
+            )
+          ]);
+          if (EnhancedOnboardingManager.needsOnboarding()) {
+            setShowOnboarding(true);
+          }
+          console.log('Onboarding manager initialized');
+        } catch (error) {
+          console.warn('Onboarding manager failed, skipping onboarding:', error);
+        }
+        
+        // Initialize daily bonus with timeout
+        setLoadingMessage('Loading daily bonuses...');
+        try {
+          await Promise.race([
+            DailyBonusManager.initialize(),
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('Daily bonus timeout')), 3000)
+            )
+          ]);
+          console.log('Daily bonus manager initialized');
+        } catch (error) {
+          console.warn('Daily bonus manager failed, using defaults:', error);
+        }
         // Daily bonus disabled - no popups
         // if (DailyBonusManager.canClaimDailyBonus() && !EnhancedOnboardingManager.needsOnboarding()) {
         //   // Show daily bonus after a short delay
         //   setTimeout(() => setShowDailyBonus(true), 1000);
         // }
         
-        // Initialize health integration
-        await HealthIntegration.initialize();
-        await HealthIntegration.requestPermissions();
-        
-        // Get initial step progress
-        const progress = await HealthIntegration.getStepGoalProgress();
-        setStepProgress(progress);
-        
-        console.log('Health integration initialized');
+        // Initialize health integration with timeout
+        setLoadingMessage('Initializing health integration...');
+        try {
+          await Promise.race([
+            HealthIntegration.initialize(),
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('Health integration timeout')), 5000)
+            )
+          ]);
+          console.log('Health integration initialized');
+          
+          // Request permissions with timeout
+          await Promise.race([
+            HealthIntegration.requestPermissions(),
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('Health permissions timeout')), 3000)
+            )
+          ]);
+          
+          // Get initial step progress with timeout
+          const progress = await Promise.race([
+            HealthIntegration.getStepGoalProgress(),
+            new Promise((_, reject) => 
+              setTimeout(() => reject(new Error('Step progress timeout')), 2000)
+            )
+          ]);
+          setStepProgress(progress);
+          
+        } catch (error) {
+          console.warn('Health integration failed, continuing with defaults:', error);
+          // Set default progress if health integration fails
+          setStepProgress({ current: 0, goal: 10000, percentage: 0 });
+        }
         
         // All done!
+        clearTimeout(globalTimeout);
         setIsLoading(false);
       } catch (error) {
         console.error('App initialization failed:', error);
+        clearTimeout(globalTimeout);
         setError({ type: 'unknown', message: error.message });
         setIsLoading(false);
       }
@@ -2575,8 +2672,8 @@ const AppContent = () => {
         onRetry={() => {
           setError(null);
           setIsLoading(true);
-          // Re-initialize app
-          window.location.reload(); // Simple reload for now
+          // Re-run initialization instead of trying to reload window
+          initializeApp();
         }}
         showDismiss={false}
       />
@@ -2868,6 +2965,19 @@ const AppContent = () => {
 
 // Wrap the app with error boundary
 const App = () => {
+  const { fontsLoaded } = usePressStart2P();
+
+  // Show loading screen while fonts are loading
+  if (!fontsLoaded) {
+    return (
+      <SafeAreaProvider>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Loading 16BitFit...</Text>
+        </View>
+      </SafeAreaProvider>
+    );
+  }
+
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
@@ -2882,5 +2992,19 @@ const App = () => {
     </ErrorBoundary>
   );
 };
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#1a1a1a',
+  },
+  loadingText: {
+    color: '#9bb33a',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
 
 export default App;

@@ -3,7 +3,7 @@
  * Street Fighter/Mortal Kombat style battles with GameBoy aesthetic
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View,
   Text,
@@ -18,9 +18,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { pixelFont } from '../hooks/useFonts';
-import PhaserBattleGame from '../components/PhaserBattleGame';
+import PhaserWebView from '../components/PhaserWebView';
+import MobileBattleGame from '../components/MobileBattleGame';
+import SimpleBattleGame from '../components/SimpleBattleGame';
 import BossSelector from '../components/BossSelector';
 import BattleHUD from '../components/BattleHUD';
+import LeaderboardService from '../services/LeaderboardService';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -92,16 +95,21 @@ const BattleScreen = ({
   onBattleComplete = () => {},
 }) => {
   const insets = useSafeAreaInsets();
-  const [selectedBoss, setSelectedBoss] = useState(null);
-  const [battleState, setBattleState] = useState('selection'); // selection, loading, battle, victory, defeat
+  // Default to first boss for testing
+  const [selectedBoss, setSelectedBoss] = useState(BOSSES[0]);
+  const [battleState, setBattleState] = useState('battle'); // selection, loading, battle, victory, defeat
   const [battleStats, setBattleStats] = useState({
     playerHP: 100,
     playerMaxHP: 100,
-    bossHP: 100,
-    bossMaxHP: 100,
+    bossHP: BOSSES[0].hp,
+    bossMaxHP: BOSSES[0].hp,
     comboCount: 0,
     specialMeter: 0,
+    damageDealt: 0,
+    damageTaken: 0,
+    maxCombo: 0,
   });
+  const [battleStartTime, setBattleStartTime] = useState(null);
   
   // Animation values
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -120,7 +128,7 @@ const BattleScreen = ({
     }).start();
   }, []);
 
-  const handleBossSelect = (boss) => {
+  const handleBossSelect = useCallback((boss) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setSelectedBoss(boss);
     
@@ -135,6 +143,9 @@ const BattleScreen = ({
       bossMaxHP,
       comboCount: 0,
       specialMeter: 0,
+      damageDealt: 0,
+      damageTaken: 0,
+      maxCombo: 0,
     });
     
     // Transition to loading state
@@ -143,10 +154,11 @@ const BattleScreen = ({
     // Simulate loading
     setTimeout(() => {
       setBattleState('battle');
+      setBattleStartTime(Date.now()); // Record battle start time
     }, 1500);
-  };
+  }, [playerStats.health]);
 
-  const handleBattleEnd = (result) => {
+  const handleBattleEnd = async (result) => {
     setBattleState(result.victory ? 'victory' : 'defeat');
     
     // Calculate rewards
@@ -158,11 +170,38 @@ const BattleScreen = ({
         focus: Math.floor(Math.random() * 3) + 1,
       };
       
+      // Submit score to leaderboard
+      const leaderboardData = {
+        username: playerStats.name || 'Player',
+        bossId: selectedBoss.id,
+        duration: Math.floor((Date.now() - battleStartTime) / 1000), // in seconds
+        maxCombo: result.stats?.maxCombo || battleStats.maxCombo || 0,
+        damageDealt: result.stats?.damageDealt || battleStats.damageDealt || 0,
+        damageTaken: result.stats?.damageTaken || battleStats.damageTaken || 0,
+        playerHP: result.stats?.playerHP || battleStats.playerHP || 0,
+        maxPlayerHP: result.stats?.playerMaxHP || battleStats.playerMaxHP || 100,
+        difficulty: selectedBoss.difficulty || 'NORMAL',
+      };
+      
+      const leaderboardResult = await LeaderboardService.submitScore(leaderboardData);
+      
+      if (leaderboardResult.success) {
+        console.log('Score submitted successfully! Rank:', leaderboardResult.rank);
+        // Store the score and rank for display
+        setBattleStats(prev => ({
+          ...prev,
+          finalScore: leaderboardResult.score,
+          globalRank: leaderboardResult.rank?.global_rank
+        }));
+      }
+      
       onBattleComplete({
         victory: true,
         xpEarned: xpReward,
         statBoosts,
         bossDefeated: selectedBoss.id,
+        leaderboardScore: leaderboardResult.score,
+        leaderboardRank: leaderboardResult.rank?.global_rank,
       });
     } else {
       onBattleComplete({
@@ -230,59 +269,14 @@ const BattleScreen = ({
   );
 
   const renderBattle = () => (
-    <View style={styles.battleContainer}>
-      {/* Battle HUD */}
-      <BattleHUD
-        playerStats={{
-          name: 'HERO',
-          hp: battleStats.playerHP,
-          maxHp: battleStats.playerMaxHP,
-          specialMeter: battleStats.specialMeter,
-        }}
-        bossStats={{
-          name: selectedBoss.name,
-          hp: battleStats.bossHP,
-          maxHp: battleStats.bossMaxHP,
-        }}
-        comboCount={battleStats.comboCount}
+    <View style={{ flex: 1 }}>
+      <SimpleBattleGame
+        playerStats={playerStats}
+        boss={selectedBoss}
+        onBattleEnd={handleBattleEnd}
+        onUpdateStats={(stats) => setBattleStats(prev => ({ ...prev, ...stats }))}
+        onGameReady={() => console.log('Game ready!')}
       />
-      
-      {/* Phaser Game Container */}
-      {Platform.OS === 'web' ? (
-        <View style={styles.gameContainer}>
-          <PhaserBattleGame
-            playerStats={playerStats}
-            boss={selectedBoss}
-            onBattleEnd={handleBattleEnd}
-            onUpdateStats={(stats) => setBattleStats(prev => ({ ...prev, ...stats }))}
-          />
-        </View>
-      ) : (
-        <View style={styles.mobileGameContainer}>
-          <Text style={[styles.mobileMessage, pixelFont]}>
-            BATTLE MODE
-          </Text>
-          <Text style={[styles.mobileSubMessage, pixelFont]}>
-            Full battles available on web version
-          </Text>
-          
-          {/* Simplified mobile battle controls */}
-          <View style={styles.mobileBattleButtons}>
-            <TouchableOpacity
-              style={styles.mobileBattleButton}
-              onPress={() => {
-                // Simulate battle outcome
-                const victory = Math.random() > 0.5;
-                handleBattleEnd({ victory, score: victory ? 100 : 0 });
-              }}
-            >
-              <Text style={[styles.mobileBattleButtonText, pixelFont]}>
-                QUICK BATTLE
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      )}
     </View>
   );
 
@@ -290,6 +284,21 @@ const BattleScreen = ({
     <View style={styles.resultContainer}>
       <Text style={[styles.victoryText, pixelFont]}>VICTORY!</Text>
       <Text style={styles.victoryIcon}>🏆</Text>
+      
+      {/* Leaderboard Score Display */}
+      {battleStats.finalScore && (
+        <View style={styles.scoreContainer}>
+          <Text style={[styles.scoreLabel, pixelFont]}>FINAL SCORE</Text>
+          <Text style={[styles.scoreValue, pixelFont]}>
+            {battleStats.finalScore.toLocaleString()}
+          </Text>
+          {battleStats.globalRank && (
+            <Text style={[styles.rankText, pixelFont]}>
+              GLOBAL RANK: #{battleStats.globalRank}
+            </Text>
+          )}
+        </View>
+      )}
       
       <View style={styles.rewardsContainer}>
         <Text style={[styles.rewardsTitle, pixelFont]}>REWARDS EARNED</Text>
@@ -304,12 +313,21 @@ const BattleScreen = ({
         </Text>
       </View>
       
-      <TouchableOpacity
-        style={styles.continueButton}
-        onPress={() => onNavigate('home')}
-      >
-        <Text style={[styles.continueButtonText, pixelFont]}>CONTINUE</Text>
-      </TouchableOpacity>
+      <View style={styles.victoryButtons}>
+        <TouchableOpacity
+          style={styles.leaderboardButton}
+          onPress={() => onNavigate('leaderboard')}
+        >
+          <Text style={[styles.leaderboardButtonText, pixelFont]}>VIEW LEADERBOARD</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={styles.continueButton}
+          onPress={() => onNavigate('home')}
+        >
+          <Text style={[styles.continueButtonText, pixelFont]}>CONTINUE</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
@@ -370,7 +388,7 @@ const BattleScreen = ({
       </View>
 
       {/* Content based on battle state */}
-      <View style={styles.content}>
+      <View style={[styles.content, battleState === 'battle' && { paddingHorizontal: 0 }]}>
         {battleState === 'selection' && renderBossSelection()}
         {battleState === 'loading' && renderLoadingScreen()}
         {battleState === 'battle' && renderBattle()}
@@ -528,12 +546,6 @@ const styles = StyleSheet.create({
 
   mobileGameContainer: {
     flex: 1,
-    backgroundColor: COLORS.screenBg,
-    borderRadius: 8,
-    borderWidth: 4,
-    borderColor: COLORS.dark,
-    justifyContent: 'center',
-    alignItems: 'center',
     marginTop: 20,
   },
 
@@ -624,6 +636,55 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.dark,
     letterSpacing: 1,
+  },
+  
+  scoreContainer: {
+    alignItems: 'center',
+    marginVertical: 20,
+    padding: 20,
+    backgroundColor: 'rgba(146, 204, 65, 0.1)',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: COLORS.primary,
+  },
+  
+  scoreLabel: {
+    fontSize: 14,
+    color: COLORS.primary,
+    marginBottom: 5,
+  },
+  
+  scoreValue: {
+    fontSize: 32,
+    color: COLORS.yellow,
+    letterSpacing: 2,
+  },
+  
+  rankText: {
+    fontSize: 16,
+    color: COLORS.primary,
+    marginTop: 10,
+  },
+  
+  victoryButtons: {
+    gap: 15,
+    marginTop: 20,
+  },
+  
+  leaderboardButton: {
+    backgroundColor: COLORS.blue,
+    paddingHorizontal: 30,
+    paddingVertical: 12,
+    borderRadius: 8,
+    borderWidth: 3,
+    borderColor: COLORS.dark,
+  },
+  
+  leaderboardButtonText: {
+    fontSize: 14,
+    color: '#FFFFFF',
+    letterSpacing: 1,
+    textAlign: 'center',
   },
 
   defeatText: {

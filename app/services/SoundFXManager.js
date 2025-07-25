@@ -103,8 +103,6 @@ class SoundFXManager {
         staysActiveInBackground: true,
         playsInSilentModeIOS: true,
         shouldDuckAndroid: true,
-        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
-        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
       });
 
       // Load saved settings
@@ -525,6 +523,17 @@ class SoundFXManager {
     if (this.settings.categoryVolumes[category] !== undefined) {
       this.settings.categoryVolumes[category] = Math.max(0, Math.min(1, volume));
       await this.saveSettings();
+    }
+  }
+
+  /**
+   * Save settings to storage
+   */
+  async saveSettings() {
+    try {
+      await AsyncStorage.setItem('@16BitFit:soundSettings', JSON.stringify(this.settings));
+    } catch (error) {
+      console.warn('Failed to save sound settings:', error);
     }
   }
 }

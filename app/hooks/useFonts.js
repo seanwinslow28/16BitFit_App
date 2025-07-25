@@ -16,10 +16,12 @@ export const usePressStart2P = () => {
   useEffect(() => {
     const loadFonts = async () => {
       try {
+        console.log('Starting font loading...');
         await Font.loadAsync({
           'PressStart2P': PressStart2P_400Regular,
           'PressStart2P-Regular': PressStart2P_400Regular,
         });
+        console.log('Fonts loaded successfully');
         setFontsLoaded(true);
       } catch (err) {
         console.error('Error loading Press Start 2P font:', err);
@@ -29,7 +31,17 @@ export const usePressStart2P = () => {
       }
     };
 
-    loadFonts();
+    // Add timeout to prevent infinite loading
+    const timeout = setTimeout(() => {
+      console.warn('Font loading timeout - proceeding without custom fonts');
+      setFontsLoaded(true);
+    }, 10000); // 10 second timeout
+
+    loadFonts().finally(() => {
+      clearTimeout(timeout);
+    });
+
+    return () => clearTimeout(timeout);
   }, []);
 
   return { fontsLoaded, error };

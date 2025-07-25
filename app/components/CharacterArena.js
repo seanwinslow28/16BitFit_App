@@ -3,7 +3,7 @@
  * 400×240px arena with gradient backgrounds, scanline effects, and animated character display
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import { View, Image, StyleSheet, Dimensions, Animated, Easing } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors, DesignUtils } from '../constants/DesignSystem';
@@ -487,4 +487,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CharacterArena;
+// Memoize component to prevent unnecessary re-renders
+export default memo(CharacterArena, (prevProps, nextProps) => {
+  return (
+    prevProps.characterState === nextProps.characterState &&
+    prevProps.showEffects === nextProps.showEffects &&
+    prevProps.backgroundType === nextProps.backgroundType &&
+    prevProps.animationDuration === nextProps.animationDuration
+  );
+});
