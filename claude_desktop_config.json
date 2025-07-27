@@ -10,7 +10,14 @@
         "NODE_ENV": "development"
       }
     },
-    "supabase-mcp": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem"],
+      "env": {
+        "MCP_FILESYSTEM_ALLOWED_DIRECTORIES": "/Users/seanwinslow/Desktop/16BitFit/16BitFit_App"
+      }
+    },
+    "supabase-local": {
       "command": "npx",
       "args": ["-y", "@supabase/mcp-server-supabase"],
       "env": {
