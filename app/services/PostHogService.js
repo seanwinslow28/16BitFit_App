@@ -21,46 +21,50 @@ class PostHogService {
         return;
       }
 
-      // Initialize PostHog
-      await PostHog.initAsync(POSTHOG_API_KEY, {
+      // Initialize PostHog using the new v4.3.0 API
+      this.client = new PostHog(POSTHOG_API_KEY, {
         host: POSTHOG_HOST || 'https://us.posthog.com',
         debug: DEBUG === 'true' || __DEV__,
         enableSessionRecording: false, // Disable for privacy
-        
-        // Device info and app version
         captureApplicationLifecycleEvents: true,
-        captureDeeplinks: true,
         
         // Optional: Add device and app context
-        properties: {
+        customAppProperties: {
           app_name: '16BitFit',
           app_version: Constants.expoConfig?.version || '1.0.0',
           platform: Platform.OS,
         }
       });
-
-      this.client = PostHog;
+      
       this.isInitialized = true;
-      
-      console.log('PostHog initialized successfully');
-      
-      // Track app launch
-      this.trackEvent('app_launched', {
-        session_start: new Date().toISOString(),
-      });
-      
+      console.log('PostHog initialized successfully!');
     } catch (error) {
       console.error('Failed to initialize PostHog:', error);
     }
   }
 
-  // Track custom events
+  trackScreen(screenName, properties = {}) {
+    if (!this.isInitialized || !this.client) {
+      console.warn('PostHog not initialized. Screen not tracked:', screenName);
+      return;
+    }
+    try {
+      this.client.screen(screenName, {
+        ...properties,
+        timestamp: new Date().toISOString(),
+        app_version: Constants.expoConfig?.version || '1.0.0',
+        platform: Platform.OS,
+      });
+    } catch (error) {
+      console.error('Error tracking screen:', screenName, error);
+    }
+  }
+
   trackEvent(eventName, properties = {}) {
     if (!this.isInitialized || !this.client) {
       console.warn('PostHog not initialized. Event not tracked:', eventName);
       return;
     }
-
     try {
       this.client.capture(eventName, {
         ...properties,
@@ -73,69 +77,35 @@ class PostHogService {
     }
   }
 
-  // Track screen views
-  trackScreen(screenName, properties = {}) {
-    this.trackEvent('screen_view', {
-      screen_name: screenName,
-      ...properties,
-    });
-  }
-
-  // Track workout events
-  trackWorkout(workoutType, duration, properties = {}) {
-    this.trackEvent('workout_completed', {
-      workout_type: workoutType,
-      duration_seconds: duration,
-      ...properties,
-    });
-  }
-
-  // Track battle events
-  trackBattle(battleType, result, properties = {}) {
-    this.trackEvent('battle_completed', {
-      battle_type: battleType,
-      battle_result: result,
-      ...properties,
-    });
-  }
-
-  // Track food logging
-  trackFoodLog(foodItem, properties = {}) {
-    this.trackEvent('food_logged', {
-      food_item: foodItem,
-      ...properties,
-    });
-  }
-
-  // Track user progression
-  trackLevelUp(newLevel, characterType, properties = {}) {
-    this.trackEvent('level_up', {
-      new_level: newLevel,
-      character_type: characterType,
-      ...properties,
-    });
-  }
-
-  // Identify user (call when user logs in)
-  identifyUser(userId, userProperties = {}) {
+  identify(userId, userProperties = {}) {
     if (!this.isInitialized || !this.client) {
-      console.warn('PostHog not initialized. User not identified');
+      console.warn('PostHog not initialized. User not identified:', userId);
       return;
     }
-
     try {
       this.client.identify(userId, userProperties);
     } catch (error) {
-      console.error('Error identifying user:', error);
+      console.error('Error identifying user:', userId, error);
     }
   }
 
-  // Reset user session (call when user logs out)
-  reset() {
+  alias(alias) {
     if (!this.isInitialized || !this.client) {
+      console.warn('PostHog not initialized. Alias not set:', alias);
       return;
     }
+    try {
+      this.client.alias(alias);
+    } catch (error) {
+      console.error('Error setting alias:', alias, error);
+    }
+  }
 
+  reset() {
+    if (!this.isInitialized || !this.client) {
+      console.warn('PostHog not initialized. Cannot reset.');
+      return;
+    }
     try {
       this.client.reset();
     } catch (error) {
@@ -143,22 +113,85 @@ class PostHogService {
     }
   }
 
-  // Get feature flags
-  async getFeatureFlag(flagKey, defaultValue = false) {
+  // Feature flags
+  isFeatureEnabled(flagKey) {
     if (!this.isInitialized || !this.client) {
-      return defaultValue;
+      console.warn('PostHog not initialized. Feature flag not checked:', flagKey);
+      return false;
     }
-
     try {
-      return await this.client.getFeatureFlag(flagKey) || defaultValue;
+      return this.client.isFeatureEnabled(flagKey);
+    } catch (error) {
+      console.error('Error checking feature flag:', flagKey, error);
+      return false;
+    }
+  }
+
+  getFeatureFlag(flagKey) {
+    if (!this.isInitialized || !this.client) {
+      console.warn('PostHog not initialized. Feature flag not retrieved:', flagKey);
+      return undefined;
+    }
+    try {
+      return this.client.getFeatureFlag(flagKey);
     } catch (error) {
       console.error('Error getting feature flag:', flagKey, error);
-      return defaultValue;
+      return undefined;
+    }
+  }
+
+  // Group analytics
+  group(groupType, groupKey, groupProperties = {}) {
+    if (!this.isInitialized || !this.client) {
+      console.warn('PostHog not initialized. Group not set:', groupType, groupKey);
+      return;
+    }
+    try {
+      this.client.group(groupType, groupKey, groupProperties);
+    } catch (error) {
+      console.error('Error setting group:', groupType, groupKey, error);
+    }
+  }
+
+  // Flush events
+  flush() {
+    if (!this.isInitialized || !this.client) {
+      console.warn('PostHog not initialized. Cannot flush.');
+      return Promise.resolve();
+    }
+    try {
+      return this.client.flush();
+    } catch (error) {
+      console.error('Error flushing PostHog events:', error);
+      return Promise.resolve();
+    }
+  }
+
+  // Opt out/in
+  optOut() {
+    if (!this.isInitialized || !this.client) {
+      console.warn('PostHog not initialized. Cannot opt out.');
+      return;
+    }
+    try {
+      this.client.optOut();
+    } catch (error) {
+      console.error('Error opting out:', error);
+    }
+  }
+
+  optIn() {
+    if (!this.isInitialized || !this.client) {
+      console.warn('PostHog not initialized. Cannot opt in.');
+      return;
+    }
+    try {
+      this.client.optIn();
+    } catch (error) {
+      console.error('Error opting in:', error);
     }
   }
 }
 
-// Export singleton instance
 const postHogService = new PostHogService();
-
 export default postHogService; 

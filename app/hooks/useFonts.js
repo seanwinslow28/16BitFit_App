@@ -5,6 +5,7 @@
 
 import * as Font from 'expo-font';
 import { useState, useEffect } from 'react';
+import { FONT_CONFIG } from '../constants/Fonts';
 
 export const usePressStart2P = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -14,9 +15,7 @@ export const usePressStart2P = () => {
     const loadFonts = async () => {
       try {
         console.log('Starting local font loading...');
-        await Font.loadAsync({
-          'PressStart2P': require('../assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf'),
-        });
+        await Font.loadAsync(FONT_CONFIG);
         console.log('Local fonts loaded successfully');
         setFontsLoaded(true);
       } catch (err) {
@@ -28,20 +27,28 @@ export const usePressStart2P = () => {
     };
 
     // Add timeout to prevent infinite loading
-    const timeout = setTimeout(() => {
-      console.warn('Font loading timeout - proceeding without custom fonts');
-      setFontsLoaded(true);
-    }, 10000); // 10 second timeout
+    const timeoutId = setTimeout(() => {
+      if (!fontsLoaded) {
+        console.warn('Font loading timeout - using fallback fonts');
+        setFontsLoaded(true);
+      }
+    }, 5000);
 
-    loadFonts().finally(() => {
-      clearTimeout(timeout);
-    });
+    loadFonts();
 
-    return () => clearTimeout(timeout);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return { fontsLoaded, error };
 };
+
+// Main hook for component usage
+export const useFonts = () => {
+  return usePressStart2P();
+};
+
+// Export default hook
+export default usePressStart2P;
 
 // Font style helper
 // Safe pixel font that works regardless of font loading status
