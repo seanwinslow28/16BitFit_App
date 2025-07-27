@@ -1,180 +1,176 @@
 name: 16BitFit MCP Server
 version: 1.0.0
-description: Claude MCP Server for 16BitFit Game Development Agents
+description: Claude MCP Server for 16BitFit Game Development Specialists
 
 server:
   host: 0.0.0.0
   port: 5000
   
 agents:
-  - name: orchestrator-agent
-    description: Master Coordinator for all tasks and communications among specialized agents
-    file: agents/orchestrator_agent.md
+  - name: game-development-specialist
+    description: Expert mobile game developer specializing in React Native Game Engine, fighting game mechanics, and 60fps performance optimization
+    file: .claude/agents/game-development-specialist.md
     capabilities:
-      - Task Decomposition
-      - Agent Delegation
-      - Progress Monitoring
-      - Issue Detection & Resolution
-      - Workflow Management
+      - React Native Game Engine architecture
+      - 60fps fighting game mechanics
+      - Sprite animation systems
+      - Mobile performance optimization
+      - Fighting game systems
+      - Input handling and gesture recognition
       
-  - name: planner-agent
-    description: Strategic planning and architecture design for 16BitFit development
-    file: agents/planner_agent.md
+  - name: health-integration-specialist
+    description: Expert in fitness data integration with Apple Health, Google Fit, and health-focused gamification systems
+    file: .claude/agents/health-integration-specialist.md
     capabilities:
-      - Project Planning
-      - Architecture Design
-      - Requirements Analysis
-      - Resource Management
-      - Timeline Management
+      - Apple Health integration
+      - Google Fit integration
+      - Fitness data processing
+      - Health-focused UX design
+      - Data privacy compliance
+      - Real-time health tracking
       
-  - name: developer-agent
-    description: Principal developer for implementing detailed tasks with clean, structured code
-    file: agents/developer_agent.md
+  - name: ui-ux-specialist
+    description: Expert mobile UI/UX designer specializing in gamification, progressive disclosure, and fitness app design patterns
+    file: .claude/agents/ui-ux-specialist.md
     capabilities:
-      - Feature Implementation
-      - Code Integration
-      - Performance Optimization
-      - Documentation
-      - React Native Development
+      - Mobile-first design patterns
+      - Progressive disclosure systems
+      - Gamification psychology
+      - Fighting game UI aesthetics
+      - Onboarding flow optimization
+      - Character progression visualization
       
-  - name: code-review-agent
-    description: Code quality assurance and review specialist
-    file: agents/code_review_agent.md
+  - name: performance-optimizer
+    description: Expert in 60fps consistency, memory management, and mobile-specific optimization techniques
+    file: .claude/agents/performance-optimizer.md
     capabilities:
-      - Code Quality Analysis
-      - Security Review
-      - Performance Review
-      - Best Practices Enforcement
-      - Technical Debt Management
+      - 60fps performance monitoring
+      - Memory management optimization
+      - Mobile device compatibility
+      - Battery usage optimization
+      - Code profiling and analysis
+      - Performance benchmarking
       
-  - name: validator-agent
-    description: Testing and validation specialist for ensuring code reliability
-    file: agents/validator_agent.md
+  - name: backend-specialist
+    description: Expert Supabase and backend systems developer specializing in real-time features and scalable architecture
+    file: .claude/agents/backend-specialist.md
     capabilities:
-      - Test Strategy Design
-      - Quality Assurance
-      - Bug Detection
-      - Validation Frameworks
-      - Test Automation
+      - Supabase database design
+      - Real-time subscriptions
+      - Authentication and RLS
+      - API design and optimization
+      - Data migration strategies
+      - Scalable mobile architecture
       
-  - name: test-runner-agent
-    description: Automated testing execution and continuous integration specialist
-    file: agents/test_runner_agent.md
+  - name: testing-specialist
+    description: Expert in user research, A/B testing, and comprehensive quality assurance for mobile gaming applications
+    file: .claude/agents/testing-specialist.md
     capabilities:
-      - Test Execution
-      - CI/CD Pipeline Management
-      - Test Reporting
-      - Performance Testing
-      - Integration Testing
+      - User research methodologies
+      - A/B testing implementation
+      - Quality assurance protocols
+      - Automated testing frameworks
+      - Performance testing
+      - Mobile-specific testing
       
-  - name: analytics-insights-agent
-    description: User behavior analytics and LLM evaluation specialist
-    file: agents/analytics_insights_agent.md
+  - name: product-manager
+    description: Expert product strategist focusing on data-driven decisions, user engagement, and fitness gaming market dynamics
+    file: .claude/agents/product-manager.md
     capabilities:
-      - User Behavior Analytics
-      - PostHog Integration
-      - LLM Performance Monitoring
-      - Langsmith MCP Integration
-      - Insights Generation
+      - Product strategy development
+      - Data-driven decision making
+      - User engagement optimization
+      - Market analysis
+      - Feature prioritization
+      - Growth strategy
       
-  - name: ui-overlay-agent
-    description: GameBoy-style UI interfaces and overlay systems manager
-    file: agents/ui-overlay-agent.md
+  - name: marketing-specialist
+    description: Expert in ASO, community growth, user acquisition, and fitness gaming market positioning
+    file: .claude/agents/marketing-specialist.md
     capabilities:
-      - UI Layout Management
-      - GameBoy Style Interface
-      - Overlay Systems
-      - Component Architecture
-      - State Management
-      - Visual Effects
+      - App Store Optimization (ASO)
+      - Community growth strategies
+      - User acquisition campaigns
+      - Content marketing
+      - Social media management
+      - Market positioning
       
-  - name: meta-systems-agent
-    description: Social features, cloud sync, and final system integration specialist
-    file: agents/meta-systems-agent.md
+  - name: privacy-security-specialist
+    description: Expert in HIPAA/GDPR compliance, health data protection, and mobile app security best practices
+    file: .claude/agents/privacy-security-specialist.md
     capabilities:
-      - Guild & Social Systems
-      - Cloud Sync Integration
-      - Achievement Systems
-      - Sound & Haptics
-      - Supabase Integration
-      - Onboarding Flow
+      - HIPAA compliance implementation
+      - GDPR compliance strategies
+      - Health data protection
+      - Mobile security protocols
+      - Privacy-by-design principles
+      - Security audit procedures
       
-  - name: gamestate-agent-rnge
-    description: Robust state management and progression systems for React Native Game Engine
-    file: agents/GameStateAgent_RNGE.md
+  - name: devops-deployment-specialist
+    description: Expert in CI/CD pipelines, app store releases, monitoring, and deployment automation for mobile applications
+    file: .claude/agents/devops-deployment-specialist.md
     capabilities:
-      - Finite State Machine Design
-      - Save/Load Systems
-      - Scene Transition Management
-      - Progression Logic
-      - Multi-Agent State Coordination
-      - Game Flow Control
+      - CI/CD pipeline design
+      - App store release management
+      - Deployment automation
+      - Infrastructure monitoring
+      - Release strategy optimization
+      - Build optimization
       
-  - name: story-narrative-agent-rnge
-    description: Advanced narrative design and story integration for game experience
-    file: agents/StoryNarrativeAgent_RNGE.md
+  - name: community-management-specialist
+    description: Expert in user engagement, social features, retention strategies, and community building for fitness gaming
+    file: .claude/agents/community-management-specialist.md
     capabilities:
-      - Interactive Dialogue Systems
-      - Character Development
-      - Cutscene Design
-      - Narrative-Gameplay Integration
-      - Motivational Storytelling
-      - Branching Story Logic
+      - User engagement strategies
+      - Social feature design
+      - Retention optimization
+      - Community building
+      - User-generated content
+      - Social gamification
       
-  - name: enemy-ai-agent-rnge
-    description: AI behavior, battle logic, and difficulty scaling for game enemies
-    file: agents/EnemyAIAgent_RNGE.md
+  - name: data-analytics-specialist
+    description: Expert in user behavior analysis, retention modeling, A/B testing, and data-driven product optimization
+    file: .claude/agents/data-analytics-specialist.md
     capabilities:
-      - AI Behavior Trees
-      - Battle Strategy
-      - Difficulty Scaling
-      - Pattern Recognition
-      - Decision Making
-      - Performance Optimization
+      - User behavior analysis
+      - Retention modeling
+      - A/B testing analytics
+      - Data pipeline design
+      - Predictive analytics
+      - Performance metrics
       
-  - name: asset-loader-agent-rnge
-    description: Elite asset loading and preloader system for mobile optimization
-    file: agents/AssetLoaderAgent_RNGE.md
+  - name: api-integration-specialist
+    description: Expert in health platform APIs, nutrition APIs, and third-party service integrations for fitness applications
+    file: .claude/agents/api-integration-specialist.md
     capabilities:
-      - Modular Asset Loading
-      - Mobile-Optimized Preloaders
-      - Dynamic Asset Management
-      - Memory-Efficient Caching
-      - Multi-Agent Asset Coordination
-      - Performance Monitoring
+      - Health platform API integration
+      - Nutrition API implementation
+      - Third-party service connections
+      - API security and authentication
+      - Data synchronization
+      - Integration testing
       
-  - name: mobile-performance-agent-rnge
-    description: Advanced mobile optimization and performance monitoring specialist
-    file: agents/MobilePerformanceAgent_RNGE.md
+  - name: customer-success-specialist
+    description: Expert in user support systems, onboarding optimization, satisfaction measurement, and user journey enhancement
+    file: .claude/agents/customer-success-specialist.md
     capabilities:
-      - FPS Profiling and Monitoring
-      - Memory Management
-      - Object Pooling Systems
-      - Performance Optimization
-      - Mobile Device Compatibility
-      - Real-Time Performance Analysis
+      - User support system design
+      - Onboarding flow optimization
+      - Customer satisfaction metrics
+      - User journey analysis
+      - Support automation
+      - Feedback collection systems
       
-  - name: pixel-art-scaler-agent-rnge
-    description: Precision visual fidelity and pixel-perfect scaling systems
-    file: agents/PixelArtScalerAgent_RNGE.md
+  - name: avatar-evolution-specialist
+    description: Expert in character progression systems, avatar customization, and gamified evolution mechanics for fitness applications
+    file: .claude/agents/avatar-evolution-specialist.md
     capabilities:
-      - Pixel-Perfect Rendering
-      - Multi-Resolution Scaling
-      - Layout Grid Management
-      - Visual Quality Assurance
-      - Cross-Device Compatibility
-      - Visual Fidelity Optimization
-      
-  - name: rn-game-fighter-agent
-    description: React Native game mechanics, combat systems, and battle physics
-    file: agents/RNGameFighterAgent.md
-    capabilities:
-      - Battle System Implementation
-      - React Native Game Development
-      - Combat Mechanics
-      - Physics Systems
-      - Animation Control
-      - Input Handling
+      - Character progression design
+      - Avatar customization systems
+      - Evolution mechanics
+      - Reward system design
+      - Visual progression feedback
+      - Gamification psychology
 
 tools:
   - name: read_agent
@@ -188,7 +184,7 @@ tools:
 
 environment:
   NODE_ENV: development
-  AGENT_DIR: ./agents
+  AGENT_DIR: ./.claude/agents
   DEBUG: true
 
 logging:

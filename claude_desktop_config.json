@@ -5,7 +5,16 @@
       "args": ["/Users/seanwinslow/Desktop/16BitFit/16BitFit_App/mcp_server.py"],
       "env": {
         "MCP_CONFIG": "/Users/seanwinslow/Desktop/16BitFit/16BitFit_App/mcp_config.yml",
-        "AGENT_DIR": "/Users/seanwinslow/Desktop/16BitFit/16BitFit_App/agents"
+        "AGENT_DIR": "/Users/seanwinslow/Desktop/16BitFit/16BitFit_App/.claude/agents",
+        "DEBUG": "true",
+        "NODE_ENV": "development"
+      }
+    },
+    "github-mcp": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "your-github-token"
       }
     },
     "supabase-mcp": {
@@ -19,13 +28,6 @@
     "react-native-debugger": {
       "command": "npx",
       "args": ["-y", "@twodoorsdev/react-native-debugger-mcp"]
-    },
-    "github-mcp": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "your-github-token"
-      }
     }
   }
 } 
