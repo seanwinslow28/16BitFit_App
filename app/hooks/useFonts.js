@@ -5,9 +5,6 @@
 
 import * as Font from 'expo-font';
 import { useState, useEffect } from 'react';
-import { 
-  PressStart2P_400Regular 
-} from '@expo-google-fonts/press-start-2p';
 
 export const usePressStart2P = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -16,12 +13,11 @@ export const usePressStart2P = () => {
   useEffect(() => {
     const loadFonts = async () => {
       try {
-        console.log('Starting font loading...');
+        console.log('Starting local font loading...');
         await Font.loadAsync({
-          'PressStart2P': PressStart2P_400Regular,
-          'PressStart2P-Regular': PressStart2P_400Regular,
+          'PressStart2P': require('../assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf'),
         });
-        console.log('Fonts loaded successfully');
+        console.log('Local fonts loaded successfully');
         setFontsLoaded(true);
       } catch (err) {
         console.error('Error loading Press Start 2P font:', err);
@@ -48,7 +44,8 @@ export const usePressStart2P = () => {
 };
 
 // Font style helper
+// Safe pixel font that works regardless of font loading status
 export const pixelFont = {
-  fontFamily: 'PressStart2P',
+  fontFamily: 'PressStart2P', // Will gracefully fallback to system font if not loaded
   letterSpacing: 1,
 };

@@ -98,11 +98,11 @@ export const preloadCommonAssets = async () => {
     { key: 'bg_warehouse', loader: () => require('../assets/Backgrounds/Industrial_Warehouse_at_Dusk.png') },
     
     // Player sprites
-    { key: 'sprite_sean', loader: () => require('../assets/Sprites/Boss Battle Sprite Sheets/Sean_Fighter-Sprite-Sheet.png') },
+    { key: 'sprite_sean', loader: () => require('../assets/Sprites/BossBattleSpriteSheets/Sean_Fighter-Sprite-Sheet.png') },
     
     // Common boss sprites
-    { key: 'sprite_gym_bully', loader: () => require('../assets/Sprites/Boss Battle Sprite Sheets/Gym_Bully-Sprite-Sheet.png') },
-    { key: 'sprite_fit_cat', loader: () => require('../assets/Sprites/Boss Battle Sprite Sheets/Fit_Cat-Sprite-Sheet.png') },
+    { key: 'sprite_gym_bully', loader: () => require('../assets/Sprites/BossBattleSpriteSheets/Gym_Bully-Sprite-Sheet.png') },
+    { key: 'sprite_fit_cat', loader: () => require('../assets/Sprites/BossBattleSpriteSheets/Fit_Cat-Sprite-Sheet.png') },
   ];
 
   await imageCache.preloadImages(commonAssets);

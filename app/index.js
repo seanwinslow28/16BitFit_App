@@ -1,6 +1,7 @@
 import { registerRootComponent } from 'expo';
 
-import App from './App';
+// Use the new V2 app with React Native Game Engine
+import App from './AppV2';
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,

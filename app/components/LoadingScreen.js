@@ -13,7 +13,6 @@ import {
   Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { pixelFont } from '../hooks/useFonts';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -148,12 +147,11 @@ const LoadingScreen = ({
         {/* Loading text */}
         <View style={styles.textContainer}>
           <View style={styles.messageRow}>
-            <Text style={[styles.message, pixelFont]}>{message}</Text>
+            <Text style={[styles.message]}>{message}</Text>
             <View style={styles.dotsContainer}>
               <Animated.Text
                 style={[
                   styles.dot,
-                  pixelFont,
                   { opacity: dotAnim1 },
                 ]}
               >
@@ -162,7 +160,6 @@ const LoadingScreen = ({
               <Animated.Text
                 style={[
                   styles.dot,
-                  pixelFont,
                   { opacity: dotAnim2 },
                 ]}
               >
@@ -171,7 +168,6 @@ const LoadingScreen = ({
               <Animated.Text
                 style={[
                   styles.dot,
-                  pixelFont,
                   { opacity: dotAnim3 },
                 ]}
               >
@@ -181,7 +177,7 @@ const LoadingScreen = ({
           </View>
 
           {subMessage && (
-            <Text style={[styles.subMessage, pixelFont]}>{subMessage}</Text>
+            <Text style={[styles.subMessage]}>{subMessage}</Text>
           )}
 
           {/* Progress bar */}
@@ -195,7 +191,7 @@ const LoadingScreen = ({
                   ]}
                 />
               </View>
-              <Text style={[styles.progressText, pixelFont]}>
+              <Text style={[styles.progressText]}>
                 {Math.round(progress)}%
               </Text>
             </View>
@@ -204,8 +200,8 @@ const LoadingScreen = ({
           {/* Loading tip */}
           {tip && (
             <View style={styles.tipContainer}>
-              <Text style={[styles.tipLabel, pixelFont]}>TIP:</Text>
-              <Text style={[styles.tipText, pixelFont]}>{tip}</Text>
+              <Text style={[styles.tipLabel]}>TIP:</Text>
+              <Text style={[styles.tipText]}>{tip}</Text>
             </View>
           )}
         </View>
@@ -258,6 +254,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.dark,
     letterSpacing: 2,
+    fontFamily: 'PressStart2P',
   },
 
   dotsContainer: {
@@ -269,6 +266,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.dark,
     letterSpacing: 2,
+    fontFamily: 'PressStart2P',
   },
 
   subMessage: {
@@ -277,6 +275,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     marginTop: 8,
     opacity: 0.8,
+    fontFamily: 'PressStart2P',
   },
 
   progressContainer: {
@@ -306,6 +305,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: COLORS.dark,
     letterSpacing: 1,
+    fontFamily: 'PressStart2P',
   },
 
   tipContainer: {
@@ -320,6 +320,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     marginBottom: 4,
     textAlign: 'center',
+    fontFamily: 'PressStart2P',
   },
 
   tipText: {
@@ -329,6 +330,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 14,
     opacity: 0.8,
+    fontFamily: 'PressStart2P',
   },
 });
 

@@ -504,11 +504,11 @@ const PhaserWebView = ({
     try {
       // Define assets to load
       const assetsToLoad = [
-        { key: 'sean_fighter', path: require('../assets/Sprites/Boss Battle Sprite Sheets/Sean_Fighter-Sprite-Sheet.png') },
-        { key: 'gym_bully', path: require('../assets/Sprites/Boss Battle Sprite Sheets/Gym_Bully-Sprite-Sheet.png') },
-        { key: 'fit_cat', path: require('../assets/Sprites/Boss Battle Sprite Sheets/Fit_Cat-Sprite-Sheet.png') },
-        { key: 'buff_mage', path: require('../assets/Sprites/Boss Battle Sprite Sheets/Buff_Mage-Sprite-Sheet.png') },
-        { key: 'rookie_ryu', path: require('../assets/Sprites/Boss Battle Sprite Sheets/Rookie_Ryu-Sprite-Sheet.png') },
+        { key: 'sean_fighter', path: require('../assets/Sprites/BossBattleSpriteSheets/Sean_Fighter-Sprite-Sheet.png') },
+        { key: 'gym_bully', path: require('../assets/Sprites/BossBattleSpriteSheets/Gym_Bully-Sprite-Sheet.png') },
+        { key: 'fit_cat', path: require('../assets/Sprites/BossBattleSpriteSheets/Fit_Cat-Sprite-Sheet.png') },
+        { key: 'buff_mage', path: require('../assets/Sprites/BossBattleSpriteSheets/Buff_Mage-Sprite-Sheet.png') },
+        { key: 'rookie_ryu', path: require('../assets/Sprites/BossBattleSpriteSheets/Rookie_Ryu-Sprite-Sheet.png') },
         { key: 'dojo_bg', path: require('../assets/Backgrounds/Tranquil_Dojo_Backround.png') },
         { key: 'warehouse_bg', path: require('../assets/Backgrounds/Industrial_Warehouse_at_Dusk.png') },
         { key: 'main_bg', path: require('../assets/Backgrounds/Main_Background.png') },

@@ -26,11 +26,11 @@ const FLOOR_Y = BATTLE_AREA_HEIGHT - 150; // Raise characters above floor
 // Use cached sprite assets for better performance
 const getSpriteAsset = (key) => {
   const assetMap = {
-    sean_fighter: () => require('../assets/Sprites/Boss Battle Sprite Sheets/Sean_Fighter-Sprite-Sheet.png'),
-    gym_bully: () => require('../assets/Sprites/Boss Battle Sprite Sheets/Gym_Bully-Sprite-Sheet.png'),
-    fit_cat: () => require('../assets/Sprites/Boss Battle Sprite Sheets/Fit_Cat-Sprite-Sheet.png'),
-    buff_mage: () => require('../assets/Sprites/Boss Battle Sprite Sheets/Buff_Mage-Sprite-Sheet.png'),
-    rookie_ryu: () => require('../assets/Sprites/Boss Battle Sprite Sheets/Rookie_Ryu-Sprite-Sheet.png'),
+    sean_fighter: () => require('../assets/Sprites/BossBattleSpriteSheets/Sean_Fighter-Sprite-Sheet.png'),
+    gym_bully: () => require('../assets/Sprites/BossBattleSpriteSheets/Gym_Bully-Sprite-Sheet.png'),
+    fit_cat: () => require('../assets/Sprites/BossBattleSpriteSheets/Fit_Cat-Sprite-Sheet.png'),
+    buff_mage: () => require('../assets/Sprites/BossBattleSpriteSheets/Buff_Mage-Sprite-Sheet.png'),
+    rookie_ryu: () => require('../assets/Sprites/BossBattleSpriteSheets/Rookie_Ryu-Sprite-Sheet.png'),
   };
   
   return imageCache.getImage(`sprite_${key}`, assetMap[key]);

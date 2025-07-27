@@ -15,8 +15,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-import { pixelFont } from '../hooks/useFonts';
-import SoundFXManager from '../services/SoundFXManager';
+// Removed unused imports
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -27,6 +26,7 @@ const COLORS = {
   yellow: '#F7D51D',
   red: '#E53935',
   blue: '#3498db',
+  white: '#FFFFFF',
 };
 
 class ErrorBoundary extends React.Component {
@@ -52,8 +52,8 @@ class ErrorBoundary extends React.Component {
       errorInfo,
     });
     
-    // Play error sound
-    SoundFXManager.playError();
+    // Play error sound (disabled for now)
+    // SoundFXManager.playError();
     
     // Log to crash reporting service
     if (this.props.onError) {
@@ -95,12 +95,12 @@ class ErrorBoundary extends React.Component {
 
             {/* Error Message */}
             <View style={styles.messageContainer}>
-              <Text style={[styles.title, pixelFont]}>ERROR!</Text>
-              <Text style={[styles.subtitle, pixelFont]}>
+              <Text style={styles.title}>ERROR!</Text>
+              <Text style={styles.subtitle}>
                 SOMETHING WENT WRONG
               </Text>
               
-              <Text style={[styles.errorMessage, pixelFont]}>
+              <Text style={styles.errorMessage}>
                 {this.state.error && this.state.error.toString()}
               </Text>
             </View>
@@ -111,7 +111,7 @@ class ErrorBoundary extends React.Component {
                 style={[styles.button, styles.resetButton]}
                 onPress={this.handleReset}
               >
-                <Text style={[styles.buttonText, pixelFont]}>
+                <Text style={styles.buttonText}>
                   RESTART APP
                 </Text>
               </TouchableOpacity>
@@ -120,7 +120,7 @@ class ErrorBoundary extends React.Component {
                 style={[styles.button, styles.detailsButton]}
                 onPress={this.handleShowDetails}
               >
-                <Text style={[styles.buttonText, pixelFont]}>
+                <Text style={styles.buttonText}>
                   {this.state.showDetails ? 'HIDE DETAILS' : 'SHOW DETAILS'}
                 </Text>
               </TouchableOpacity>
@@ -129,10 +129,10 @@ class ErrorBoundary extends React.Component {
             {/* Error Details */}
             {this.state.showDetails && (
               <ScrollView style={styles.detailsContainer}>
-                <Text style={[styles.detailsTitle, pixelFont]}>
+                <Text style={styles.detailsTitle}>
                   TECHNICAL DETAILS:
                 </Text>
-                <Text style={[styles.detailsText, pixelFont]}>
+                <Text style={styles.detailsText}>
                   {this.state.errorInfo && this.state.errorInfo.componentStack}
                 </Text>
               </ScrollView>
@@ -140,16 +140,16 @@ class ErrorBoundary extends React.Component {
 
             {/* Help Text */}
             <View style={styles.helpContainer}>
-              <Text style={[styles.helpText, pixelFont]}>
+              <Text style={styles.helpText}>
                 If this keeps happening, try:
               </Text>
-              <Text style={[styles.helpItem, pixelFont]}>
+              <Text style={styles.helpItem}>
                 • Force close and restart the app
               </Text>
-              <Text style={[styles.helpItem, pixelFont]}>
+              <Text style={styles.helpItem}>
                 • Check for app updates
               </Text>
-              <Text style={[styles.helpItem, pixelFont]}>
+              <Text style={styles.helpItem}>
                 • Clear app cache
               </Text>
             </View>
@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     letterSpacing: 3,
     marginBottom: 8,
+    fontFamily: 'PressStart2P',
   },
 
   subtitle: {
@@ -202,6 +203,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     marginBottom: 16,
     opacity: 0.9,
+    fontFamily: 'PressStart2P',
   },
 
   errorMessage: {
@@ -210,6 +212,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     textAlign: 'center',
     opacity: 0.8,
+    fontFamily: 'PressStart2P',
   },
 
   buttonContainer: {
@@ -239,6 +242,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: COLORS.dark,
     letterSpacing: 1,
+    fontFamily: 'PressStart2P',
   },
 
   detailsContainer: {
@@ -255,6 +259,7 @@ const styles = StyleSheet.create({
     color: COLORS.yellow,
     letterSpacing: 1,
     marginBottom: 8,
+    fontFamily: 'PressStart2P',
   },
 
   detailsText: {
@@ -263,6 +268,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     lineHeight: 12,
     opacity: 0.8,
+    fontFamily: 'PressStart2P',
   },
 
   helpContainer: {
@@ -277,6 +283,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     letterSpacing: 0.5,
     marginBottom: 8,
+    fontFamily: 'PressStart2P',
   },
 
   helpItem: {
@@ -285,6 +292,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     marginBottom: 4,
     opacity: 0.8,
+    fontFamily: 'PressStart2P',
   },
 });
 

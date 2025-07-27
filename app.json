@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "16BitFit",
+    "slug": "16bitfit",
+    "version": "1.0.0",
+    "platforms": ["ios", "android"],
+    "orientation": "portrait",
+    "icon": "./app/assets/images/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./app/assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#9BBD0F"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.sixteenbitfit.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./app/assets/images/adaptive-icon.png",
+        "backgroundColor": "#0F380F"
+      },
+      "package": "com.sixteenbitfit.app"
+    },
+    "web": {
+      "favicon": "./app/assets/images/favicon.png"
+    }
+  }
+}

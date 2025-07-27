@@ -13,7 +13,7 @@ if (__DEV__) {
 }
 
 import { registerRootComponent } from 'expo';
-import App from './app/App';
+import App from './App'; // Use the root App.js which imports AppV2
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,

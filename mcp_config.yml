@@ -7,19 +7,78 @@ server:
   port: 5000
   
 agents:
-  - name: phaser-fighter-agent
-    description: Handles Phaser.js game mechanics, combat systems, and battle physics
-    file: agents/phaser-fighter-agent.md
+  - name: orchestrator-agent
+    description: Master Coordinator for all tasks and communications among specialized agents
+    file: agents/orchestrator_agent.md
     capabilities:
-      - Battle System Implementation
-      - Phaser.js Game Development
-      - Combat Mechanics
-      - Physics System
-      - Animation Control
-      - Input Handling
+      - Task Decomposition
+      - Agent Delegation
+      - Progress Monitoring
+      - Issue Detection & Resolution
+      - Workflow Management
+      
+  - name: planner-agent
+    description: Strategic planning and architecture design for 16BitFit development
+    file: agents/planner_agent.md
+    capabilities:
+      - Project Planning
+      - Architecture Design
+      - Requirements Analysis
+      - Resource Management
+      - Timeline Management
+      
+  - name: developer-agent
+    description: Principal developer for implementing detailed tasks with clean, structured code
+    file: agents/developer_agent.md
+    capabilities:
+      - Feature Implementation
+      - Code Integration
+      - Performance Optimization
+      - Documentation
+      - React Native Development
+      
+  - name: code-review-agent
+    description: Code quality assurance and review specialist
+    file: agents/code_review_agent.md
+    capabilities:
+      - Code Quality Analysis
+      - Security Review
+      - Performance Review
+      - Best Practices Enforcement
+      - Technical Debt Management
+      
+  - name: validator-agent
+    description: Testing and validation specialist for ensuring code reliability
+    file: agents/validator_agent.md
+    capabilities:
+      - Test Strategy Design
+      - Quality Assurance
+      - Bug Detection
+      - Validation Frameworks
+      - Test Automation
+      
+  - name: test-runner-agent
+    description: Automated testing execution and continuous integration specialist
+    file: agents/test_runner_agent.md
+    capabilities:
+      - Test Execution
+      - CI/CD Pipeline Management
+      - Test Reporting
+      - Performance Testing
+      - Integration Testing
+      
+  - name: analytics-insights-agent
+    description: User behavior analytics and LLM evaluation specialist
+    file: agents/analytics_insights_agent.md
+    capabilities:
+      - User Behavior Analytics
+      - PostHog Integration
+      - LLM Performance Monitoring
+      - Langsmith MCP Integration
+      - Insights Generation
       
   - name: ui-overlay-agent
-    description: Manages UI overlays, GameBoy-style interfaces, and display systems
+    description: GameBoy-style UI interfaces and overlay systems manager
     file: agents/ui-overlay-agent.md
     capabilities:
       - UI Layout Management
@@ -29,9 +88,42 @@ agents:
       - State Management
       - Visual Effects
       
-  - name: enemy-ai-agent
-    description: Controls enemy AI behavior, battle logic, and difficulty scaling
-    file: agents/enemy-ai-agent.md
+  - name: meta-systems-agent
+    description: Social features, cloud sync, and final system integration specialist
+    file: agents/meta-systems-agent.md
+    capabilities:
+      - Guild & Social Systems
+      - Cloud Sync Integration
+      - Achievement Systems
+      - Sound & Haptics
+      - Supabase Integration
+      - Onboarding Flow
+      
+  - name: gamestate-agent-rnge
+    description: Robust state management and progression systems for React Native Game Engine
+    file: agents/GameStateAgent_RNGE.md
+    capabilities:
+      - Finite State Machine Design
+      - Save/Load Systems
+      - Scene Transition Management
+      - Progression Logic
+      - Multi-Agent State Coordination
+      - Game Flow Control
+      
+  - name: story-narrative-agent-rnge
+    description: Advanced narrative design and story integration for game experience
+    file: agents/StoryNarrativeAgent_RNGE.md
+    capabilities:
+      - Interactive Dialogue Systems
+      - Character Development
+      - Cutscene Design
+      - Narrative-Gameplay Integration
+      - Motivational Storytelling
+      - Branching Story Logic
+      
+  - name: enemy-ai-agent-rnge
+    description: AI behavior, battle logic, and difficulty scaling for game enemies
+    file: agents/EnemyAIAgent_RNGE.md
     capabilities:
       - AI Behavior Trees
       - Battle Strategy
@@ -40,9 +132,9 @@ agents:
       - Decision Making
       - Performance Optimization
       
-  - name: asset-loader-agent
+  - name: asset-loader-agent-rnge
     description: Elite asset loading and preloader system for mobile optimization
-    file: agents/asset-loader-agent.md
+    file: agents/AssetLoaderAgent_RNGE.md
     capabilities:
       - Modular Asset Loading
       - Mobile-Optimized Preloaders
@@ -51,62 +143,38 @@ agents:
       - Multi-Agent Asset Coordination
       - Performance Monitoring
       
-  - name: mobile-performance-agent
-    description: Advanced mobile optimization and performance monitoring
-    file: agents/mobile-performance-agent.md
+  - name: mobile-performance-agent-rnge
+    description: Advanced mobile optimization and performance monitoring specialist
+    file: agents/MobilePerformanceAgent_RNGE.md
     capabilities:
       - FPS Profiling and Monitoring
-      - Memory Management and Cleanup
+      - Memory Management
       - Object Pooling Systems
-      - Performance Optimization Utilities
+      - Performance Optimization
       - Mobile Device Compatibility
       - Real-Time Performance Analysis
       
-  - name: story-narrative-agent
-    description: Advanced narrative design and story integration
-    file: agents/story-narrative-agent.md
+  - name: pixel-art-scaler-agent-rnge
+    description: Precision visual fidelity and pixel-perfect scaling systems
+    file: agents/PixelArtScalerAgent_RNGE.md
     capabilities:
-      - Interactive Dialogue Systems
-      - Character Development and Relationships
-      - Cutscene Design and Direction
-      - Narrative-Gameplay Integration
-      - Motivational Storytelling
-      - Branching Story Logic
-      
-  - name: pixel-art-scaler-agent
-    description: Precision visual fidelity and scaling systems
-    file: agents/pixel-art-scaler-agent.md
-    capabilities:
-      - Pixel-Perfect Rendering Systems
+      - Pixel-Perfect Rendering
       - Multi-Resolution Scaling
       - Layout Grid Management
       - Visual Quality Assurance
       - Cross-Device Compatibility
       - Visual Fidelity Optimization
       
-  - name: game-state-agent
-    description: Robust state management and progression systems
-    file: agents/game-state-agent.md
+  - name: rn-game-fighter-agent
+    description: React Native game mechanics, combat systems, and battle physics
+    file: agents/RNGameFighterAgent.md
     capabilities:
-      - Finite State Machine Design
-      - Save/Load System Implementation
-      - Scene Transition Management
-      - Progression Logic and Unlocks
-      - Multi-Agent State Coordination
-      - Game Flow Control
-      
-  - name: meta-systems-agent
-    description: Final-phase systems integration agent for social features, cloud sync, and polish
-    file: agents/meta-systems-agent.md
-    capabilities:
-      - Guild & Social Systems
-      - Cloud Sync Specialist
-      - Achievement & Reward Designer
-      - Sound & Haptics Coordinator
-      - UX Finisher
-      - Supabase Integration
-      - Onboarding Flow Management
-      - Performance Polish
+      - Battle System Implementation
+      - React Native Game Development
+      - Combat Mechanics
+      - Physics Systems
+      - Animation Control
+      - Input Handling
 
 tools:
   - name: read_agent

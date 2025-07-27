@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # MCP Proxy for sandboxed server management
+  mcp-proxy:
+    image: ghcr.io/tbxark/mcp-proxy:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/mcp-proxy-config.json:/config/config.json:ro
+    environment:
+      - UV_CACHE_DIR=/cache/uv
+      - npm_config_cache=/cache/npm
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+  # React Native MCP Server
+  react-native-mcp:
+    image: node:18-alpine
+    working_dir: /app
+    command: npx react-native-mcp
+    volumes:
+      - .:/app:ro
+      - react-native-cache:/root/.npm
+    ports:
+      - "3001:3000"
+    networks:
+      - mcp-network
+    restart: unless-stopped
+
+  # Supabase MCP Server
+  supabase-mcp:
+    image: node:18-alpine
+    working_dir: /app
+    command: npx @supabase/mcp-server-supabase
+    environment:
+      - SUPABASE_PROJECT_ID=${SUPABASE_PROJECT_ID}
+      - SUPABASE_ACCESS_TOKEN=${SUPABASE_ACCESS_TOKEN}
+    volumes:
+      - supabase-cache:/root/.npm
+    ports:
+      - "3002:3000"
+    networks:
+      - mcp-network
+    restart: unless-stopped
+
+  # React Native Debugger MCP
+  rn-debugger-mcp:
+    image: node:18-alpine
+    working_dir: /app
+    command: npx -y @twodoorsdev/react-native-debugger-mcp
+    volumes:
+      - debugger-cache:/root/.npm
+    ports:
+      - "3003:3000"
+    networks:
+      - mcp-network
+    restart: unless-stopped
+
+  # Mobile Testing MCP
+  mobile-next-mcp:
+    image: node:18-alpine
+    working_dir: /app
+    command: npx -y @mobilenext/mobile-mcp@latest
+    volumes:
+      - mobile-cache:/root/.npm
+    ports:
+      - "3004:3000"
+    networks:
+      - mcp-network
+    restart: unless-stopped
+
+volumes:
+  react-native-cache:
+  supabase-cache:
+  debugger-cache:
+  mobile-cache:
+
+networks:
+  mcp-network:
+    driver: bridge 

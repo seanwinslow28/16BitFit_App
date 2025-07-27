@@ -129,27 +129,27 @@ export default class BootScene extends Phaser.Scene {
   
   loadNormalAssets() {
     // Load character sprite sheets (4x4 grid, 64x64 per frame)
-    this.load.spritesheet('sean_fighter', 'Sprites/Boss Battle Sprite Sheets/Sean_Fighter-Sprite-Sheet.png', {
+    this.load.spritesheet('sean_fighter', 'Sprites/BossBattleSpriteSheets/Sean_Fighter-Sprite-Sheet.png', {
       frameWidth: 64,
       frameHeight: 64,
     });
     
-    this.load.spritesheet('rookie_ryu', 'Sprites/Boss Battle Sprite Sheets/Rookie_Ryu-Sprite-Sheet.png', {
+    this.load.spritesheet('rookie_ryu', 'Sprites/BossBattleSpriteSheets/Rookie_Ryu-Sprite-Sheet.png', {
       frameWidth: 64,
       frameHeight: 64,
     });
     
-    this.load.spritesheet('gym_bully', 'Sprites/Boss Battle Sprite Sheets/Gym_Bully-Sprite-Sheet.png', {
+    this.load.spritesheet('gym_bully', 'Sprites/BossBattleSpriteSheets/Gym_Bully-Sprite-Sheet.png', {
       frameWidth: 64,
       frameHeight: 64,
     });
     
-    this.load.spritesheet('fit_cat', 'Sprites/Boss Battle Sprite Sheets/Fit_Cat-Sprite-Sheet.png', {
+    this.load.spritesheet('fit_cat', 'Sprites/BossBattleSpriteSheets/Fit_Cat-Sprite-Sheet.png', {
       frameWidth: 64,
       frameHeight: 64,
     });
     
-    this.load.spritesheet('buff_mage', 'Sprites/Boss Battle Sprite Sheets/Buff_Mage-Sprite-Sheet.png', {
+    this.load.spritesheet('buff_mage', 'Sprites/BossBattleSpriteSheets/Buff_Mage-Sprite-Sheet.png', {
       frameWidth: 64,
       frameHeight: 64,
     });

@@ -1,8 +1,8 @@
 /**
  * 16BitFit Root App Entry Point
- * This file imports and exports the main App component from the app directory
+ * Updated to use the new AppV2 implementation with React Native Game Engine
  */
 
-import App from './app/App';
+import AppV2 from './app/AppV2';
 
-export default App; 
+export default AppV2; 

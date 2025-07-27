@@ -3,14 +3,14 @@
  * Handles Press Start 2P font loading and fallbacks
  */
 
-import { useFonts, PressStart2P_400Regular } from '@expo-google-fonts/press-start-2p';
+import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 import { Platform } from 'react-native';
 
 // Font family constants
 export const FONT_FAMILY = {
-  primary: 'PressStart2P_400Regular',
+  primary: 'PressStart2P',
   fallback: Platform.select({
     ios: 'Courier New',
     android: 'monospace',
