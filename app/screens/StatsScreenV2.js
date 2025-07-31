@@ -1,128 +1,106 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useCharacter } from '../contexts/CharacterContext';
+import { Colors, Typography, Spacing, Effects } from '../constants/DesignSystem';
+
+// Import our components
+import { StatCard, ScreenHeader } from '../components/home';
 
 const StatsScreenV2 = () => {
-  const { characterStats, totalWorkouts, streak, achievements } = useCharacter();
-  
+  const { characterStats } = useCharacter();
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>STATS</Text>
-      </View>
-      
-      <View style={styles.statsContainer}>
-        <View style={styles.statRow}>
-          <Text style={styles.statLabel}>HEALTH</Text>
-          <View style={styles.statBarContainer}>
-            <View style={[styles.statBar, { width: `${characterStats?.health || 100}%`, backgroundColor: '#4CAF50' }]} />
-          </View>
-          <Text style={styles.statValue}>{characterStats?.health || 100}/100</Text>
-        </View>
+    <View style={styles.container}>
+      {/* Screen Header */}
+      <ScreenHeader title="STATS" />
         
-        <View style={styles.statRow}>
-          <Text style={styles.statLabel}>STRENGTH</Text>
-          <View style={styles.statBarContainer}>
-            <View style={[styles.statBar, { width: `${characterStats?.strength || 50}%`, backgroundColor: '#FF6B6B' }]} />
-          </View>
-          <Text style={styles.statValue}>{characterStats?.strength || 50}/100</Text>
+      <ScrollView style={styles.scrollContainer}>
+        {/* Main Stats Container */}
+        <View style={styles.statsContainer}>
+          <StatCard
+            label="HEALTH"
+            value={characterStats?.health || 100}
+            maxValue={100}
+            color='#4CAF50' // Green
+          />
+          <StatCard
+            label="STRENGTH"
+            value={characterStats?.strength || 50}
+            maxValue={100}
+            color='#FF6B6B' // Red
+          />
+          <StatCard
+            label="STAMINA"
+            value={characterStats?.stamina || 50}
+            maxValue={100}
+            color='#4ECDC4' // Teal
+          />
+          <StatCard
+            label="SPEED"
+            value={characterStats?.speed || 50}
+            maxValue={100}
+            color='#FFD700' // Yellow
+          />
         </View>
-        
-        <View style={styles.statRow}>
-          <Text style={styles.statLabel}>STAMINA</Text>
-          <View style={styles.statBarContainer}>
-            <View style={[styles.statBar, { width: `${characterStats?.stamina || 50}%`, backgroundColor: '#4ECDC4' }]} />
+          
+        {/* Level and Experience Section */}
+        <View style={styles.levelContainer}>
+          <Text style={styles.levelLabel}>LEVEL</Text>
+          <Text style={styles.levelValue}>{characterStats?.level || 1}</Text>
+          <View style={styles.expBar}>
+            <Text style={styles.expLabel}>EXP: {characterStats?.experience || 0}</Text>
           </View>
-          <Text style={styles.statValue}>{characterStats?.stamina || 50}/100</Text>
         </View>
-        
-        <View style={styles.statRow}>
-          <Text style={styles.statLabel}>SPEED</Text>
-          <View style={styles.statBarContainer}>
-            <View style={[styles.statBar, { width: `${characterStats?.speed || 50}%`, backgroundColor: '#FFD700' }]} />
-          </View>
-          <Text style={styles.statValue}>{characterStats?.speed || 50}/100</Text>
-        </View>
-      </View>
-      
-      <View style={styles.levelContainer}>
-        <Text style={styles.levelLabel}>LEVEL</Text>
-        <Text style={styles.levelValue}>{characterStats?.level || 1}</Text>
-        <Text style={styles.expLabel}>EXP: {characterStats?.experience || 0}</Text>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#9BBD0F',
+    backgroundColor: Colors.screen.lightestGreen,
   },
-  header: {
-    paddingTop: 60,
-    paddingBottom: 20,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontFamily: 'PressStart2P',
-    color: '#0F380F',
+  scrollContainer: {
+    flex: 1,
   },
   statsContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-  },
-  statRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  statLabel: {
-    width: 100,
-    fontSize: 12,
-    fontFamily: 'PressStart2P',
-    color: '#0F380F',
-  },
-  statBarContainer: {
-    flex: 1,
-    height: 20,
-    backgroundColor: '#0F380F',
-    borderRadius: 10,
-    marginHorizontal: 10,
-    overflow: 'hidden',
-  },
-  statBar: {
-    height: '100%',
-    borderRadius: 10,
-  },
-  statValue: {
-    width: 80,
-    fontSize: 10,
-    fontFamily: 'PressStart2P',
-    color: '#0F380F',
-    textAlign: 'right',
+    padding: Spacing.lg,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: Spacing.md,
   },
   levelContainer: {
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: Spacing.xl,
+    paddingHorizontal: Spacing.lg,
   },
   levelLabel: {
-    fontSize: 16,
-    fontFamily: 'PressStart2P',
-    color: '#0F380F',
-    marginBottom: 10,
+    ...Typography.panelHeader,
+    color: Colors.screen.darkestGreen,
+    marginBottom: Spacing.sm,
   },
   levelValue: {
-    fontSize: 36,
-    fontFamily: 'PressStart2P',
-    color: '#FFD700',
-    marginBottom: 10,
+    ...Typography.titleExtraLarge,
+    fontSize: 32,
+    color: Colors.shell.accentBlue,
+    textShadowColor: Colors.screen.darkestGreen,
+    textShadowOffset: { width: 2, height: 2 },
+    marginBottom: Spacing.md,
+  },
+  expBar: {
+    width: '100%',
+    backgroundColor: Colors.screen.darkGreen,
+    padding: Spacing.md,
+    borderWidth: 2,
+    borderColor: Colors.screen.darkestGreen,
+    alignItems: 'center',
+    borderRadius: 4,
+    ...Effects.panelShadow,
   },
   expLabel: {
-    fontSize: 12,
-    fontFamily: 'PressStart2P',
-    color: '#0F380F',
+    ...Typography.bodyText,
+    color: Colors.screen.lightestGreen,
   },
 });
 

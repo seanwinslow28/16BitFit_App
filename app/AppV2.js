@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StatusBar, View, Text, TouchableOpacity } from 'react-native';
+import { StatusBar, View, Text } from 'react-native';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { preloadAssets } from './utils/assetPreloader';
@@ -21,6 +21,7 @@ import { GuestOnboardingScreen } from './screens/onboarding';
 // Import V2 screens that we know exist
 import StatsScreenV2 from './screens/StatsScreenV2';
 import SocialScreenV2 from './screens/SocialScreenV2';
+import BattleMenuScreen from './screens/BattleMenuScreen';
 
 // Services
 import { SupabaseProvider } from './services/SupabaseService';
@@ -122,78 +123,7 @@ function BattleStackNavigator() {
   );
 }
 
-// Simple battle menu screen
-function BattleMenuScreen({ navigation }) {
-  return (
-    <View style={{ 
-      flex: 1, 
-      backgroundColor: '#9BBD0F',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}>
-      <Text style={{
-        fontSize: 24,
-        fontFamily: 'PressStart2P',
-        color: '#0F380F',
-        marginBottom: 40,
-      }}>
-        BATTLE MODE
-      </Text>
-      
-      <View style={{ gap: 20 }}>
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#0F380F',
-            paddingVertical: 20,
-            paddingHorizontal: 40,
-            borderRadius: 10,
-          }}
-          onPress={() => navigation.navigate('BattleScreen')}
-        >
-          <Text
-            style={{
-              color: '#9BBD0F',
-              fontSize: 14,
-              fontFamily: 'PressStart2P',
-            }}
-          >
-            QUICK BATTLE
-          </Text>
-        </TouchableOpacity>
-        
-        <View
-          style={{
-            backgroundColor: '#556B2F',
-            paddingVertical: 20,
-            paddingHorizontal: 40,
-            borderRadius: 10,
-            opacity: 0.5,
-          }}
-        >
-          <Text
-            style={{
-              color: '#9BBD0F',
-              fontSize: 14,
-              fontFamily: 'PressStart2P',
-            }}
-          >
-            BOSS FIGHT
-          </Text>
-          <Text
-            style={{
-              color: '#9BBD0F',
-              fontSize: 8,
-              fontFamily: 'PressStart2P',
-              marginTop: 5,
-            }}
-          >
-            COMING SOON
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
-}
+// BattleMenuScreen has been moved to ./screens/BattleMenuScreen.js
 
 // Root stack navigator
 function RootNavigator() {
