@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>16BitFit Combat System Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #1a1a1a;
+            font-family: Arial, sans-serif;
+        }
+        #game-container {
+            width: 100%;
+            max-width: 960px;
+            aspect-ratio: 16/9;
+            position: relative;
+        }
+        #controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        .control-group {
+            margin-bottom: 10px;
+        }
+        h3 {
+            margin: 0 0 5px 0;
+            color: #ffff00;
+        }
+        .combo-list {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="controls">
+            <div class="control-group">
+                <h3>Movement</h3>
+                ← → : Walk<br>
+                ↑ : Jump<br>
+                ↓ : Crouch
+            </div>
+            <div class="control-group">
+                <h3>Attacks</h3>
+                J : Light Punch (LP)<br>
+                K : Medium Punch (MP)<br>
+                L : Heavy Punch (HP)<br>
+                U : Light Kick (LK)<br>
+                I : Medium Kick (MK)<br>
+                O : Heavy Kick (HK)
+            </div>
+            <div class="control-group">
+                <h3>Defense</h3>
+                Hold ← : Block<br>
+                J+U : Throw
+            </div>
+            <div class="combo-list">
+                <h3>Special Moves</h3>
+                ↓ ↘ → + Punch : Hadouken<br>
+                → ↓ ↘ + Punch : Shoryuken<br>
+                ↓ ↙ ← + Kick : Tatsumaki<br>
+                ↓ ↘ → ↓ ↘ → + Punch : Super
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.min.js"></script>
+    <script>
+        // Mock bridge for testing
+        window.bridge = {
+            send: (event, data) => console.log('Bridge:', event, data),
+            on: (event, callback) => {},
+            off: (event, callback) => {}
+        };
+
+        // Test configuration
+        const config = {
+            type: Phaser.AUTO,
+            parent: 'game-container',
+            width: 960,
+            height: 540,
+            backgroundColor: '#2a2a4a',
+            scale: {
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH
+            },
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 0 },
+                    debug: true
+                }
+            },
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
+        };
+
+        let player, opponent;
+        let combatSystem, bossAI;
+        let cursors, keys;
+
+        function preload() {
+            // Create placeholder graphics
+            this.load.image('fighter', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==');
+        }
+
+        function create() {
+            // Import combat system (simplified for testing)
+            this.combatSystem = {
+                frameData: new Map(),
+                superMeters: { p1: 0, p2: 0 },
+                superMeterMax: 100,
+                stunTimers: { p1: 0, p2: 0 },
+                comboCounts: { p1: 0, p2: 0 },
+                update: function() {
+                    if (this.stunTimers.p1 > 0) this.stunTimers.p1--;
+                    if (this.stunTimers.p2 > 0) this.stunTimers.p2--;
+                }
+            };
+
+            // Create ground
+            const ground = this.add.rectangle(480, 500, 960, 100, 0x4a4a6a);
+
+            // Create fighters (simplified)
+            player = this.add.rectangle(200, 400, 60, 120, 0x00ff00);
+            player.health = 100;
+            player.maxHealth = 100;
+            player.facing = 'right';
+            player.velocity = { x: 0, y: 0 };
+            player.grounded = true;
+
+            opponent = this.add.rectangle(760, 400, 60, 120, 0xff0000);
+            opponent.health = 100;
+            opponent.maxHealth = 100;
+            opponent.facing = 'left';
+            opponent.velocity = { x: 0, y: 0 };
+            opponent.grounded = true;
+
+            // Create UI
+            this.add.text(10, 10, 'PLAYER', { font: '20px Arial', fill: '#00ff00' });
+            this.add.text(850, 10, 'CPU', { font: '20px Arial', fill: '#ff0000' });
+
+            // Health bars
+            this.playerHealthBg = this.add.rectangle(10, 40, 204, 24, 0x000000);
+            this.playerHealthBg.setOrigin(0, 0);
+            this.playerHealth = this.add.rectangle(12, 42, 200, 20, 0x00ff00);
+            this.playerHealth.setOrigin(0, 0);
+
+            this.opponentHealthBg = this.add.rectangle(950, 40, 204, 24, 0x000000);
+            this.opponentHealthBg.setOrigin(1, 0);
+            this.opponentHealth = this.add.rectangle(948, 42, 200, 20, 0xff0000);
+            this.opponentHealth.setOrigin(1, 0);
+
+            // Super meters
+            this.playerSuperBg = this.add.rectangle(10, 70, 204, 14, 0x003366);
+            this.playerSuperBg.setOrigin(0, 0);
+            this.playerSuper = this.add.rectangle(12, 72, 0, 10, 0x00ffff);
+            this.playerSuper.setOrigin(0, 0);
+
+            this.opponentSuperBg = this.add.rectangle(950, 70, 204, 14, 0x003366);
+            this.opponentSuperBg.setOrigin(1, 0);
+            this.opponentSuper = this.add.rectangle(948, 72, 0, 10, 0x00ffff);
+            this.opponentSuper.setOrigin(1, 0);
+
+            // Combo counter
+            this.comboText = this.add.text(10, 100, '', { 
+                font: 'bold 24px Arial', 
+                fill: '#ffff00',
+                stroke: '#000000',
+                strokeThickness: 3
+            });
+
+            // Timer
+            this.timerText = this.add.text(480, 30, '99', {
+                font: 'bold 48px Arial',
+                fill: '#ffffff'
+            });
+            this.timerText.setOrigin(0.5, 0.5);
+
+            // Controls
+            cursors = this.input.keyboard.createCursorKeys();
+            keys = this.input.keyboard.addKeys('W,A,S,D,J,K,L,U,I,O,P');
+
+            // Start message
+            const startText = this.add.text(480, 270, 'ROUND 1\nFIGHT!', {
+                font: 'bold 64px Arial',
+                fill: '#ffffff',
+                stroke: '#ff0000',
+                strokeThickness: 6,
+                align: 'center'
+            });
+            startText.setOrigin(0.5, 0.5);
+
+            this.tweens.add({
+                targets: startText,
+                scale: { from: 0, to: 1 },
+                alpha: { from: 1, to: 0 },
+                duration: 2000,
+                ease: 'Power2',
+                onComplete: () => startText.destroy()
+            });
+
+            // Simple AI behavior
+            this.time.addEvent({
+                delay: 1000,
+                callback: () => {
+                    if (Math.random() < 0.3) {
+                        // Move towards player
+                        if (opponent.x > player.x + 100) {
+                            opponent.velocity.x = -3;
+                        } else if (opponent.x < player.x - 100) {
+                            opponent.velocity.x = 3;
+                        } else {
+                            opponent.velocity.x = 0;
+                            // Attack
+                            if (Math.random() < 0.5) {
+                                this.performAttack(opponent, player, 'punch');
+                            }
+                        }
+                    }
+                },
+                loop: true
+            });
+        }
+
+        function update() {
+            // Update combat system
+            this.combatSystem.update();
+
+            // Player controls
+            if (cursors.left.isDown) {
+                player.velocity.x = -5;
+                player.facing = 'left';
+            } else if (cursors.right.isDown) {
+                player.velocity.x = 5;
+                player.facing = 'right';
+            } else {
+                player.velocity.x *= 0.8;
+            }
+
+            if (cursors.up.isDown && player.grounded) {
+                player.velocity.y = -15;
+                player.grounded = false;
+            }
+
+            // Attack inputs
+            if (Phaser.Input.Keyboard.JustDown(keys.J)) {
+                this.performAttack(player, opponent, 'LP');
+            }
+            if (Phaser.Input.Keyboard.JustDown(keys.K)) {
+                this.performAttack(player, opponent, 'MP');
+            }
+            if (Phaser.Input.Keyboard.JustDown(keys.L)) {
+                this.performAttack(player, opponent, 'HP');
+            }
+
+            // Apply physics
+            [player, opponent].forEach(fighter => {
+                // Gravity
+                if (!fighter.grounded) {
+                    fighter.velocity.y += 0.8;
+                }
+
+                // Update position
+                fighter.x += fighter.velocity.x;
+                fighter.y += fighter.velocity.y;
+
+                // Ground collision
+                if (fighter.y > 400) {
+                    fighter.y = 400;
+                    fighter.velocity.y = 0;
+                    fighter.grounded = true;
+                }
+
+                // Stage bounds
+                fighter.x = Phaser.Math.Clamp(fighter.x, 50, 910);
+            });
+
+            // Update facing
+            if (player.x < opponent.x) {
+                player.setScale(1, 1);
+                opponent.setScale(-1, 1);
+            } else {
+                player.setScale(-1, 1);
+                opponent.setScale(1, 1);
+            }
+
+            // Update UI
+            this.playerHealth.width = (player.health / player.maxHealth) * 200;
+            this.opponentHealth.width = (opponent.health / opponent.maxHealth) * 200;
+            
+            this.playerSuper.width = (this.combatSystem.superMeters.p1 / 100) * 200;
+            this.opponentSuper.width = (this.combatSystem.superMeters.p2 / 100) * 200;
+
+            if (this.combatSystem.comboCounts.p1 > 1) {
+                this.comboText.setText(`${this.combatSystem.comboCounts.p1} HIT COMBO!`);
+            } else {
+                this.comboText.setText('');
+            }
+        }
+
+        // Simple attack system for testing
+        function performAttack(attacker, defender, type) {
+            const distance = Math.abs(attacker.x - defender.x);
+            
+            if (distance < 100) {
+                // Hit!
+                const damage = { LP: 10, MP: 15, HP: 20, punch: 12 }[type] || 10;
+                defender.health = Math.max(0, defender.health - damage);
+                
+                // Knockback
+                const direction = attacker.x < defender.x ? 1 : -1;
+                defender.velocity.x = direction * 8;
+                defender.velocity.y = -3;
+                defender.grounded = false;
+                
+                // Build meter
+                if (attacker === player) {
+                    this.combatSystem.superMeters.p1 += damage * 0.5;
+                    this.combatSystem.comboCounts.p1++;
+                    
+                    // Reset combo after delay
+                    this.time.delayedCall(1000, () => {
+                        this.combatSystem.comboCounts.p1 = 0;
+                    });
+                }
+                
+                // Hit effect
+                const hitEffect = this.add.circle(
+                    (attacker.x + defender.x) / 2,
+                    (attacker.y + defender.y) / 2,
+                    20,
+                    0xffff00
+                );
+                
+                this.tweens.add({
+                    targets: hitEffect,
+                    scale: { from: 0, to: 2 },
+                    alpha: { from: 1, to: 0 },
+                    duration: 200,
+                    onComplete: () => hitEffect.destroy()
+                });
+                
+                // Damage number
+                const dmgText = this.add.text(defender.x, defender.y - 50, damage, {
+                    font: 'bold 24px Arial',
+                    fill: '#ffff00'
+                });
+                dmgText.setOrigin(0.5, 0.5);
+                
+                this.tweens.add({
+                    targets: dmgText,
+                    y: defender.y - 100,
+                    alpha: 0,
+                    duration: 800,
+                    onComplete: () => dmgText.destroy()
+                });
+                
+                // Screen shake
+                if (damage > 15) {
+                    this.cameras.main.shake(100, 0.01);
+                }
+            }
+        }
+
+        // Create game
+        const game = new Phaser.Game(config);
+    </script>
+</body>
+</html>

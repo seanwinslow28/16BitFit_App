@@ -11,12 +11,15 @@ const initialState = {
     level: 1,
     experience: 0,
   },
+  characterArchetype: null, // 'strength', 'speed', or 'balanced'
+  characterName: null,
   activities: [],
   nutrition: [],
   lastSync: null,
   streak: 0,
   totalWorkouts: 0,
   achievements: [],
+  createdAt: null,
 };
 
 // Action types
@@ -29,6 +32,7 @@ const ActionTypes = {
   LOAD_STATE: 'LOAD_STATE',
   RESET_CHARACTER: 'RESET_CHARACTER',
   UPDATE_STREAK: 'UPDATE_STREAK',
+  SET_CHARACTER_ARCHETYPE: 'SET_CHARACTER_ARCHETYPE',
 };
 
 // Stat calculation formulas based on activities
@@ -42,22 +46,40 @@ const calculateStatsFromActivity = (activity) => {
   };
 
   switch (activity.category) {
-    case 'cardio':
-      statChanges.stamina += activity.intensity * 2;
-      statChanges.speed += activity.intensity * 1.5;
+    case 'gym':
+      statChanges.strength += activity.intensity * 3;
+      statChanges.stamina += activity.intensity * 1;
       statChanges.health += activity.intensity * 1;
       statChanges.experience += activity.duration * 10;
+      break;
+    case 'cardio':
+      statChanges.stamina += activity.intensity * 3;
+      statChanges.speed += activity.intensity * 2;
+      statChanges.strength += activity.intensity * 0.5;
+      statChanges.experience += activity.duration * 10;
+      break;
+    case 'yoga':
+      statChanges.health += activity.intensity * 3;
+      statChanges.stamina += activity.intensity * 1;
+      statChanges.speed += activity.intensity * 0.5;
+      statChanges.experience += activity.duration * 8;
+      break;
+    case 'sports':
+      statChanges.speed += activity.intensity * 2;
+      statChanges.stamina += activity.intensity * 2;
+      statChanges.strength += activity.intensity * 1;
+      statChanges.experience += activity.duration * 11;
+      break;
+    case 'walking':
+      statChanges.health += activity.intensity * 2;
+      statChanges.stamina += activity.intensity * 1;
+      statChanges.speed += activity.intensity * 0.5;
+      statChanges.experience += activity.duration * 7;
       break;
     case 'strength':
       statChanges.strength += activity.intensity * 2.5;
       statChanges.health += activity.intensity * 1.2;
       statChanges.experience += activity.duration * 12;
-      break;
-    case 'sports':
-      statChanges.speed += activity.intensity * 2;
-      statChanges.stamina += activity.intensity * 1.5;
-      statChanges.strength += activity.intensity * 1;
-      statChanges.experience += activity.duration * 11;
       break;
     case 'wellness':
       statChanges.health += activity.intensity * 3;
@@ -219,6 +241,15 @@ const characterReducer = (state, action) => {
       return initialState;
     }
 
+    case ActionTypes.SET_CHARACTER_ARCHETYPE: {
+      return {
+        ...state,
+        characterArchetype: action.payload.archetype,
+        characterName: action.payload.name,
+        createdAt: action.payload.createdAt || new Date().toISOString(),
+      };
+    }
+
     default:
       return state;
   }
@@ -300,6 +331,49 @@ export const CharacterProvider = ({ children }) => {
     dispatch({ type: ActionTypes.RESET_CHARACTER });
   }, []);
 
+  const setCharacterArchetype = useCallback((archetype, name) => {
+    dispatch({ 
+      type: ActionTypes.SET_CHARACTER_ARCHETYPE, 
+      payload: { archetype, name, createdAt: new Date().toISOString() }
+    });
+  }, []);
+
+  const createGuestCharacter = useCallback(async ({ archetype, name }) => {
+    // Create a guest character with default stats
+    const guestCharacter = {
+      id: 'guest-' + Date.now(),
+      archetype,
+      name,
+      isGuest: true,
+      createdAt: new Date().toISOString(),
+    };
+    
+    // Set initial stats based on archetype
+    const archetypeStats = {
+      power: { strength: 75, stamina: 50, health: 70, speed: 40 },
+      speed: { strength: 40, stamina: 75, health: 60, speed: 80 },
+      balance: { strength: 60, stamina: 60, health: 65, speed: 60 },
+    };
+    
+    const stats = archetypeStats[archetype] || archetypeStats.balance;
+    
+    // Update state
+    dispatch({ 
+      type: ActionTypes.SET_CHARACTER_ARCHETYPE, 
+      payload: { archetype, name, createdAt: guestCharacter.createdAt }
+    });
+    
+    dispatch({ 
+      type: ActionTypes.UPDATE_STATS, 
+      payload: stats 
+    });
+    
+    // Save guest state
+    await saveCharacterState({ ...state, characterStats: stats });
+    
+    return guestCharacter;
+  }, [state]);
+
   const value = {
     ...state,
     updateStats,
@@ -308,6 +382,8 @@ export const CharacterProvider = ({ children }) => {
     addAchievement,
     updateStreak,
     resetCharacter,
+    setCharacterArchetype,
+    createGuestCharacter,
   };
 
   return (

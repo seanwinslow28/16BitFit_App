@@ -30,6 +30,8 @@ const SOUND_EFFECTS = {
   ui_success: { category: SOUND_CATEGORIES.UI, file: 'success.mp3', volume: 0.5 },
   ui_notification: { category: SOUND_CATEGORIES.UI, file: 'notification.mp3', volume: 0.6 },
   ui_transition: { category: SOUND_CATEGORIES.UI, file: 'screen_transition.mp3', volume: 0.4 },
+  select: { category: SOUND_CATEGORIES.UI, file: 'select.mp3', volume: 0.5 },
+  powerUp: { category: SOUND_CATEGORIES.UI, file: 'power_up.mp3', volume: 0.7 },
   
   // Battle Sounds
   battle_punch_light: { category: SOUND_CATEGORIES.BATTLE, file: 'punch_light.mp3', volume: 0.6 },

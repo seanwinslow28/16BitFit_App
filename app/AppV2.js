@@ -14,8 +14,9 @@ import HomeScreenV2 from './screens/HomeScreenV2';
 import BattleScreenV2 from './screens/BattleScreenV2';
 import WorkoutSelectionV2 from './screens/WorkoutSelectionV2';
 import FoodSelectionScreenV2 from './screens/FoodSelectionScreenV2';
-import PlaceholderScreen from './screens/PlaceholderScreen';
 import WorkoutHistoryScreen from './screens/WorkoutHistoryScreen';
+import QuickActivityLogScreen from './screens/QuickActivityLogScreen';
+import { GuestOnboardingScreen } from './screens/onboarding';
 
 // Import V2 screens that we know exist
 import StatsScreenV2 from './screens/StatsScreenV2';
@@ -27,9 +28,13 @@ import AudioService from './services/AudioService';
 import PostHogService from './services/PostHogService';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingScreen from './components/LoadingScreen';
+import OnboardingManager from './services/OnboardingManager';
 
 // Contexts
 import { CharacterProvider } from './contexts/CharacterContext';
+
+// Theme
+import { navigationTheme, tabBarTheme, statusBarTheme } from './constants/Theme';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,21 +47,16 @@ function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: {
-          backgroundColor: '#0F380F',
-          borderTopWidth: 2,
-          borderTopColor: '#9BBD0F',
-          height: 80,
-          paddingBottom: 10,
-          paddingTop: 10,
-        },
-        tabBarActiveTintColor: '#FFD700',
-        tabBarInactiveTintColor: '#9BBD0F',
+        tabBarStyle: tabBarTheme.style,
+        tabBarActiveTintColor: tabBarTheme.activeTintColor,
+        tabBarInactiveTintColor: tabBarTheme.inactiveTintColor,
         headerShown: false,
         tabBarLabelStyle: {
+          ...tabBarTheme.labelStyle,
           fontFamily: 'PressStart2P',
-          fontSize: 10,
-          marginTop: 5,
+        },
+        tabBarItemStyle: {
+          paddingVertical: 8,
         },
       }}
     >
@@ -65,7 +65,7 @@ function MainTabs() {
         component={HomeScreenV2}
         options={{
           tabBarLabel: 'HOME',
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: () => (
             <View style={{ alignItems: 'center' }}>
               <Text style={{ fontSize: 24 }}>🏠</Text>
             </View>
@@ -77,7 +77,7 @@ function MainTabs() {
         component={BattleStackNavigator}
         options={{
           tabBarLabel: 'BATTLE',
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center' }}>
               <Text style={{ fontSize: 24 }}>{focused ? '⚔️' : '🗡️'}</Text>
             </View>
@@ -89,7 +89,7 @@ function MainTabs() {
         component={StatsScreenV2}
         options={{
           tabBarLabel: 'STATS',
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center' }}>
               <Text style={{ fontSize: 24 }}>{focused ? '📊' : '📈'}</Text>
             </View>
@@ -101,7 +101,7 @@ function MainTabs() {
         component={SocialScreenV2}
         options={{
           tabBarLabel: 'SOCIAL',
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center' }}>
               <Text style={{ fontSize: 24 }}>{focused ? '🌐' : '👥'}</Text>
             </View>
@@ -197,15 +197,31 @@ function BattleMenuScreen({ navigation }) {
 
 // Root stack navigator
 function RootNavigator() {
+  const [needsOnboarding, setNeedsOnboarding] = useState(null);
+
+  useEffect(() => {
+    // Check if user needs onboarding
+    OnboardingManager.initialize().then(() => {
+      setNeedsOnboarding(OnboardingManager.needsOnboarding());
+    });
+  }, []);
+
+  if (needsOnboarding === null) {
+    return <LoadingScreen />;
+  }
+
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
         cardStyle: { backgroundColor: '#9BBD0F' },
       }}
+      initialRouteName={needsOnboarding ? "GuestOnboarding" : "Main"}
     >
+      <Stack.Screen name="GuestOnboarding" component={GuestOnboardingScreen} />
       <Stack.Screen name="Main" component={MainTabs} />
       <Stack.Screen name="WorkoutSelection" component={WorkoutSelectionV2} />
+      <Stack.Screen name="QuickActivityLog" component={QuickActivityLogScreen} />
       <Stack.Screen name="FoodSelection" component={FoodSelectionScreenV2} />
       <Stack.Screen name="WorkoutHistory" component={WorkoutHistoryScreen} />
     </Stack.Navigator>
@@ -213,7 +229,6 @@ function RootNavigator() {
 }
 
 function AppV2() {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
   const [appReady, setAppReady] = useState(false);
   
   // Log to verify new app is running
@@ -244,7 +259,6 @@ function AppV2() {
           console.warn('PostHog initialization failed, continuing without analytics:', analyticsError);
         }
         
-        setFontsLoaded(true);
         setAppReady(true);
       } catch (e) {
         console.error('❌ Error loading app resources:', e);
@@ -267,8 +281,11 @@ function AppV2() {
       <SafeAreaProvider>
         <SupabaseProvider>
           <CharacterProvider>
-            <StatusBar barStyle="light-content" backgroundColor="#0F380F" />
-            <NavigationContainer>
+            <StatusBar 
+              barStyle={statusBarTheme.style} 
+              backgroundColor={statusBarTheme.backgroundColor} 
+            />
+            <NavigationContainer theme={navigationTheme}>
               <RootNavigator />
             </NavigationContainer>
           </CharacterProvider>

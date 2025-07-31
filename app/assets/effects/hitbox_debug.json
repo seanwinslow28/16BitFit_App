@@ -1,0 +1,52 @@
+{
+  "debug_textures": {
+    "hitbox_indicator": {
+      "description": "Red semi-transparent box for hitbox visualization",
+      "color": "rgba(255, 0, 0, 0.5)",
+      "border": {
+        "width": 2,
+        "color": "#FF0000",
+        "style": "solid"
+      }
+    },
+    "hurtbox_indicator": {
+      "description": "Green semi-transparent box for hurtbox visualization",
+      "color": "rgba(0, 255, 0, 0.3)",
+      "border": {
+        "width": 2,
+        "color": "#00FF00",
+        "style": "solid"
+      }
+    },
+    "collision_spark": {
+      "description": "Yellow spark effect for collision points",
+      "frames": [
+        { "duration": 50, "scale": 0.5, "opacity": 1.0 },
+        { "duration": 50, "scale": 1.0, "opacity": 0.8 },
+        { "duration": 50, "scale": 1.5, "opacity": 0.5 },
+        { "duration": 50, "scale": 2.0, "opacity": 0.0 }
+      ],
+      "color": "#FFFF00"
+    },
+    "priority_indicators": {
+      "low": { "color": "#808080", "label": "L" },
+      "medium": { "color": "#0080FF", "label": "M" },
+      "high": { "color": "#FF8000", "label": "H" },
+      "super": { "color": "#FF00FF", "label": "S" }
+    }
+  },
+  "debug_colors": {
+    "hitbox_types": {
+      "strike": "#FF0000",
+      "projectile": "#FF00FF",
+      "throw": "#FFFF00",
+      "counter": "#00FFFF"
+    },
+    "hurtbox_types": {
+      "normal": "#00FF00",
+      "invulnerable": "#666666",
+      "counter": "#FFD700",
+      "armor": "#0066FF"
+    }
+  }
+}

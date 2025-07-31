@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>16BitFit Battle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            touch-action: none;
+        }
+        
+        #game-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        /* Virtual controls overlay */
+        #controls-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .control-zone {
+            position: absolute;
+            pointer-events: auto;
+            /* Debug visualization - remove in production */
+            /* border: 2px dashed rgba(255,255,255,0.2); */
+        }
+        
+        /* Movement zone - left side */
+        #movement-zone {
+            left: 0;
+            bottom: 0;
+            width: 35%;
+            height: 40%;
+        }
+        
+        /* Action buttons - right side */
+        #action-zone {
+            right: 0;
+            bottom: 0;
+            width: 35%;
+            height: 40%;
+        }
+        
+        /* Special move zone - center bottom */
+        #special-zone {
+            left: 35%;
+            bottom: 0;
+            width: 30%;
+            height: 15%;
+        }
+        
+        /* Performance overlay */
+        #perf-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #92CC41;
+            font-family: monospace;
+            font-size: 12px;
+            background: rgba(0,0,0,0.7);
+            padding: 5px;
+            border-radius: 3px;
+            z-index: 100;
+            display: none;
+        }
+        
+        #perf-overlay.visible {
+            display: block;
+        }
+        
+        /* Loading screen */
+        #loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0D0D0D;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        #loading-text {
+            color: #92CC41;
+            font-family: monospace;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        #loading-bar {
+            width: 80%;
+            height: 20px;
+            background-color: #708028;
+            border: 2px solid #92CC41;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        #loading-progress {
+            height: 100%;
+            background-color: #92CC41;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        /* Prevent scroll bounce on iOS */
+        body {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <!-- Phaser canvas will be inserted here -->
+    </div>
+    
+    <!-- Virtual controls overlay -->
+    <div id="controls-overlay">
+        <div id="movement-zone" class="control-zone"></div>
+        <div id="action-zone" class="control-zone"></div>
+        <div id="special-zone" class="control-zone"></div>
+    </div>
+    
+    <!-- Performance overlay -->
+    <div id="perf-overlay">
+        <div>FPS: <span id="fps">60</span></div>
+        <div>Latency: <span id="latency">0</span>ms</div>
+        <div>Draw Calls: <span id="draw-calls">0</span></div>
+    </div>
+    
+    <!-- Loading screen -->
+    <div id="loading-screen">
+        <div id="loading-text">LOADING BATTLE...</div>
+        <div id="loading-bar">
+            <div id="loading-progress"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Global configuration
+        window.GAME_CONFIG = {
+            debug: false,
+            showPerformance: false,
+            targetFPS: 60,
+            fixedTimestep: true,
+            antialias: false,
+            pixelArt: true,
+            audioContext: null,
+        };
+        
+        // Initialize React Native bridge if available
+        if (window.ReactNativeWebView) {
+            window.isReactNative = true;
+            
+            // Override console for debugging
+            const originalConsole = {
+                log: console.log,
+                warn: console.warn,
+                error: console.error,
+            };
+            
+            ['log', 'warn', 'error'].forEach(level => {
+                console[level] = function(...args) {
+                    originalConsole[level].apply(console, args);
+                    
+                    // Send to React Native
+                    try {
+                        window.ReactNativeWebView.postMessage(JSON.stringify({
+                            type: 'console',
+                            level: level,
+                            message: args.map(arg => String(arg)).join(' '),
+                        }));
+                    } catch (e) {
+                        // Ignore errors in console forwarding
+                    }
+                };
+            });
+            
+            // Send ready signal when DOM is loaded
+            document.addEventListener('DOMContentLoaded', () => {
+                window.ReactNativeWebView.postMessage(JSON.stringify({
+                    type: 'domReady',
+                    timestamp: Date.now(),
+                }));
+            });
+        }
+        
+        // Prevent default touch behaviors
+        document.addEventListener('touchstart', (e) => {
+            if (e.target.closest('.control-zone')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        document.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, { passive: false });
+        
+        // Handle visibility change for pause/resume
+        document.addEventListener('visibilitychange', () => {
+            if (window.game) {
+                if (document.hidden) {
+                    window.game.pause();
+                } else {
+                    window.game.resume();
+                }
+            }
+        });
+        
+        // Loading progress handler
+        window.updateLoadingProgress = function(progress) {
+            const progressBar = document.getElementById('loading-progress');
+            if (progressBar) {
+                progressBar.style.width = `${progress}%`;
+            }
+            
+            if (progress >= 100) {
+                setTimeout(() => {
+                    const loadingScreen = document.getElementById('loading-screen');
+                    if (loadingScreen) {
+                        loadingScreen.style.display = 'none';
+                    }
+                }, 500);
+            }
+        };
+        
+        // Performance monitoring
+        window.updatePerformanceDisplay = function(metrics) {
+            if (!window.GAME_CONFIG.showPerformance) return;
+            
+            document.getElementById('fps').textContent = metrics.fps || 0;
+            document.getElementById('latency').textContent = metrics.latency || 0;
+            document.getElementById('draw-calls').textContent = metrics.drawCalls || 0;
+        };
+        
+        // Toggle performance display
+        window.togglePerformanceDisplay = function() {
+            window.GAME_CONFIG.showPerformance = !window.GAME_CONFIG.showPerformance;
+            const overlay = document.getElementById('perf-overlay');
+            overlay.classList.toggle('visible', window.GAME_CONFIG.showPerformance);
+        };
+        
+        // Error handling
+        window.addEventListener('error', (event) => {
+            console.error('Game error:', event.error);
+            
+            if (window.ReactNativeWebView) {
+                window.ReactNativeWebView.postMessage(JSON.stringify({
+                    type: 'error',
+                    message: event.message,
+                    stack: event.error ? event.error.stack : 'No stack trace',
+                }));
+            }
+        });
+        
+        // Unhandled promise rejections
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('Unhandled promise rejection:', event.reason);
+            
+            if (window.ReactNativeWebView) {
+                window.ReactNativeWebView.postMessage(JSON.stringify({
+                    type: 'unhandledRejection',
+                    reason: String(event.reason),
+                }));
+            }
+        });
+    </script>
+    
+    <!-- Phaser and game scripts will be injected here by webpack -->
+</body>
+</html>

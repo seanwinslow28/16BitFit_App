@@ -1,4 +1,17 @@
+/**
+ * Legacy Matter.js based game engine
+ * This is being replaced by the unified react-native-game-engine implementation
+ * See app/gameEngine/core/GameEngine.js for the new architecture
+ */
+
 import Matter from 'matter-js';
+
+// Re-export the new unified game engine as the default
+export { default } from './core/GameEngine';
+export * from './core/GameEngine';
+
+// Keep legacy exports for backwards compatibility
+// These will be removed once migration is complete
 
 // Fighting game optimized engine configuration
 export const GameEngineConfig = {

@@ -1,0 +1,46 @@
+{
+  "name": "16bitfit-phaser-embedded",
+  "version": "1.0.0",
+  "description": "Street Fighter 2 style fighting game engine for 16BitFit",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "webpack serve --mode development --open",
+    "build": "webpack --mode production",
+    "build:watch": "webpack --mode development --watch",
+    "serve": "python3 -m http.server 8080",
+    "clean": "rm -rf dist",
+    "analyze": "webpack-bundle-analyzer dist/stats.json"
+  },
+  "keywords": [
+    "phaser3",
+    "fighting-game",
+    "webview",
+    "react-native",
+    "fitness"
+  ],
+  "author": "16BitFit Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "babel-loader": "^9.1.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.3",
+    "style-loader": "^3.3.3",
+    "terser-webpack-plugin": "^5.3.9",
+    "webpack": "^5.88.2",
+    "webpack-bundle-analyzer": "^4.9.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "phaser": "^3.70.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

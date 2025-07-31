@@ -171,6 +171,17 @@ agents:
       - Reward system design
       - Visual progression feedback
       - Gamification psychology
+      
+  - name: phaser3-integration-specialist
+    description: Expert in Phaser 3 game engine integration, WebView bridging, and mobile-optimized web game development
+    file: .claude/agents/phaser3-integration-specialist.md
+    capabilities:
+      - Phaser 3 game engine architecture
+      - WebView integration with React Native
+      - Mobile web game optimization
+      - Asset pipeline management
+      - Performance profiling
+      - Cross-platform compatibility
 
 tools:
   - name: read_agent

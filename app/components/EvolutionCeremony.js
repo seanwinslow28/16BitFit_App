@@ -6,6 +6,8 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
 import { Colors, Typography, Spacing, Effects } from '../constants/DesignSystem';
+import { EvolutionStages } from '../services/CharacterEvolutionSystem';
+import EvolutionTransformation from './EvolutionTransformation';
 
 const EvolutionCeremony = ({
   visible = false,
@@ -98,37 +100,19 @@ const EvolutionCeremony = ({
   if (!visible) return null;
 
   const getEvolutionInfo = (stage) => {
-    const evolutionData = {
-      0: { 
-        name: 'NEWBIE', 
-        title: 'The Beginning',
-        emoji: '🌱',
-        color: Colors.environment.groundDark,
-        description: 'Every fitness journey starts with a single step!'
-      },
-      1: { 
-        name: 'TRAINEE', 
-        title: 'Building Habits',
-        emoji: '🏃',
-        color: Colors.state.energy,
-        description: 'You\'re developing consistent healthy habits!'
-      },
-      2: { 
-        name: 'FIGHTER', 
-        title: 'Strong & Dedicated',
-        emoji: '💪',
-        color: Colors.primary.logoYellow,
-        description: 'Your dedication is paying off with real strength!'
-      },
-      3: { 
-        name: 'CHAMPION', 
-        title: 'Peak Performance',
-        emoji: '👑',
-        color: Colors.primary.success,
-        description: 'You\'ve achieved the pinnacle of fitness mastery!'
-      },
+    // Use the new 5-stage evolution system
+    const stages = Object.values(EvolutionStages);
+    const evolution = stages[stage] || stages[0];
+    
+    return {
+      name: evolution.displayName,
+      title: evolution.name,
+      emoji: ['🥋', '🥊', '💪', '🏆', '⚡'][stage] || '🥋',
+      color: evolution.visualTheme.primary,
+      description: evolution.description,
+      unlockMessage: evolution.unlockMessage,
+      bonuses: evolution.bonuses,
     };
-    return evolutionData[stage] || evolutionData[0];
   };
 
   const newEvolution = getEvolutionInfo(newEvolutionStage);
@@ -266,17 +250,32 @@ const EvolutionCeremony = ({
             🎁 NEW ABILITIES UNLOCKED 🎁
           </Text>
           <Text style={[styles.rewardText, { fontFamily }]}>
-            • Enhanced stat bonuses from workouts
+            • Stats x{newEvolution.bonuses.statMultiplier} from workouts
           </Text>
           <Text style={[styles.rewardText, { fontFamily }]}>
-            • Stronger battle performance
+            • Experience x{newEvolution.bonuses.experienceMultiplier} boost
           </Text>
           <Text style={[styles.rewardText, { fontFamily }]}>
-            • New character expressions
+            • Coins x{newEvolution.bonuses.coinMultiplier} multiplier
           </Text>
+          {newEvolutionStage >= 1 && (
+            <Text style={[styles.rewardText, { fontFamily }]}>
+              • Special moves unlocked
+            </Text>
+          )}
           {newEvolutionStage >= 2 && (
             <Text style={[styles.rewardText, { fontFamily }]}>
-              • Access to legendary bosses
+              • Aura effects activated
+            </Text>
+          )}
+          {newEvolutionStage >= 3 && (
+            <Text style={[styles.rewardText, { fontFamily }]}>
+              • Legendary equipment access
+            </Text>
+          )}
+          {newEvolutionStage >= 4 && (
+            <Text style={[styles.rewardText, { fontFamily }]}>
+              • Cosmic powers unleashed
             </Text>
           )}
         </View>

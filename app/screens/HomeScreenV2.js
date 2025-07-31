@@ -61,7 +61,7 @@ const HomeScreenV2 = () => {
         navigation.navigate('BattleTab');
         break;
       case 'train':
-        navigation.navigate('WorkoutSelection');
+        navigation.navigate('QuickActivityLog');
         break;
       case 'feed':
         navigation.navigate('FoodSelection');
@@ -142,6 +142,20 @@ const HomeScreenV2 = () => {
               label="HISTORY"
               onPress={() => handleActionPress('history')}
               color="#FFE66D"
+              size="medium"
+            />
+            <ActionButton
+              icon="🥊"
+              label="TEST"
+              onPress={() => navigation.navigate('HitboxTest')}
+              color="#FF69B4"
+              size="medium"
+            />
+            <ActionButton
+              icon="⚡"
+              label="PERF"
+              onPress={() => navigation.navigate('PerformanceTest')}
+              color="#9370DB"
               size="medium"
             />
           </Animated.View>

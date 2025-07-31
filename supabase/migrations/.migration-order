@@ -1,0 +1,27 @@
+# Migration Order for 16BitFit Database
+# This file documents the correct order for running migrations
+
+1. 20250115000000_initial_schema.sql
+   - Creates core tables: user_profiles, characters, achievements, etc.
+   - Sets up RLS policies
+   - Creates indexes and triggers
+   - Must run FIRST as other migrations depend on these tables
+
+2. 20240721_battle_system.sql
+   - Creates battle-specific tables
+   - Adds battle statistics and leaderboards
+   - Depends on user_profiles from initial schema
+
+3. 20250127_realtime_matchmaking.sql
+   - Adds PvP matchmaking support
+   - Creates matchmaking queue
+   - Adds health columns to pvp_battles
+   - Depends on user_profiles and pvp_battles
+
+4. create_leaderboards.sql
+   - Creates leaderboard table and views
+   - Adds weekly/monthly leaderboard views
+   - Should run LAST as it may reference other tables
+
+Note: Supabase will run these in alphabetical order by filename,
+which is why we use timestamps to ensure correct ordering.

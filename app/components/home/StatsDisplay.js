@@ -1,45 +1,39 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
-const StatBar = React.memo(({ label, value, max, color }) => {
-  const percentage = (value / max) * 100;
-  
-  return (
-    <View style={styles.statBar}>
-      <Text style={styles.statLabel}>{label}</Text>
-      <View style={styles.statBarContainer}>
-        <View 
-          style={[
-            styles.statBarFill, 
-            { width: `${percentage}%`, backgroundColor: color }
-          ]} 
-        />
-      </View>
-      <Text style={styles.statValue}>{value}</Text>
-    </View>
-  );
-});
+import { View, StyleSheet } from 'react-native';
+import { AnimatedStatBar } from '../ui';
+import { Colors, Spacing } from '../../constants/DesignSystem';
+import { StatConfigs } from '../../constants/DesignSystem';
 
 const StatsDisplay = React.memo(({ characterStats }) => {
   return (
     <View style={styles.container}>
-      <StatBar 
-        label="HP" 
+      <AnimatedStatBar 
+        label="HEALTH" 
         value={characterStats?.health || 100} 
-        max={100} 
-        color="#4CAF50" 
+        maxValue={100} 
+        color={StatConfigs.health.color}
+        showParticles={true}
       />
-      <StatBar 
-        label="STR" 
+      <AnimatedStatBar 
+        label="STRENGTH" 
         value={characterStats?.strength || 50} 
-        max={100} 
-        color="#FF6B6B" 
+        maxValue={100} 
+        color={StatConfigs.strength.color}
+        showParticles={true}
       />
-      <StatBar 
-        label="STA" 
+      <AnimatedStatBar 
+        label="ENERGY" 
         value={characterStats?.stamina || 50} 
-        max={100} 
-        color="#4ECDC4" 
+        maxValue={100} 
+        color={StatConfigs.energy.color}
+        showParticles={true}
+      />
+      <AnimatedStatBar 
+        label="HAPPINESS" 
+        value={characterStats?.happiness || 75} 
+        maxValue={100} 
+        color={StatConfigs.happiness.color}
+        showParticles={true}
       />
     </View>
   );
@@ -48,37 +42,12 @@ const StatsDisplay = React.memo(({ characterStats }) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingHorizontal: 20,
-    marginVertical: 10,
-  },
-  statBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 2,
-  },
-  statLabel: {
-    width: 30,
-    fontSize: 10,
-    fontFamily: 'PressStart2P',
-    color: '#0F380F',
-  },
-  statBarContainer: {
-    flex: 1,
-    height: 8,
-    backgroundColor: '#0F380F',
-    marginHorizontal: 5,
-    borderRadius: 4,
-  },
-  statBarFill: {
-    height: '100%',
-    borderRadius: 4,
-  },
-  statValue: {
-    width: 30,
-    fontSize: 10,
-    fontFamily: 'PressStart2P',
-    color: '#0F380F',
-    textAlign: 'right',
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.md,
+    backgroundColor: Colors.shell.darkerGray,
+    borderWidth: 2,
+    borderColor: Colors.shell.buttonBlack,
+    marginVertical: Spacing.sm,
   },
 });
 

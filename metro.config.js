@@ -30,6 +30,15 @@ config.resolver = {
     '@services': path.resolve(__dirname, 'app/services'),
     '@assets': path.resolve(__dirname, 'app/assets'),
   },
+  // Exclude test files and phaser-game from bundling
+  blockList: [
+    /.*\/__tests__\/.*/,
+    /.*\.test\.(js|jsx|ts|tsx)$/,
+    /.*\.spec\.(js|jsx|ts|tsx)$/,
+    /.*\/test\/.*/,
+    /phaser-game\/.*/,
+    /app\/gameEngine\/phaser\/.*/,
+  ],
 };
 
 // Basic server configuration

@@ -7,6 +7,30 @@ import {
   DEBUG 
 } from '@env';
 
+// Polyfill TextEncoder for React Native
+if (typeof global.TextEncoder === 'undefined') {
+  global.TextEncoder = class TextEncoder {
+    encode(str) {
+      const utf8 = unescape(encodeURIComponent(str));
+      const result = new Uint8Array(utf8.length);
+      for (let i = 0; i < utf8.length; i++) {
+        result[i] = utf8.charCodeAt(i);
+      }
+      return result;
+    }
+  };
+  
+  global.TextDecoder = class TextDecoder {
+    decode(uint8Array) {
+      let str = '';
+      for (let i = 0; i < uint8Array.length; i++) {
+        str += String.fromCharCode(uint8Array[i]);
+      }
+      return decodeURIComponent(escape(str));
+    }
+  };
+}
+
 class PostHogService {
   constructor() {
     this.isInitialized = false;

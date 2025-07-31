@@ -32,12 +32,23 @@ const COACH = {
 // Onboarding steps with coach dialogue
 const ONBOARDING_STEPS = [
   {
+    id: 'character_selection',
+    title: 'Choose Your Fighter',
+    coach: "First, let's choose your fighter type! Each archetype has unique strengths that match different fitness goals.",
+    action: 'show_character_selection',
+    component: 'CharacterSelectionScreen',
+    nextButton: null, // Component handles its own navigation
+    canSkip: false,
+    timeEstimate: 15, // seconds
+  },
+  {
     id: 'welcome',
     title: 'Welcome to 16BitFit!',
-    coach: "Hey there, champion! I'm Coach 8-Bit, your personal fitness companion. Ready to turn your health journey into an epic adventure?",
+    coach: "Excellent choice! I'm Coach 8-Bit, and I'll help you transform your fighter from a Newbie to a Champion!",
     action: null,
     nextButton: "Let's Go!",
     canSkip: false,
+    timeEstimate: 10, // seconds
   },
   {
     id: 'character_intro',

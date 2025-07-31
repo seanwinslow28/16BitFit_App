@@ -1,604 +1,288 @@
 /**
- * PhaserWebView Component
- * Simplified WebView for Phaser game integration
+ * PhaserWebView - High-performance WebView wrapper for Phaser 3 game engine
+ * Optimized for 60fps fighting game with minimal input latency
  */
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import {
   View,
   StyleSheet,
-  Dimensions,
+  Platform,
   ActivityIndicator,
+  Text,
+  Alert,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { Asset } from 'expo-asset';
-import * as FileSystem from 'expo-file-system';
+import RNFS from 'react-native-fs';
+import { getPhaserBridge } from '../gameEngine/phaser/integration/PhaserWebViewBridge';
+import PerformanceMonitor from '../gameEngine/core/utils/PerformanceMonitor';
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const PHASER_HTML_PATH = Platform.select({
+  ios: `${RNFS.MainBundlePath}/phaser-game-dist/index.html`,
+  android: 'file:///android_asset/phaser-game-dist/index.html',
+  default: 'http://localhost:8080' // For development
+});
 
 const PhaserWebView = ({
-  playerStats,
-  boss,
-  onGameReady,
-  onBattleEnd,
-  onUpdateStats,
+  onReady,
+  onStateUpdate,
+  onPerformanceUpdate,
+  onError,
+  characterData,
+  battleConfig,
+  style,
 }) => {
   const webViewRef = useRef(null);
-  const [htmlContent, setHtmlContent] = useState('');
+  const bridgeRef = useRef(null);
+  const performanceRef = useRef(new PerformanceMonitor());
+  
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [performanceMetrics, setPerformanceMetrics] = useState({
+    fps: 0,
+    latency: 0,
+    droppedFrames: 0,
+  });
 
+  // Initialize bridge on mount
   useEffect(() => {
-    // Load the HTML file with assets
-    loadGameHTML();
+    bridgeRef.current = getPhaserBridge();
+    
+    // Set up event listeners
+    bridgeRef.current.on('ready', handleBridgeReady);
+    bridgeRef.current.on('stateUpdate', handleStateUpdate);
+    bridgeRef.current.on('performanceUpdate', handlePerformanceUpdate);
+    bridgeRef.current.on('error', handleBridgeError);
+    bridgeRef.current.on('performanceWarning', handlePerformanceWarning);
+    
+    return () => {
+      // Clean up
+      if (bridgeRef.current) {
+        bridgeRef.current.off('ready', handleBridgeReady);
+        bridgeRef.current.off('stateUpdate', handleStateUpdate);
+        bridgeRef.current.off('performanceUpdate', handlePerformanceUpdate);
+        bridgeRef.current.off('error', handleBridgeError);
+        bridgeRef.current.off('performanceWarning', handlePerformanceWarning);
+      }
+    };
   }, []);
 
-  const loadGameHTML = async () => {
-    try {
-      // Load and convert assets to base64 for WebView
-      const assetMap = await loadGameAssets();
+  // Handle WebView load
+  const handleWebViewLoad = useCallback(() => {
+    if (webViewRef.current && bridgeRef.current) {
+      bridgeRef.current.init(webViewRef.current);
       
-      // For now, we'll use inline HTML with embedded assets
-      // In production, you'd load this from a bundled HTML file
-      const html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #000;
-      touch-action: none;
-    }
-    #game-container {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .control-button {
-      position: absolute;
-      background: rgba(146, 204, 65, 0.8);
-      border: 3px solid #0D0D0D;
-      border-radius: 8px;
-      color: #0D0D0D;
-      font-family: monospace;
-      font-weight: bold;
-      text-align: center;
-      user-select: none;
-      -webkit-user-select: none;
-      cursor: pointer;
-    }
-    .control-button:active {
-      background: rgba(247, 213, 29, 0.9);
-      transform: scale(0.95);
-    }
-    .dpad-left { bottom: 100px; left: 20px; width: 50px; height: 50px; }
-    .dpad-right { bottom: 100px; left: 130px; width: 50px; height: 50px; }
-    .dpad-up { bottom: 160px; left: 75px; width: 50px; height: 50px; }
-    .button-punch { bottom: 160px; right: 75px; width: 55px; height: 55px; }
-    .button-kick { bottom: 100px; right: 75px; width: 55px; height: 55px; }
-    .button-block { bottom: 160px; right: 140px; width: 55px; height: 55px; }
-    .button-special { bottom: 40px; left: 50%; transform: translateX(-50%); width: 150px; height: 40px; background: rgba(52, 152, 219, 0.8); }
-  </style>
-</head>
-<body>
-  <div id="game-container"></div>
-  
-  <!-- Control buttons -->
-  <div class="control-button dpad-left" ontouchstart="handleControl('moveLeft')" ontouchend="handleControl('stopMove')">←</div>
-  <div class="control-button dpad-right" ontouchstart="handleControl('moveRight')" ontouchend="handleControl('stopMove')">→</div>
-  <div class="control-button dpad-up" ontouchstart="handleControl('jump')">↑</div>
-  <div class="control-button button-punch" ontouchstart="handleControl('punch')">PUNCH</div>
-  <div class="control-button button-kick" ontouchstart="handleControl('kick')">KICK</div>
-  <div class="control-button button-block" ontouchstart="handleControl('block')" ontouchend="handleControl('stopBlock')">BLOCK</div>
-  <div class="control-button button-special" ontouchstart="handleControl('special')">SPECIAL</div>
-
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.min.js"></script>
-  <script>
-    // Game state
-    let game = null;
-    let player = null;
-    let boss = null;
-    let playerHP = 100;
-    let bossHP = 100;
-    let specialMeter = 0;
-    
-    // Player stats from React Native
-    const playerStats = ${JSON.stringify(playerStats || {})};
-    const bossData = ${JSON.stringify(boss || { id: 'sloth_demon', name: 'SLOTH DEMON', health: 100, attackPower: 15 })};
-    
-    // Assets passed from React Native
-    window.assetMap = ${JSON.stringify(assetMap)};
-    window.isReactNative = true;
-    
-    // Note: In production, you would import actual game modules here
-    // For WebView, we're using a simplified battle scene
-    
-    // Simple battle scene (fallback for WebView)
-    class SimpleBattleScene extends Phaser.Scene {
-      constructor() {
-        super({ key: 'SimpleBattleScene' });
-      }
-      
-      preload() {
-        // Assets are loaded as base64 data URIs
-        const assets = ${JSON.stringify(assetMap)};
+      // Initialize game with config
+      const initCode = `
+        window.__gameConfig = ${JSON.stringify({
+          characterData,
+          battleConfig,
+          targetFPS: 60,
+          enableDebug: __DEV__,
+          renderMode: 'webgl',
+          antialias: false,
+          powerPreference: 'high-performance',
+        })};
         
-        // Load sprite sheets from base64
-        if (assets['sean_fighter']) {
-          this.load.spritesheet('sean_fighter', assets['sean_fighter'], {
-            frameWidth: 64,
-            frameHeight: 64,
-          });
+        // Start Phaser game
+        if (window.initPhaserGame) {
+          window.initPhaserGame(window.__gameConfig);
         }
-        
-        // Map boss types to sprites
-        const bossSprites = {
-          'sloth_demon': 'gym_bully',
-          'junk_food_monster': 'fit_cat',
-          'procrastination_phantom': 'buff_mage',
-          'stress_titan': 'rookie_ryu',
-        };
-        
-        const bossSprite = bossSprites[bossData.id] || 'rookie_ryu';
-        if (assets[bossSprite]) {
-          this.load.spritesheet(bossSprite, assets[bossSprite], {
-            frameWidth: 64,
-            frameHeight: 64,
-          });
-        }
-        
-        // Load backgrounds from base64
-        if (assets['dojo_bg']) this.load.image('dojo_bg', assets['dojo_bg']);
-        if (assets['warehouse_bg']) this.load.image('warehouse_bg', assets['warehouse_bg']);
-        if (assets['main_bg']) this.load.image('main_bg', assets['main_bg']);
-        
-        // Handle load errors
-        this.load.on('loaderror', (file) => {
-          console.warn('Failed to load:', file.key);
-          // Log more details
-          window.ReactNativeWebView.postMessage(JSON.stringify({ 
-            type: 'error', 
-            data: { message: 'Asset load failed: ' + file.key, file: file } 
-          }));
-          // Create placeholder
-          this.createPlaceholder(file.key);
-        });
-        
-        // Log assets status
-        console.log('Assets available:', Object.keys(assets));
-        window.ReactNativeWebView.postMessage(JSON.stringify({ 
-          type: 'debug', 
-          data: { message: 'Assets loaded', keys: Object.keys(assets) } 
-        }));
-      }
-      
-      createPlaceholder(key) {
-        const graphics = this.make.graphics({ x: 0, y: 0 });
-        graphics.fillStyle(0x92CC41, 1);
-        graphics.fillRect(0, 0, 64, 64);
-        graphics.generateTexture(key, 64, 64);
-        graphics.destroy();
-      }
-      
-      create() {
-        const { width, height } = this.cameras.main;
-        
-        // Background
-        const backgrounds = {
-          'sloth_demon': 'warehouse_bg',
-          'junk_food_monster': 'dojo_bg',
-          'procrastination_phantom': 'main_bg',
-          'stress_titan': 'warehouse_bg',
-        };
-        
-        const bgKey = backgrounds[bossData.id] || 'main_bg';
-        if (this.textures.exists(bgKey)) {
-          const bg = this.add.image(width / 2, height / 2, bgKey);
-          const scaleX = width / bg.width;
-          const scaleY = height / bg.height;
-          const scale = Math.max(scaleX, scaleY);
-          bg.setScale(scale);
-        } else {
-          this.add.rectangle(0, 0, width, height, 0x9BBC0F).setOrigin(0, 0);
-        }
-        
-        // Ground
-        const ground = this.add.rectangle(width / 2, height - 40, width, 80, 0x708028);
-        this.physics.add.existing(ground, true);
-        
-        // Create player sprite
-        if (this.textures.exists('sean_fighter')) {
-          player = this.physics.add.sprite(150, height - 120, 'sean_fighter');
-          player.setFrame(0); // Idle frame
-          
-          // Create simple animations
-          this.anims.create({
-            key: 'player_idle',
-            frames: this.anims.generateFrameNumbers('sean_fighter', { frames: [0, 1, 2, 3] }),
-            frameRate: 8,
-            repeat: -1
-          });
-          
-          this.anims.create({
-            key: 'player_attack',
-            frames: this.anims.generateFrameNumbers('sean_fighter', { frames: [10, 11] }),
-            frameRate: 12,
-            repeat: 0
-          });
-          
-          player.play('player_idle');
-        } else {
-          player = this.physics.add.rectangle(150, height - 120, 64, 64, 0x92CC41);
-        }
-        
-        player.setCollideWorldBounds(true);
-        player.body.setGravityY(300);
-        
-        // Create boss sprite
-        const bossSprites = {
-          'sloth_demon': 'gym_bully',
-          'junk_food_monster': 'fit_cat',
-          'procrastination_phantom': 'buff_mage',
-          'stress_titan': 'rookie_ryu',
-        };
-        
-        const bossSprite = bossSprites[bossData.id] || 'rookie_ryu';
-        
-        if (this.textures.exists(bossSprite)) {
-          boss = this.physics.add.sprite(width - 150, height - 120, bossSprite);
-          boss.setFrame(0); // Idle frame
-          boss.setFlipX(true); // Face left
-          
-          // Create boss animations
-          this.anims.create({
-            key: 'boss_idle',
-            frames: this.anims.generateFrameNumbers(bossSprite, { frames: [0, 1, 2, 3] }),
-            frameRate: 6,
-            repeat: -1
-          });
-          
-          boss.play('boss_idle');
-        } else {
-          boss = this.physics.add.rectangle(width - 150, height - 120, 64, 64, 0xff6666);
-        }
-        
-        boss.setCollideWorldBounds(true);
-        boss.body.setGravityY(300);
-        
-        // Collisions
-        this.physics.add.collider(player, ground);
-        this.physics.add.collider(boss, ground);
-        
-        // HUD
-        this.createHUD();
-        
-        // Start message
-        const readyText = this.add.text(width / 2, height / 2, 'READY?', {
-          font: '48px monospace',
-          fill: '#F7D51D',
-          stroke: '#0D0D0D',
-          strokeThickness: 4,
-        }).setOrigin(0.5);
-        
-        this.time.delayedCall(1000, () => {
-          readyText.setText('FIGHT!');
-          readyText.setColor('#E53935');
-          
-          this.time.delayedCall(500, () => {
-            readyText.destroy();
-            this.startBossAI();
-          });
-        });
-        
-        // Send ready message
-        if (window.ReactNativeWebView) {
-          window.ReactNativeWebView.postMessage(JSON.stringify({ 
-            type: 'gameReady', 
-            data: { ready: true } 
-          }));
-        }
-      }
-      
-      createHUD() {
-        // Player health
-        this.add.text(20, 20, 'HERO', { font: '14px monospace', fill: '#92CC41' });
-        this.playerHealthBar = this.add.rectangle(20, 40, 200, 20, 0x92CC41).setOrigin(0, 0.5);
-        
-        // Boss health
-        this.add.text(this.cameras.main.width - 220, 20, bossData.name, { font: '14px monospace', fill: '#92CC41' });
-        this.bossHealthBar = this.add.rectangle(this.cameras.main.width - 220, 40, 200, 20, 0xff6666).setOrigin(0, 0.5);
-      }
-      
-      startBossAI() {
-        // Simple AI - move towards player and attack
-        this.time.addEvent({
-          delay: 2000,
-          callback: () => {
-            if (boss && player && bossHP > 0) {
-              // Move towards player
-              if (boss.x > player.x + 100) {
-                boss.body.setVelocityX(-100);
-              } else if (boss.x < player.x - 100) {
-                boss.body.setVelocityX(100);
-              } else {
-                boss.body.setVelocityX(0);
-                // Attack
-                this.bossAttack();
-              }
-            }
-          },
-          loop: true,
-        });
-      }
-      
-      bossAttack() {
-        // Flash boss to indicate attack
-        if (boss.setFillStyle) {
-          boss.setFillStyle(0xffff00);
-          this.time.delayedCall(200, () => {
-            boss.setFillStyle(0xff6666);
-          });
-        }
-        
-        // Check if player is in range
-        if (Math.abs(boss.x - player.x) < 100) {
-          this.damagePlayer(bossData.attackPower);
-        }
-      }
-      
-      playerAttack(type) {
-        if (!player) return;
-        
-        // Flash player or play animation
-        if (player.anims) {
-          player.play('player_attack');
-          player.once('animationcomplete', () => {
-            player.play('player_idle');
-          });
-        } else {
-          player.setFillStyle(0xFFFF00);
-          this.time.delayedCall(200, () => {
-            player.setFillStyle(0x92CC41);
-          });
-        }
-        
-        // Check if boss is in range
-        if (Math.abs(player.x - boss.x) < 100) {
-          const damage = type === 'special' ? 30 : (type === 'kick' ? 15 : 10);
-          this.damageBoss(damage);
-        }
-      }
-      
-      damagePlayer(amount) {
-        playerHP = Math.max(0, playerHP - amount);
-        this.updateHealthBars();
-        
-        if (playerHP <= 0) {
-          this.endBattle(false);
-        }
-      }
-      
-      damageBoss(amount) {
-        bossHP = Math.max(0, bossHP - amount);
-        specialMeter = Math.min(100, specialMeter + 15);
-        this.updateHealthBars();
-        
-        if (bossHP <= 0) {
-          this.endBattle(true);
-        }
-      }
-      
-      updateHealthBars() {
-        this.playerHealthBar.setScale(playerHP / 100, 1);
-        this.bossHealthBar.setScale(bossHP / bossData.health, 1);
-        
-        // Update special meter
-        const specialButton = document.querySelector('.button-special');
-        if (specialMeter >= 100) {
-          specialButton.style.background = 'rgba(0, 255, 0, 0.9)';
-        } else {
-          specialButton.style.background = 'rgba(52, 152, 219, 0.8)';
-        }
-      }
-      
-      endBattle(victory) {
-        const resultText = this.add.text(
-          this.cameras.main.width / 2,
-          this.cameras.main.height / 2,
-          victory ? 'VICTORY!' : 'DEFEAT...',
-          {
-            font: '48px monospace',
-            fill: victory ? '#92CC41' : '#E53935',
-            stroke: '#0D0D0D',
-            strokeThickness: 6,
-          }
-        ).setOrigin(0.5);
-        
-        // Send result to React Native
-        if (window.ReactNativeWebView) {
-          window.ReactNativeWebView.postMessage(JSON.stringify({ 
-            type: 'battleEnd', 
-            data: { 
-              victory,
-              score: victory ? Math.floor(playerHP * 10) : 0,
-            } 
-          }));
-        }
-      }
-    }
-    
-    // Control handler
-    function handleControl(action) {
-      if (!game || !player) return;
-      
-      const scene = game.scene.getScene('SimpleBattleScene');
-      
-      switch (action) {
-        case 'moveLeft':
-          player.body.setVelocityX(-200);
-          break;
-        case 'moveRight':
-          player.body.setVelocityX(200);
-          break;
-        case 'stopMove':
-          player.body.setVelocityX(0);
-          break;
-        case 'jump':
-          if (player.body.onFloor()) {
-            player.body.setVelocityY(-400);
-          }
-          break;
-        case 'punch':
-          scene.playerAttack('punch');
-          break;
-        case 'kick':
-          scene.playerAttack('kick');
-          break;
-        case 'special':
-          if (specialMeter >= 100) {
-            scene.playerAttack('special');
-            specialMeter = 0;
-          }
-          break;
-      }
-    }
-    
-    // Initialize game
-    const config = {
-      type: Phaser.AUTO,
-      parent: 'game-container',
-      width: window.innerWidth,
-      height: window.innerHeight * 0.6,
-      physics: {
-        default: 'arcade',
-        arcade: {
-          gravity: { y: 800 },
-          debug: false,
-        },
-      },
-      scene: SimpleBattleScene,
-    };
-    
-    game = new Phaser.Game(config);
-  </script>
-</body>
-</html>
       `;
       
-      setHtmlContent(html);
-      setIsLoading(false);
-    } catch (error) {
-      console.error('Error loading game HTML:', error);
-      setIsLoading(false);
+      webViewRef.current.injectJavaScript(initCode);
     }
-  };
+  }, [characterData, battleConfig]);
 
-  const loadGameAssets = async () => {
-    const assetMap = {};
+  // Handle bridge ready event
+  const handleBridgeReady = useCallback((data) => {
+    setIsLoading(false);
+    performanceRef.current.start();
     
-    try {
-      // Define assets to load
-      const assetsToLoad = [
-        { key: 'sean_fighter', path: require('../assets/Sprites/BossBattleSpriteSheets/Sean_Fighter-Sprite-Sheet.png') },
-        { key: 'gym_bully', path: require('../assets/Sprites/BossBattleSpriteSheets/Gym_Bully-Sprite-Sheet.png') },
-        { key: 'fit_cat', path: require('../assets/Sprites/BossBattleSpriteSheets/Fit_Cat-Sprite-Sheet.png') },
-        { key: 'buff_mage', path: require('../assets/Sprites/BossBattleSpriteSheets/Buff_Mage-Sprite-Sheet.png') },
-        { key: 'rookie_ryu', path: require('../assets/Sprites/BossBattleSpriteSheets/Rookie_Ryu-Sprite-Sheet.png') },
-        { key: 'dojo_bg', path: require('../assets/Backgrounds/Tranquil_Dojo_Backround.png') },
-        { key: 'warehouse_bg', path: require('../assets/Backgrounds/Industrial_Warehouse_at_Dusk.png') },
-        { key: 'main_bg', path: require('../assets/Backgrounds/Main_Background.png') },
-        { key: 'background_dojo', path: require('../assets/Backgrounds/Tranquil_Dojo_Backround.png') },
-        { key: 'background_warehouse', path: require('../assets/Backgrounds/Industrial_Warehouse_at_Dusk.png') },
-        { key: 'background_main', path: require('../assets/Backgrounds/Main_Background.png') },
-      ];
-      
-      // Load assets and convert to base64
-      console.log('Loading assets for WebView...');
-      for (const asset of assetsToLoad) {
-        try {
-          // Download asset to cache
-          const downloadedAsset = await Asset.fromModule(asset.path).downloadAsync();
-          
-          if (downloadedAsset && downloadedAsset.localUri) {
-            // Read as base64
-            const base64 = await FileSystem.readAsStringAsync(downloadedAsset.localUri, {
-              encoding: FileSystem.EncodingType.Base64,
-            });
-            
-            // Store as data URI
-            const mimeType = asset.path.toString().endsWith('.png') ? 'image/png' : 'image/jpeg';
-            assetMap[asset.key] = `data:${mimeType};base64,${base64}`;
-            console.log(`Loaded asset: ${asset.key}`);
-          } else {
-            console.warn(`Asset ${asset.key} has no local URI`);
+    if (onReady) {
+      onReady({
+        bridge: bridgeRef.current,
+        timestamp: data.timestamp,
+      });
+    }
+  }, [onReady]);
+
+  // Handle game state updates
+  const handleStateUpdate = useCallback((state) => {
+    performanceRef.current.recordFrame();
+    
+    if (onStateUpdate) {
+      onStateUpdate(state);
+    }
+  }, [onStateUpdate]);
+
+  // Handle performance metrics
+  const handlePerformanceUpdate = useCallback((metrics) => {
+    setPerformanceMetrics({
+      fps: metrics.fps || 0,
+      latency: metrics.averageLatency || 0,
+      droppedFrames: metrics.droppedFrames || 0,
+    });
+    
+    if (onPerformanceUpdate) {
+      onPerformanceUpdate(metrics);
+    }
+  }, [onPerformanceUpdate]);
+
+  // Handle performance warnings
+  const handlePerformanceWarning = useCallback((warning) => {
+    if (warning.severity === 'critical') {
+      Alert.alert(
+        'Performance Issue',
+        `Game is running at ${warning.fps} FPS. Consider reducing quality settings.`,
+        [
+          { text: 'Reduce Quality', onPress: () => reduceQuality() },
+          { text: 'Continue', style: 'cancel' },
+        ]
+      );
+    }
+  }, []);
+
+  // Handle bridge errors
+  const handleBridgeError = useCallback((error) => {
+    console.error('Bridge error:', error);
+    setError(error);
+    
+    if (onError) {
+      onError(error);
+    }
+  }, [onError]);
+
+  // Handle WebView errors
+  const handleWebViewError = useCallback((syntheticEvent) => {
+    const { nativeEvent } = syntheticEvent;
+    console.error('WebView error:', nativeEvent);
+    setError({
+      code: nativeEvent.code,
+      description: nativeEvent.description,
+    });
+  }, []);
+
+  // Handle WebView messages
+  const handleMessage = useCallback((event) => {
+    if (bridgeRef.current) {
+      bridgeRef.current.handleMessage(event);
+    }
+  }, []);
+
+  // Reduce rendering quality for performance
+  const reduceQuality = useCallback(() => {
+    if (webViewRef.current) {
+      const code = `
+        if (window.game && window.game.scene) {
+          const scene = window.game.scene.getScene('BattleScene');
+          if (scene && scene.reduceQuality) {
+            scene.reduceQuality();
           }
-        } catch (error) {
-          console.warn(`Failed to load asset ${asset.key}:`, error);
-          // Create a simple placeholder for failed assets
-          assetMap[asset.key] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
         }
-      }
-      console.log(`Total assets loaded: ${Object.keys(assetMap).length} of ${assetsToLoad.length}`);
-    } catch (error) {
-      console.error('Asset loading error:', error);
+      `;
+      webViewRef.current.injectJavaScript(code);
     }
+  }, []);
+
+  // Send input to game
+  const sendInput = useCallback((inputType, pressed = true) => {
+    if (bridgeRef.current) {
+      bridgeRef.current.sendInput(inputType, pressed);
+    }
+  }, []);
+
+  // Send command to game
+  const sendCommand = useCallback((command, data) => {
+    if (bridgeRef.current) {
+      bridgeRef.current.sendCommand(command, data);
+    }
+  }, []);
+
+  // WebView configuration for optimal performance
+  const webViewConfig = {
+    // Core settings
+    ref: webViewRef,
+    source: { uri: PHASER_HTML_PATH },
+    style: [styles.webView, style],
     
-    return assetMap;
+    // Performance settings
+    javaScriptEnabled: true,
+    domStorageEnabled: true,
+    startInLoadingState: true,
+    scalesPageToFit: false,
+    scrollEnabled: false,
+    bounces: false,
+    
+    // Hardware acceleration
+    androidHardwareAccelerationDisabled: false,
+    androidLayerType: 'hardware',
+    
+    // Message handling
+    onMessage: handleMessage,
+    onLoad: handleWebViewLoad,
+    onError: handleWebViewError,
+    
+    // iOS specific
+    allowsInlineMediaPlayback: true,
+    mediaPlaybackRequiresUserAction: false,
+    
+    // Injection settings
+    injectedJavaScriptBeforeContentLoaded: `
+      window.__REACT_NATIVE__ = true;
+      window.__DEV__ = ${__DEV__};
+      window.onerror = function(msg, url, line, col, error) {
+        window.ReactNativeWebView.postMessage(JSON.stringify({
+          type: 'error',
+          error: {
+            message: msg,
+            url: url,
+            line: line,
+            col: col,
+            stack: error ? error.stack : ''
+          }
+        }));
+        return true;
+      };
+    `,
   };
 
-  const handleMessage = (event) => {
-    try {
-      const message = JSON.parse(event.nativeEvent.data);
-      
-      switch (message.type) {
-        case 'gameReady':
-          if (onGameReady) onGameReady();
-          break;
-        case 'battleEnd':
-          if (onBattleEnd) onBattleEnd(message.data);
-          break;
-        case 'updateStats':
-          if (onUpdateStats) onUpdateStats(message.data);
-          break;
-        case 'error':
-          console.error('Game error:', message.data);
-          break;
-        case 'debug':
-          console.log('Game debug:', message.data);
-          break;
-      }
-    } catch (error) {
-      console.error('Message parsing error:', error);
-    }
-  };
+  // Loading overlay
+  const renderLoading = () => (
+    <View style={styles.loadingContainer}>
+      <ActivityIndicator size="large" color="#FFD700" />
+      <Text style={styles.loadingText}>Loading Battle Arena...</Text>
+    </View>
+  );
 
-  if (isLoading) {
+  // Error overlay
+  const renderError = () => (
+    <View style={styles.errorContainer}>
+      <Text style={styles.errorText}>Failed to load game engine</Text>
+      <Text style={styles.errorDetail}>{error?.description || 'Unknown error'}</Text>
+    </View>
+  );
+
+  // Performance overlay (dev only)
+  const renderPerformanceOverlay = () => {
+    if (!__DEV__) return null;
+    
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#92CC41" />
+      <View style={styles.performanceOverlay}>
+        <Text style={styles.performanceText}>
+          FPS: {performanceMetrics.fps} | Latency: {performanceMetrics.latency}ms | Dropped: {performanceMetrics.droppedFrames}
+        </Text>
       </View>
     );
-  }
+  };
 
   return (
     <View style={styles.container}>
-      <WebView
-        ref={webViewRef}
-        source={{ html: htmlContent }}
-        style={styles.webView}
-        onMessage={handleMessage}
-        scrollEnabled={false}
-        bounces={false}
-        allowsInlineMediaPlayback
-        mediaPlaybackRequiresUserAction={false}
-        originWhitelist={['*']}
-        javaScriptEnabled={true}
-      />
+      <WebView {...webViewConfig} />
+      
+      {isLoading && renderLoading()}
+      {error && renderError()}
+      {renderPerformanceOverlay()}
     </View>
   );
 };
@@ -613,11 +297,70 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   loadingContainer: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000',
+  },
+  loadingText: {
+    color: '#FFD700',
+    fontSize: 16,
+    marginTop: 10,
+    fontFamily: Platform.select({
+      ios: 'Courier',
+      android: 'monospace',
+    }),
+  },
+  errorContainer: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255, 0, 0, 0.9)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  errorText: {
+    color: '#FFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  errorDetail: {
+    color: '#FFF',
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  performanceOverlay: {
+    position: 'absolute',
+    top: 40,
+    left: 10,
+    right: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    padding: 5,
+    borderRadius: 5,
+  },
+  performanceText: {
+    color: '#0F0',
+    fontSize: 10,
+    fontFamily: Platform.select({
+      ios: 'Courier',
+      android: 'monospace',
+    }),
   },
 });
+
+// Export methods for external control
+PhaserWebView.sendInput = (inputType, pressed) => {
+  const bridge = getPhaserBridge();
+  if (bridge && bridge.isReady) {
+    bridge.sendInput(inputType, pressed);
+  }
+};
+
+PhaserWebView.sendCommand = (command, data) => {
+  const bridge = getPhaserBridge();
+  if (bridge && bridge.isReady) {
+    bridge.sendCommand(command, data);
+  }
+};
 
 export default PhaserWebView;

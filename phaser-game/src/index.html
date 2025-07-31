@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>16BitFit Fighting Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+            touch-action: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            font-family: Arial, sans-serif;
+        }
+        
+        #phaser-game-container {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        
+        .loading-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .loading-logo {
+            width: 200px;
+            height: 200px;
+            background-color: #333;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #fff;
+        }
+        
+        .loading-text {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .loading-bar {
+            width: 300px;
+            height: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            background-color: #00ff00;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .error-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .error-title {
+            color: #ff4444;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .error-message {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 30px;
+            max-width: 400px;
+        }
+        
+        .error-button {
+            background-color: #4a4a4a;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="phaser-game-container"></div>
+    
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-logo">16BF</div>
+        <div class="loading-text">Loading Game Engine...</div>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loading-progress"></div>
+        </div>
+    </div>
+    
+    <div class="error-screen" id="error-screen">
+        <div class="error-title">Game Error</div>
+        <div class="error-message" id="error-message">An error occurred while loading the game.</div>
+        <button class="error-button" onclick="location.reload()">Reload</button>
+    </div>
+    
+    <script>
+        // Loading progress simulation before Phaser loads
+        let progress = 0;
+        const progressBar = document.getElementById('loading-progress');
+        const loadingScreen = document.getElementById('loading-screen');
+        const errorScreen = document.getElementById('error-screen');
+        const errorMessage = document.getElementById('error-message');
+        
+        const updateProgress = setInterval(() => {
+            if (progress < 90) {
+                progress += Math.random() * 10;
+                progressBar.style.width = Math.min(progress, 90) + '%';
+            }
+        }, 200);
+        
+        // Hide loading screen when game is ready
+        window.hideLoadingScreen = function() {
+            clearInterval(updateProgress);
+            progressBar.style.width = '100%';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 300);
+        };
+        
+        // Show error screen
+        window.showError = function(message) {
+            loadingScreen.style.display = 'none';
+            errorScreen.style.display = 'flex';
+            errorMessage.textContent = message;
+        };
+        
+        // Global error handler
+        window.addEventListener('error', (e) => {
+            console.error('Game Error:', e);
+            window.showError(e.message || 'An unexpected error occurred');
+        });
+    </script>
+</body>
+</html>

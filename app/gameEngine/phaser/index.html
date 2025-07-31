@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>16BitFit Battle Engine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            touch-action: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        #game-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #game-canvas {
+            width: 100%;
+            height: 100%;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #FFD700;
+            font-family: monospace;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .error {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #FF4444;
+            font-family: monospace;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        /* Prevent iOS bounce */
+        body {
+            position: fixed;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div class="loading" id="loading">
+            Loading Battle Engine...<br>
+            <span id="loading-progress">0%</span>
+        </div>
+    </div>
+
+    <!-- Phaser 3 -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.min.js"></script>
+    
+    <!-- Game Configuration -->
+    <script>
+        // Global configuration passed from React Native
+        window.__gameConfig = window.__gameConfig || {
+            targetFPS: 60,
+            enableDebug: false,
+            renderMode: 'webgl',
+            antialias: false,
+            powerPreference: 'high-performance',
+        };
+        
+        // Performance monitoring
+        window.__performance = {
+            frameCount: 0,
+            lastTime: performance.now(),
+            fps: 0,
+            deltaTime: 0,
+        };
+    </script>
+    
+    <!-- Bridge initialization (injected by React Native) -->
+    
+    <!-- Game initialization -->
+    <script>
+        // Wait for bridge to be ready
+        function waitForBridge() {
+            if (window.__phaserBridge) {
+                initializeGame();
+            } else {
+                setTimeout(waitForBridge, 50);
+            }
+        }
+        
+        // Initialize Phaser game
+        function initializeGame() {
+            const config = window.__gameConfig;
+            
+            // Hide loading
+            document.getElementById('loading').style.display = 'none';
+            
+            // Create Phaser configuration
+            const phaserConfig = {
+                type: config.renderMode === 'webgl' ? Phaser.WEBGL : Phaser.CANVAS,
+                parent: 'game-container',
+                width: window.innerWidth,
+                height: window.innerHeight,
+                backgroundColor: '#000000',
+                pixelArt: true,
+                antialias: config.antialias,
+                fps: {
+                    target: config.targetFPS,
+                    forceSetTimeOut: false,
+                },
+                physics: {
+                    default: 'arcade',
+                    arcade: {
+                        gravity: { y: 980 },
+                        debug: config.enableDebug,
+                    }
+                },
+                scale: {
+                    mode: Phaser.Scale.RESIZE,
+                    autoCenter: Phaser.Scale.CENTER_BOTH,
+                },
+                render: {
+                    powerPreference: config.powerPreference,
+                    mipmapFilter: 'LINEAR_MIPMAP_LINEAR',
+                },
+                input: {
+                    activePointers: 3,
+                    windowEvents: false,
+                },
+                scene: [BattleScene],
+            };
+            
+            // Create game instance
+            window.game = new Phaser.Game(phaserConfig);
+        }
+        
+        // Battle Scene
+        class BattleScene extends Phaser.Scene {
+            constructor() {
+                super({ key: 'BattleScene' });
+                this.player = null;
+                this.boss = null;
+                this.lastFrameTime = 0;
+                this.frameData = [];
+            }
+            
+            preload() {
+                // Update loading progress
+                this.load.on('progress', (value) => {
+                    const progress = document.getElementById('loading-progress');
+                    if (progress) {
+                        progress.textContent = Math.round(value * 100) + '%';
+                    }
+                    
+                    // Send progress to React Native
+                    if (window.__phaserBridge) {
+                        window.__phaserBridge.requestAsset('progress', value);
+                    }
+                });
+                
+                // Load placeholder assets
+                this.load.setBaseURL('assets/');
+                
+                // Create placeholder sprites
+                this.createPlaceholderAssets();
+            }
+            
+            create() {
+                // Set up world bounds
+                this.physics.world.setBounds(0, 0, this.game.config.width, this.game.config.height);
+                
+                // Create floor
+                const floor = this.add.rectangle(
+                    this.game.config.width / 2,
+                    this.game.config.height - 50,
+                    this.game.config.width,
+                    100,
+                    0x333333
+                );
+                this.physics.add.existing(floor, true);
+                
+                // Create player
+                this.player = this.physics.add.sprite(200, 300, 'player');
+                this.player.setCollideWorldBounds(true);
+                this.player.setSize(64, 96);
+                
+                // Create boss
+                this.boss = this.physics.add.sprite(600, 300, 'boss');
+                this.boss.setCollideWorldBounds(true);
+                this.boss.setSize(80, 120);
+                
+                // Add collision
+                this.physics.add.collider(this.player, floor);
+                this.physics.add.collider(this.boss, floor);
+                
+                // Set up input handling
+                this.setupInputHandling();
+                
+                // Start performance monitoring
+                this.time.addEvent({
+                    delay: 100,
+                    callback: this.updatePerformance,
+                    callbackScope: this,
+                    loop: true,
+                });
+                
+                // Notify React Native that game is ready
+                if (window.__phaserBridge) {
+                    window.__phaserBridge.init();
+                }
+            }
+            
+            update(time, delta) {
+                // Track frame time
+                this.lastFrameTime = delta;
+                window.__performance.deltaTime = delta;
+                window.__performance.frameCount++;
+                
+                // Update game state
+                this.updateGameState();
+                
+                // Send state to React Native
+                if (window.__performance.frameCount % 4 === 0) { // Every 4 frames (~15Hz)
+                    this.sendStateUpdate();
+                }
+                
+                // Track performance
+                if (window.__phaserBridge) {
+                    window.__phaserBridge.trackFrameTime(delta);
+                }
+            }
+            
+            createPlaceholderAssets() {
+                // Create player sprite
+                const playerGraphics = this.make.graphics({ x: 0, y: 0 }, false);
+                playerGraphics.fillStyle(0x4CAF50);
+                playerGraphics.fillRect(0, 0, 64, 96);
+                playerGraphics.generateTexture('player', 64, 96);
+                playerGraphics.destroy();
+                
+                // Create boss sprite
+                const bossGraphics = this.make.graphics({ x: 0, y: 0 }, false);
+                bossGraphics.fillStyle(0xFF5722);
+                bossGraphics.fillRect(0, 0, 80, 120);
+                bossGraphics.generateTexture('boss', 80, 120);
+                bossGraphics.destroy();
+            }
+            
+            setupInputHandling() {
+                // Handle input from bridge
+                window.handleGameInput = (inputCode, pressed) => {
+                    switch (inputCode) {
+                        case 0x01: // LEFT
+                            if (pressed) {
+                                this.player.setVelocityX(-200);
+                            } else if (this.player.body.velocity.x < 0) {
+                                this.player.setVelocityX(0);
+                            }
+                            break;
+                            
+                        case 0x02: // RIGHT
+                            if (pressed) {
+                                this.player.setVelocityX(200);
+                            } else if (this.player.body.velocity.x > 0) {
+                                this.player.setVelocityX(0);
+                            }
+                            break;
+                            
+                        case 0x04: // UP/JUMP
+                            if (pressed && this.player.body.blocked.down) {
+                                this.player.setVelocityY(-500);
+                            }
+                            break;
+                            
+                        case 0x10: // PUNCH
+                            if (pressed) {
+                                this.performAttack('punch');
+                            }
+                            break;
+                            
+                        case 0x20: // KICK
+                            if (pressed) {
+                                this.performAttack('kick');
+                            }
+                            break;
+                    }
+                };
+                
+                // Handle binary input buffer
+                window.__phaserBridge.handleInputBuffer = (buffer) => {
+                    const view = new DataView(new Uint8Array(buffer).buffer);
+                    const type = view.getUint8(0);
+                    const inputCode = view.getUint8(1);
+                    const pressed = type === 0x0B; // INPUT_DOWN
+                    
+                    window.handleGameInput(inputCode, pressed);
+                };
+            }
+            
+            performAttack(type) {
+                // Simple attack animation
+                const attackEffect = this.add.rectangle(
+                    this.player.x + (this.player.flipX ? -40 : 40),
+                    this.player.y,
+                    30,
+                    30,
+                    type === 'punch' ? 0xFFFF00 : 0xFF00FF
+                );
+                
+                this.tweens.add({
+                    targets: attackEffect,
+                    alpha: 0,
+                    duration: 200,
+                    onComplete: () => attackEffect.destroy(),
+                });
+            }
+            
+            updateGameState() {
+                // Simple AI for boss
+                if (this.boss && this.player) {
+                    const distance = Phaser.Math.Distance.Between(
+                        this.player.x, this.player.y,
+                        this.boss.x, this.boss.y
+                    );
+                    
+                    if (distance > 150) {
+                        // Move towards player
+                        if (this.player.x < this.boss.x) {
+                            this.boss.setVelocityX(-100);
+                        } else {
+                            this.boss.setVelocityX(100);
+                        }
+                    } else {
+                        this.boss.setVelocityX(0);
+                    }
+                }
+            }
+            
+            sendStateUpdate() {
+                if (!window.__phaserBridge || !this.player || !this.boss) return;
+                
+                const state = {
+                    player: {
+                        x: this.player.x,
+                        y: this.player.y,
+                        health: 100,
+                        state: 0, // IDLE
+                        frame: 0,
+                    },
+                    boss: {
+                        x: this.boss.x,
+                        y: this.boss.y,
+                        health: 100,
+                        state: 0, // IDLE
+                        frame: 0,
+                    },
+                    combo: 0,
+                    specialMeter: 0,
+                    damageMultiplier: 1.0,
+                };
+                
+                window.__phaserBridge.sendStateUpdate(state);
+            }
+            
+            updatePerformance() {
+                const now = performance.now();
+                const elapsed = now - window.__performance.lastTime;
+                window.__performance.fps = Math.round(1000 / (elapsed / window.__performance.frameCount));
+                window.__performance.lastTime = now;
+                window.__performance.frameCount = 0;
+            }
+            
+            // Quality reduction for performance
+            reduceQuality() {
+                this.game.config.fps.target = 30;
+                this.physics.world.timeScale = 2; // Reduce physics accuracy
+                
+                // Disable effects
+                this.tweens.pauseAll();
+            }
+        }
+        
+        // Global function for React Native to call
+        window.initPhaserGame = function(config) {
+            window.__gameConfig = { ...window.__gameConfig, ...config };
+            waitForBridge();
+        };
+        
+        // Start initialization
+        waitForBridge();
+        
+        // Error handling
+        window.onerror = function(msg, url, line, col, error) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.innerHTML = `Error: ${msg}<br>Line: ${line}`;
+            document.getElementById('game-container').appendChild(errorDiv);
+            return true;
+        };
+    </script>
+</body>
+</html>

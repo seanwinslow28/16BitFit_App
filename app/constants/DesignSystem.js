@@ -4,40 +4,58 @@
  * Comprehensive color palette, typography, spacing, and effects
  */
 
-// COLORS - Complete Figma Color Palette
+// COLORS - 16BitFit Style Guide Implementation
 export const Colors = {
-  // Primary Colors
+  // UI/Shell Palette - For app interface
+  shell: {
+    lightGray: '#C4BEBB',     // Primary background (plastic shell)
+    darkerGray: '#545454',    // Secondary panels, inactive items
+    buttonBlack: '#272929',   // Default text, icons, outlines
+    abButtonMagenta: '#9A2257', // Primary CTA color (START, BATTLE, TRAIN)
+    screenBorderGreen: '#84D07D', // Border/header for screen areas
+    accentBlue: '#5577AA',    // Secondary button text, less important elements
+  },
+
+  // Green Screen Palette - Exclusively for simulated screen content
+  screen: {
+    lightestGreen: '#9BBC0F', // Default screen background
+    lightGreen: '#8BAC0F',    // Fills, highlights, secondary details
+    darkGreen: '#306230',     // Primary sprite details and UI elements
+    darkestGreen: '#0F380F',  // Outlines, shadows, and text on screen
+  },
+
+  // Legacy mapping for backward compatibility
   primary: {
-    heroBlue: '#2C76C8',      // RGB: 44, 118, 200
-    logoYellow: '#F7D51D',    // RGB: 247, 213, 29
-    black: '#0D0D0D',         // RGB: 13, 13, 13
-    success: '#92CC41',       // RGB: 146, 204, 65
+    heroBlue: '#5577AA',      // Maps to shell.accentBlue
+    logoYellow: '#F7D51D',    // Keep for branding
+    black: '#272929',         // Maps to shell.buttonBlack
+    success: '#92CC41',       // Keep for positive states
   },
 
-  // Game State Colors
+  // Game State Colors (keeping for game mechanics)
   state: {
-    health: '#E53935',        // RGB: 229, 57, 53
-    energy: '#FB8C00',        // RGB: 251, 140, 0
-    characterPink: '#FCB9B2', // RGB: 252, 185, 178
-    gameboyGreen: '#9BBC0F',  // RGB: 155, 188, 15 (legacy)
+    health: '#E53935',        // Health bars
+    energy: '#FB8C00',        // Energy bars
+    characterPink: '#FCB9B2', // Character highlights
+    gameboyGreen: '#9BBC0F',  // Maps to screen.lightestGreen
   },
 
-  // Environment Colors
+  // Environment Colors (for in-game backgrounds)
   environment: {
-    skyBlue: '#5C94FC',       // RGB: 92, 148, 252
-    skyLight: '#7BA7FC',      // RGB: 123, 167, 252
-    dojoBrown: '#8B5A3C',     // RGB: 139, 90, 60
-    groundDark: '#6B5745',    // RGB: 107, 87, 69
-    nightPurple: '#2E1A47',   // RGB: 46, 26, 71
+    skyBlue: '#5C94FC',       // Battle backgrounds
+    skyLight: '#7BA7FC',      // Battle backgrounds
+    dojoBrown: '#8B5A3C',     // Arena floors
+    groundDark: '#6B5745',    // Arena shadows
+    nightPurple: '#2E1A47',   // Night scenes
   },
 
-  // Button States (derived)
+  // Button States (updated with new palette)
   button: {
-    default: '#92CC41',
-    pressed: '#7FB032',       // 10% darker success
-    disabled: '#6B7280',
-    disabledText: '#9CA3AF',
-    shadowDefault: '#6B9431', // Success green darkened
+    default: '#9A2257',       // shell.abButtonMagenta
+    pressed: '#7A1845',       // Darker magenta
+    disabled: '#545454',      // shell.darkerGray
+    disabledText: '#272929',  // shell.buttonBlack at 40% opacity
+    shadowDefault: '#272929', // shell.buttonBlack
   },
 
   // Utility Colors
@@ -45,18 +63,59 @@ export const Colors = {
   transparent: 'transparent',
 };
 
-// TYPOGRAPHY - Press Start 2P Font System
+// TYPOGRAPHY - 16BitFit Style Guide Typography
 export const Typography = {
-  fontFamily: 'Press Start 2P', // Note: Need to install this font
+  fontFamily: 'PressStart2P', // Primary font for all text
   
-  // Text Styles from Figma
+  // Style Guide Typography Scale
+  screenTitle: { // H1
+    fontSize: 24,
+    lineHeight: 32,
+    letterSpacing: 0,
+    color: Colors.shell.buttonBlack,
+    fontFamily: 'PressStart2P',
+  },
+  
+  panelHeader: { // H2
+    fontSize: 18,
+    lineHeight: 24,
+    letterSpacing: 0,
+    color: Colors.shell.buttonBlack,
+    fontFamily: 'PressStart2P',
+  },
+  
+  primaryButtonText: {
+    fontSize: 16,
+    lineHeight: 20,
+    letterSpacing: 0,
+    color: Colors.shell.lightGray, // On magenta background
+    fontFamily: 'PressStart2P',
+  },
+  
+  bodyText: { // Labels
+    fontSize: 12,
+    lineHeight: 16,
+    letterSpacing: 0,
+    color: Colors.shell.buttonBlack,
+    fontFamily: 'PressStart2P',
+  },
+  
+  subLabel: { // Hints
+    fontSize: 10,
+    lineHeight: 14,
+    letterSpacing: 0,
+    color: Colors.shell.darkerGray,
+    fontFamily: 'PressStart2P',
+  },
+  
+  // Legacy mappings for backward compatibility
   titleExtraLarge: {
     fontSize: 24,
     lineHeight: 32,
     letterSpacing: 0,
     textTransform: 'uppercase',
     color: Colors.primary.logoYellow,
-    fontFamily: 'Press Start 2P',
+    fontFamily: 'PressStart2P',
   },
   
   titleLarge: {
@@ -64,8 +123,8 @@ export const Typography = {
     lineHeight: 24,
     letterSpacing: 0,
     textTransform: 'uppercase',
-    color: Colors.primary.black,
-    fontFamily: 'Press Start 2P',
+    color: Colors.shell.buttonBlack,
+    fontFamily: 'PressStart2P',
   },
   
   titleMedium: {
@@ -73,8 +132,8 @@ export const Typography = {
     lineHeight: 24,
     letterSpacing: 0,
     textTransform: 'uppercase',
-    color: Colors.primary.black,
-    fontFamily: 'Press Start 2P',
+    color: Colors.shell.buttonBlack,
+    fontFamily: 'PressStart2P',
   },
   
   buttonText: {
@@ -82,8 +141,8 @@ export const Typography = {
     lineHeight: 16,
     letterSpacing: 0,
     textTransform: 'uppercase',
-    color: Colors.primary.black,
-    fontFamily: 'Press Start 2P',
+    color: Colors.shell.buttonBlack,
+    fontFamily: 'PressStart2P',
   },
   
   labelSmall: {
@@ -91,8 +150,8 @@ export const Typography = {
     lineHeight: 16,
     letterSpacing: 0,
     textTransform: 'none',
-    color: Colors.primary.black,
-    fontFamily: 'Press Start 2P',
+    color: Colors.shell.buttonBlack,
+    fontFamily: 'PressStart2P',
   },
   
   microCopy: {
@@ -100,8 +159,8 @@ export const Typography = {
     lineHeight: 12,
     letterSpacing: 0,
     textTransform: 'none',
-    color: Colors.primary.black,
-    fontFamily: 'Press Start 2P',
+    color: Colors.shell.buttonBlack,
+    fontFamily: 'PressStart2P',
   },
 };
 
@@ -128,37 +187,53 @@ export const Spacing = {
   },
 };
 
-// SHADOWS & EFFECTS
+// SHADOWS & EFFECTS - Style Guide Implementation
 export const Effects = {
-  // Button Shadows
+  // Button Shadows (sharp pixel-perfect)
   buttonShadowDefault: {
-    shadowColor: Colors.button.shadowDefault,
+    shadowColor: Colors.shell.buttonBlack,
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 1,
-    shadowRadius: 0,
+    shadowRadius: 0, // Sharp shadow
     elevation: 4, // Android
   },
   
   buttonShadowPressed: {
-    shadowColor: Colors.button.shadowDefault,
+    shadowColor: Colors.shell.buttonBlack,
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 1,
-    shadowRadius: 0,
+    shadowRadius: 0, // Sharp shadow
+    elevation: 2, // Android
+  },
+  
+  // Panel/Card shadows
+  panelShadow: {
+    shadowColor: Colors.shell.buttonBlack,
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 0, // Sharp retro shadow
     elevation: 2, // Android
   },
   
   cardShadow: {
-    shadowColor: Colors.primary.black,
+    shadowColor: Colors.shell.buttonBlack,
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.5,
     shadowRadius: 0,
     elevation: 4, // Android
   },
   
-  // Scanline overlay
+  // Scanline overlay for screen areas
   scanlineOverlay: {
-    backgroundColor: Colors.primary.black,
+    backgroundColor: Colors.shell.buttonBlack,
     opacity: 0.15,
+  },
+  
+  // Screen border effect
+  screenBorder: {
+    borderWidth: 4,
+    borderColor: Colors.shell.screenBorderGreen,
+    backgroundColor: Colors.screen.lightestGreen,
   },
 };
 
@@ -208,18 +283,43 @@ export const Dimensions = {
   },
 };
 
-// ANIMATION TIMINGS
+// ANIMATION TIMINGS - "Fluid Retro" Motion Design
 export const Animations = {
-  // Button press
+  // Button interactions with physics-based feel
   buttonPress: {
     duration: 100,
-    easing: 'ease-out',
+    easing: 'ease-in-out', // Natural acceleration/deceleration
+    scale: 0.95, // Subtle depression
+    overshoot: 1.02, // Tiny bounce on release
   },
   
-  // Stat bar fill
+  // Stat bar animations with particle effects
   statBarFill: {
-    duration: 800,
+    duration: 400, // 300-400ms as per style guide
     easing: 'ease-out',
+    particleDuration: 600,
+    flashDuration: 200,
+  },
+  
+  // Screen transitions
+  screenTransition: {
+    duration: 300,
+    easing: 'ease-in-out',
+    blurAmount: 10,
+    bounceAmount: 0.03, // Subtle settle bounce
+  },
+  
+  // Notification animations
+  notification: {
+    slideIn: {
+      duration: 250,
+      easing: 'ease-out',
+      overshoot: 1.05,
+    },
+    slideOut: {
+      duration: 200,
+      easing: 'ease-in',
+    },
   },
   
   // Character state transitions

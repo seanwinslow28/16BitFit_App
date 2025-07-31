@@ -1,93 +1,69 @@
-import React, { useRef, useCallback } from 'react';
-import { Pressable, Animated, Text, StyleSheet } from 'react-native';
-import * as Haptics from 'expo-haptics';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { FluidRetroButton } from '../ui';
+import { Colors, Typography, Spacing } from '../../constants/DesignSystem';
 
 const ActionButton = React.memo(({ 
   icon, 
   label, 
   onPress, 
   color, 
-  size = 'medium' 
+  size = 'medium',
+  variant = 'primary' 
 }) => {
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-  
-  const handlePressIn = useCallback(() => {
-    Animated.spring(scaleAnim, {
-      toValue: 0.95,
-      useNativeDriver: true,
-    }).start();
-  }, [scaleAnim]);
-  
-  const handlePressOut = useCallback(() => {
-    Animated.spring(scaleAnim, {
-      toValue: 1,
-      friction: 3,
-      tension: 40,
-      useNativeDriver: true,
-    }).start();
-  }, [scaleAnim]);
-
-  const handlePress = useCallback(() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    onPress();
-  }, [onPress]);
-  
   return (
-    <Pressable
-      onPress={handlePress}
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
+    <FluidRetroButton
+      onPress={onPress}
+      variant={variant}
+      style={[
+        styles.actionButton,
+        size === 'large' && styles.largeButton,
+        size === 'medium' && styles.mediumButton,
+      ]}
     >
-      <Animated.View 
-        style={[
-          styles.actionButton,
-          size === 'large' && styles.largeButton,
-          size === 'medium' && styles.mediumButton,
-          { backgroundColor: color, transform: [{ scale: scaleAnim }] }
-        ]}
-      >
+      <View style={styles.content}>
         <Text style={[styles.buttonIcon, size === 'large' && styles.largeIcon]}>
           {icon}
         </Text>
         <Text style={[styles.buttonLabel, size === 'large' && styles.largeLabel]}>
           {label}
         </Text>
-      </Animated.View>
-    </Pressable>
+      </View>
+    </FluidRetroButton>
   );
 });
 
 const styles = StyleSheet.create({
   actionButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-    padding: 10,
-    borderWidth: 3,
-    borderColor: '#0F380F',
+    // Base styles handled by FluidRetroButton
   },
   largeButton: {
-    width: 120,
-    height: 80,
+    width: 140,
+    height: 64,
   },
   mediumButton: {
-    width: 100,
-    height: 60,
+    width: 120,
+    height: 56,
+  },
+  content: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonIcon: {
     fontSize: 24,
+    marginBottom: Spacing.xs,
   },
   largeIcon: {
     fontSize: 32,
   },
   buttonLabel: {
-    fontSize: 10,
+    ...Typography.bodyText,
     fontFamily: 'PressStart2P',
-    color: '#0F380F',
-    marginTop: 5,
+    color: Colors.shell.lightGray,
+    textAlign: 'center',
   },
   largeLabel: {
-    fontSize: 12,
+    fontSize: 14,
   },
 });
 

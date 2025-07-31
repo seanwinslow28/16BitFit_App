@@ -13,7 +13,13 @@ if (__DEV__) {
 }
 
 import { registerRootComponent } from 'expo';
+import { LogBox } from 'react-native';
 import App from './App'; // Use the root App.js which imports AppV2
+
+// Ignore specific warnings if needed
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,

@@ -1,0 +1,84 @@
+{
+  "agents": [
+    {
+      "name": "api-integration-specialist",
+      "description": "Specialist for API integrations and external service connections",
+      "agentPromptFile": "agents/api-integration-specialist.md"
+    },
+    {
+      "name": "avatar-evolution-specialist",
+      "description": "Specialist for avatar system and progression mechanics",
+      "agentPromptFile": "agents/avatar-evolution-specialist.md"
+    },
+    {
+      "name": "backend-specialist",
+      "description": "Specialist for backend development and server-side logic",
+      "agentPromptFile": "agents/backend-specialist.md"
+    },
+    {
+      "name": "community-management-specialist",
+      "description": "Specialist for community features and user engagement",
+      "agentPromptFile": "agents/community-management-specialist.md"
+    },
+    {
+      "name": "customer-success-specialist",
+      "description": "Specialist for user experience and customer satisfaction",
+      "agentPromptFile": "agents/customer-success-specialist.md"
+    },
+    {
+      "name": "data-analytics-specialist",
+      "description": "Specialist for data analysis and insights",
+      "agentPromptFile": "agents/data-analytics-specialist.md"
+    },
+    {
+      "name": "devops-deployment-specialist",
+      "description": "Specialist for deployment, CI/CD, and infrastructure",
+      "agentPromptFile": "agents/devops-deployment-specialist.md"
+    },
+    {
+      "name": "game-development-specialist",
+      "description": "Specialist for gamification and game mechanics",
+      "agentPromptFile": "agents/game-development-specialist.md"
+    },
+    {
+      "name": "health-integration-specialist",
+      "description": "Specialist for health device integrations and fitness tracking",
+      "agentPromptFile": "agents/health-integration-specialist.md"
+    },
+    {
+      "name": "marketing-specialist",
+      "description": "Specialist for marketing strategies and user acquisition",
+      "agentPromptFile": "agents/marketing-specialist.md"
+    },
+    {
+      "name": "performance-optimizer",
+      "description": "Specialist for app performance and optimization",
+      "agentPromptFile": "agents/performance-optimizer.md"
+    },
+    {
+      "name": "privacy-security-specialist",
+      "description": "Specialist for privacy, security, and data protection",
+      "agentPromptFile": "agents/privacy-security-specialist.md"
+    },
+    {
+      "name": "product-manager",
+      "description": "Specialist for product strategy and feature planning",
+      "agentPromptFile": "agents/product-manager.md"
+    },
+    {
+      "name": "testing-specialist",
+      "description": "Specialist for testing strategies and quality assurance",
+      "agentPromptFile": "agents/testing-specialist.md"
+    },
+    {
+      "name": "ui-ux-specialist",
+      "description": "Specialist for user interface and user experience design",
+      "agentPromptFile": "agents/ui-ux-specialist.md"
+    },
+    {
+      "name": "phaser3-integration-specialist",
+      "description": "Specialist for Phaser 3 game engine integration and WebView bridging",
+      "agentPromptFile": "agents/phaser3-integration-specialist.md"
+    }
+  ]
+}

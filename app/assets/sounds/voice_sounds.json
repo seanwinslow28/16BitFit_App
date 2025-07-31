@@ -1,0 +1,9 @@
+{
+  "sounds": [
+    {
+      "id": "placeholder",
+      "file": "placeholder.mp3",
+      "volume": 1
+    }
+  ]
+}

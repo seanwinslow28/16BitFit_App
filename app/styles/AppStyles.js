@@ -24,19 +24,21 @@ export const createStyles = (fontsLoaded) => {
     // MAIN CONTAINER
     container: {
       flex: 1,
-      backgroundColor: Colors.primary.black,
+      backgroundColor: Colors.shell.lightGray, // Updated to shell light gray
     },
 
     // MOBILE-FIRST SCREEN LAYOUTS (replacing GameBoy shell)
     screenContainer: {
       flex: 1,
-      backgroundColor: Colors.primary.black,
+      backgroundColor: Colors.shell.lightGray, // Shell background
     },
 
     // HEADER SECTION
     headerSection: {
       height: DS.screen.headerHeight,
-      backgroundColor: Colors.primary.black,
+      backgroundColor: Colors.shell.lightGray,
+      borderBottomWidth: 2,
+      borderBottomColor: Colors.shell.buttonBlack,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -45,26 +47,29 @@ export const createStyles = (fontsLoaded) => {
     },
 
     headerTitle: {
-      ...Typography.titleLarge,
+      ...Typography.screenTitle,
       fontFamily,
-      color: Colors.primary.logoYellow,
+      color: Colors.shell.buttonBlack,
     },
 
     settingsIcon: {
       width: 32,
       height: 32,
-      backgroundColor: Colors.primary.success,
-      borderRadius: 16,
+      backgroundColor: Colors.shell.darkerGray,
+      borderWidth: 2,
+      borderColor: Colors.shell.buttonBlack,
+      borderRadius: 4,
       justifyContent: 'center',
       alignItems: 'center',
     },
 
-    // CHARACTER ARENA SYSTEM
+    // CHARACTER ARENA SYSTEM (Green Screen Area)
     characterArenaSection: {
       height: getResponsiveCharacterArena().height,
       backgroundColor: Colors.transparent,
       justifyContent: 'center',
       alignItems: 'center',
+      paddingHorizontal: responsivePadding,
     },
 
     characterArena: {
@@ -72,6 +77,9 @@ export const createStyles = (fontsLoaded) => {
       height: getResponsiveCharacterArena().height,
       position: 'relative',
       overflow: 'hidden',
+      backgroundColor: Colors.screen.lightestGreen,
+      borderWidth: 4,
+      borderColor: Colors.shell.screenBorderGreen,
     },
 
     // Background layers
@@ -190,13 +198,14 @@ export const createStyles = (fontsLoaded) => {
       gap: Spacing.sm,
     },
 
-    // ACTION BUTTONS (Figma specifications)
+    // ACTION BUTTONS (Primary CTA Style)
     actionButton: {
       width: DS.actionButton.width,
       height: DS.actionButton.height,
-      backgroundColor: Colors.primary.success,
-      borderWidth: 4,
-      borderColor: Colors.primary.black,
+      backgroundColor: Colors.shell.abButtonMagenta,
+      borderWidth: 2,
+      borderColor: Colors.shell.buttonBlack,
+      borderRadius: 4,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
@@ -206,13 +215,13 @@ export const createStyles = (fontsLoaded) => {
     },
 
     actionButtonPressed: {
-      backgroundColor: Colors.button.pressed,
-      transform: [{ translateX: 2 }, { translateY: 2 }],
+      backgroundColor: '#7A1845', // Darker magenta
+      transform: [{ translateX: 2 }, { translateY: 2 }, { scale: 0.98 }],
       ...Effects.buttonShadowPressed,
     },
 
     actionButtonDisabled: {
-      backgroundColor: Colors.button.disabled,
+      backgroundColor: Colors.shell.darkerGray,
       opacity: 0.6,
       shadowOpacity: 0,
       elevation: 0,
@@ -222,19 +231,21 @@ export const createStyles = (fontsLoaded) => {
       width: DS.actionButton.iconSize,
       height: DS.actionButton.iconSize,
       resizeMode: 'contain',
+      tintColor: Colors.shell.lightGray,
     },
 
     actionButtonText: {
-      ...Typography.buttonText,
+      ...Typography.primaryButtonText,
       fontFamily,
-      color: Colors.primary.black,
+      color: Colors.shell.lightGray,
     },
 
     actionButtonTextDisabled: {
-      color: Colors.button.disabledText,
+      color: Colors.shell.buttonBlack,
+      opacity: 0.4,
     },
 
-    // STAT BARS (Figma specifications)
+    // STAT BARS (Style Guide Specification)
     statBarContainer: {
       width: DS.statBar.width,
       height: DS.statBar.height,
@@ -245,9 +256,9 @@ export const createStyles = (fontsLoaded) => {
     },
 
     statLabel: {
-      ...Typography.labelSmall,
+      ...Typography.bodyText,
       fontFamily,
-      color: Colors.primary.black,
+      color: Colors.shell.buttonBlack,
       width: DS.statBar.labelWidth,
       textAlign: 'left',
     },
@@ -255,9 +266,9 @@ export const createStyles = (fontsLoaded) => {
     statBarBackground: {
       width: DS.statBar.progressWidth,
       height: DS.statBar.height - 8, // 24px height
-      backgroundColor: Colors.environment.groundDark,
-      borderWidth: 2,
-      borderColor: Colors.primary.black,
+      backgroundColor: Colors.shell.darkerGray,
+      borderWidth: 1,
+      borderColor: Colors.shell.buttonBlack,
       position: 'relative',
       overflow: 'hidden',
     },
@@ -267,23 +278,23 @@ export const createStyles = (fontsLoaded) => {
       position: 'absolute',
       top: 0,
       left: 0,
-      // Background color will be set dynamically based on stat type
+      backgroundColor: Colors.shell.accentBlue, // Default, override per stat
     },
 
     statValue: {
-      ...Typography.microCopy,
+      ...Typography.bodyText,
       fontFamily,
-      color: Colors.primary.black,
+      color: Colors.shell.buttonBlack,
       width: DS.statBar.valueWidth,
       textAlign: 'right',
     },
 
-    // NAVIGATION (Bottom nav with proper spacing)
+    // NAVIGATION (Style Guide Specification)
     navigation: {
       height: DS.navigation.height,
-      backgroundColor: Colors.environment.groundDark,
+      backgroundColor: Colors.shell.darkerGray,
       borderTopWidth: 2,
-      borderTopColor: Colors.primary.black,
+      borderTopColor: Colors.shell.buttonBlack,
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
@@ -297,43 +308,49 @@ export const createStyles = (fontsLoaded) => {
       justifyContent: 'center',
       alignItems: 'center',
       gap: 4,
+      padding: Spacing.xs,
     },
 
     navButtonActive: {
-      backgroundColor: Colors.primary.success,
+      backgroundColor: Colors.shell.abButtonMagenta,
       borderRadius: 4,
       borderWidth: 2,
-      borderColor: Colors.primary.black,
+      borderColor: Colors.shell.buttonBlack,
     },
 
     navButtonSprite: {
       width: 32,
       height: 32,
       resizeMode: 'contain',
+      tintColor: Colors.shell.buttonBlack,
     },
 
     navLabel: {
-      ...Typography.microCopy,
+      ...Typography.subLabel,
       fontFamily,
-      color: Colors.primary.black,
+      color: Colors.shell.buttonBlack,
       textAlign: 'center',
     },
 
-    // STAT PANELS
+    navLabelActive: {
+      color: Colors.shell.lightGray,
+    },
+
+    // STAT PANELS (Style Guide Panels)
     statsPanel: {
-      backgroundColor: Colors.environment.groundDark,
+      backgroundColor: Colors.shell.darkerGray,
       borderWidth: 2,
-      borderColor: Colors.primary.black,
-      padding: responsivePadding,
+      borderColor: Colors.shell.buttonBlack,
+      padding: Spacing.md, // Consistent 16px internal padding
       margin: responsivePadding,
       borderRadius: 0, // Keep retro aesthetic
-      ...Effects.cardShadow,
+      ...Effects.panelShadow,
     },
 
     statsPanelTitle: {
-      ...Typography.titleMedium,
+      ...Typography.panelHeader,
       fontFamily,
-      color: Colors.primary.logoYellow,
+      color: Colors.shell.buttonBlack,
       textAlign: 'center',
       marginBottom: Spacing.md,
     },
@@ -596,14 +613,14 @@ export const createStyles = (fontsLoaded) => {
     // SCREEN CONTENT STYLES
     screenContent: {
       flex: 1,
-      backgroundColor: Colors.primary.black,
+      backgroundColor: Colors.shell.lightGray,
       padding: 0,
     },
 
     screenTitle: {
-      ...Typography.titleLarge,
+      ...Typography.screenTitle,
       fontFamily,
-      color: Colors.primary.logoYellow,
+      color: Colors.shell.buttonBlack,
       textAlign: 'center',
       marginVertical: Spacing.md,
     },
@@ -611,20 +628,22 @@ export const createStyles = (fontsLoaded) => {
     // LEGACY GAMEBOY STYLES (for backwards compatibility during transition)
     gameBoyShell: {
       flex: 1,
-      backgroundColor: Colors.primary.black,
+      backgroundColor: Colors.shell.lightGray,
       margin: 0,
       padding: 0,
     },
 
     screenArea: {
       flex: 1,
-      backgroundColor: Colors.primary.black,
+      backgroundColor: Colors.screen.lightestGreen,
       position: 'relative',
+      borderWidth: 4,
+      borderColor: Colors.shell.screenBorderGreen,
     },
 
     screen: {
       flex: 1,
-      backgroundColor: Colors.primary.black,
+      backgroundColor: Colors.screen.lightestGreen,
     },
 
     // Legacy GameBoy Controls (may not be needed in mobile-first design)

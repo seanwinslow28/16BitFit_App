@@ -1,8 +1,12 @@
 // Frame data for precise fighting game mechanics
 // 60fps = 16.67ms per frame
 
+import { CharacterFrameData, UniversalMechanics } from '../core/data/ComprehensiveFrameData';
+import FrameDataManager from '../core/systems/FrameDataManager';
+
+// Re-export comprehensive frame data for backward compatibility
 export const FrameData = {
-  // Attack frame data
+  // Legacy attack frame data (kept for compatibility)
   attacks: {
     punch: {
       startup: 3,      // 3 frames (50ms) before hit
@@ -70,42 +74,11 @@ export const FrameData = {
     },
   },
   
-  // Movement frame data
-  movement: {
-    walk: {
-      speed: 2,
-      acceleration: 0.5,
-    },
-    dash: {
-      startup: 3,
-      duration: 15,
-      recovery: 5,
-      speed: 6,
-      invulnerable: false,
-    },
-    jump: {
-      prejump: 4,      // Frames before leaving ground
-      airborne: 30,    // Frames in air
-      landing: 4,      // Landing recovery
-      cancelable: true, // Can attack during jump
-    },
-  },
-  
-  // Defense frame data
-  defense: {
-    block: {
-      startup: 1,      // Near instant
-      active: -1,      // Infinite while held
-      recovery: 2,     // Frames to drop guard
-      chipDamage: 0.1, // 10% damage on block
-    },
-    parry: {
-      startup: 2,
-      active: 6,       // 6 frame window to parry
-      recovery: 20,    // High risk if missed
-      counterBonus: 1.5, // Damage multiplier after parry
-    },
-  },
+  // Use universal mechanics from comprehensive data
+  movement: UniversalMechanics.jump,
+  dash: UniversalMechanics.dash,
+  defense: UniversalMechanics.block,
+  parry: UniversalMechanics.parry,
 };
 
 // Frame advantage calculator
@@ -133,20 +106,29 @@ export const isComboValid = (previousAttack, currentAttack, currentFrame) => {
   return framesSinceAttack >= windowStart && framesSinceAttack <= windowEnd;
 };
 
-// Frame data system for combat
+// Enhanced Frame data system for combat
 class FrameDataSystem {
   constructor() {
     this.frameCount = 0;
     this.entityStates = new Map();
+    this.frameDataManager = FrameDataManager;
   }
 
   process(entities, { time }) {
     this.frameCount++;
     
+    // Update frame data manager
+    this.frameDataManager.update(time.delta);
+    
     // Process each fighter
     Object.entries(entities).forEach(([key, entity]) => {
       if (entity.type === 'fighter' || entity.attack) {
         this.processFighter(key, entity);
+        
+        // Sync with comprehensive frame data
+        if (entity.archetype && !this.frameDataManager.activeStates.has(key)) {
+          this.frameDataManager.initializeCharacter(key, entity.archetype);
+        }
       }
     });
     

@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
+import { Colors, Spacing, Effects } from '../../constants/DesignSystem';
+import { StyleGuideComponents } from '../../constants/StyleGuideComponents';
 
 // Sprite mapping object (Metro bundler requires static paths)
 const SPRITE_MAP = {
@@ -56,14 +58,20 @@ const CharacterDisplay = React.memo(({ characterStats }) => {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={{ transform: [{ scale: characterScale }] }}>
-        <Image
-          source={getCharacterSpriteSource()}
-          style={styles.characterSprite}
-          contentFit="contain"
-          transition={300}
-        />
-      </Animated.View>
+      {/* Green screen area for character */}
+      <View style={styles.screenArea}>
+        {/* Scanline overlay effect */}
+        <View style={styles.scanlineOverlay} />
+        
+        <Animated.View style={[styles.characterContainer, { transform: [{ scale: characterScale }] }]}>
+          <Image
+            source={getCharacterSpriteSource()}
+            style={styles.characterSprite}
+            contentFit="contain"
+            transition={300}
+          />
+        </Animated.View>
+      </View>
     </View>
   );
 });
@@ -72,10 +80,27 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: Spacing.md,
+  },
+  screenArea: {
+    ...StyleGuideComponents.ScreenArea.container,
+    width: '100%',
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  scanlineOverlay: {
+    ...StyleGuideComponents.ScreenArea.scanlineOverlay,
+  },
+  characterContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   characterSprite: {
-    width: 150,
-    height: 150,
+    width: 128,
+    height: 128,
+    // Apply screen-appropriate styling for sprites
+    tintColor: undefined, // Preserve original sprite colors
   },
 });
 
