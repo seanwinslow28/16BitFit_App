@@ -1,6 +1,6 @@
 -- 16BitFit Production Database Schema Deployment
 -- Run this in your Supabase SQL Editor
--- https://app.supabase.com/project/noxwzelpibuytttlgztq/editor
+-- Execute via Supabase Dashboard > SQL Editor
 
 -- Migration 1: Initial Schema
 -- Enable UUID extension

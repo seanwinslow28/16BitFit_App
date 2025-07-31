@@ -8,9 +8,14 @@
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
-// Use the production credentials
-const supabaseUrl = process.env.SUPABASE_URL || 'https://noxwzelpibuytttlgztq.supabase.co';
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5veHd6ZWxwaWJ1eXR0dGxnenRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1Njc2ODQsImV4cCI6MjA2ODE0MzY4NH0.wLBAe5q8t8GImd7YGzW_AYwGAzs5xmkg1kFlqUGweLY';
+// Use environment variables for security
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('❌ Missing required environment variables: SUPABASE_URL and SUPABASE_ANON_KEY');
+  process.exit(1);
+}
 
 console.log('🔌 Testing Supabase Production Connection...');
 console.log(`📍 URL: ${supabaseUrl}`);
