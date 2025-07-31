@@ -88,6 +88,17 @@ Desktop.ini
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# IDE and tool configurations
+.cursor/
+claude_desktop_config.json
+*.local.json
+config/local-*.json
+
+# MCP configurations
+mcp_server.py
+supabase_mcp_server.py
+agent_access.py
+
 # Temporary files
 *.tmp
 *.temp
