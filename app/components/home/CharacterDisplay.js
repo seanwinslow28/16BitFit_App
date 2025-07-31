@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import { Colors, Spacing, Effects } from '../../constants/DesignSystem';
-import { StyleGuideComponents } from '../../constants/StyleGuideComponents';
+import StyleGuideComponents from '../../constants/StyleGuideComponents';
 
 // Sprite mapping object (Metro bundler requires static paths)
 const SPRITE_MAP = {
