@@ -13,6 +13,7 @@ import { useCharacter } from '../contexts/CharacterContext';
 import { SafeAreaView } from 'react-native-safe-area-context';  
 import designTokens from '../constants/designTokens'; // Import our design system
 import PixelButton from '../components/PixelButton';
+import StatGainAnimation from '../components/animations/StatGainAnimation';
 
 // DATA and LOGIC (unchanged)  
 const ACTIVITY_CATEGORIES = [  
@@ -32,13 +33,14 @@ const INTENSITY_LEVELS = [
 
 const QuickActivityLogScreen = () => {  
   const navigation = useNavigation();  
-  const { addActivity } = useCharacter();  
+  const { addActivity, characterStats } = useCharacter();  
     
   const [selectedCategory, setSelectedCategory] = useState(null);  
   const [selectedDuration, setSelectedDuration] = useState(20);  
   const [selectedIntensity, setSelectedIntensity] = useState(2);  
   const [showSuccess, setShowSuccess] = useState(false);  
-  const [previewStats, setPreviewStats] = useState(null);  
+  const [previewStats, setPreviewStats] = useState(null);
+  const [statGains, setStatGains] = useState(null);  
     
   const fadeAnim = useRef(new Animated.Value(0)).current;  
   const scaleAnim = useRef(new Animated.Value(0)).current;  
@@ -84,6 +86,12 @@ const QuickActivityLogScreen = () => {
       if (!selectedCategory) return;  
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);  
       const category = ACTIVITY_CATEGORIES.find(c => c.id === selectedCategory);  
+      const intensity = INTENSITY_LEVELS.find(i => i.level === selectedIntensity);
+      
+      // Calculate the stat gains
+      const gains = calculateStatGains(category, selectedDuration, intensity);
+      
+      // Log the activity
       addActivity({  
           category: selectedCategory,  
           name: category.name,  
@@ -91,9 +99,13 @@ const QuickActivityLogScreen = () => {
           intensity: selectedIntensity,  
           timestamp: new Date().toISOString(),  
       });  
-      setShowSuccess(true);  
-      Animated.spring(scaleAnim, { toValue: 1, friction: 4, useNativeDriver: true }).start();  
-      setTimeout(() => navigation.goBack(), 2000);  
+      
+      // Show the stat gain animation instead of simple success
+      setStatGains(gains);
+  };
+  
+  const handleAnimationComplete = () => {
+      navigation.goBack();
   };  
   // ...
 
@@ -179,6 +191,15 @@ const QuickActivityLogScreen = () => {
           </Animated.View>  
         )}  
       </ScrollView>  
+      
+      {/* Stat Gain Animation Overlay */}
+      {statGains && (
+        <StatGainAnimation
+          initialStats={characterStats}
+          gains={statGains}
+          onComplete={handleAnimationComplete}
+        />
+      )}
     </SafeAreaView>  
   );  
 };

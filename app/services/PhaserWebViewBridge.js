@@ -6,7 +6,6 @@
 
 import { getPhaserBridge } from '../gameEngine/phaser/integration/PhaserWebViewBridge';
 import { Platform } from 'react-native';
-import RNFS from 'react-native-fs';
 
 class PhaserWebViewBridgeService {
   constructor() {
@@ -18,7 +17,7 @@ class PhaserWebViewBridgeService {
     // Asset loading configuration
     this.assetConfig = {
       baseUrl: Platform.select({
-        ios: `${RNFS.MainBundlePath}/phaser-assets`,
+        ios: 'phaser-assets',
         android: 'file:///android_asset/phaser-assets'
       }),
       cacheEnabled: true,

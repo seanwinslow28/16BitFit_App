@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StatusBar, View, Text } from 'react-native';
+import { StatusBar } from 'react-native';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { preloadAssets } from './utils/assetPreloader';
@@ -16,12 +16,22 @@ import WorkoutSelectionV2 from './screens/WorkoutSelectionV2';
 import FoodSelectionScreenV2 from './screens/FoodSelectionScreenV2';
 import WorkoutHistoryScreen from './screens/WorkoutHistoryScreen';
 import QuickActivityLogScreen from './screens/QuickActivityLogScreen';
-import { GuestOnboardingScreen } from './screens/onboarding';
+import { 
+  GuestOnboardingScreen,
+  OnboardingWelcomeScreen,
+  OnboardingAuthScreen,
+  OnboardingCharacterCreationScreen,
+  OnboardingHealthScreen
+} from './screens/onboarding';
 
 // Import V2 screens that we know exist
 import StatsScreenV2 from './screens/StatsScreenV2';
 import SocialScreenV2 from './screens/SocialScreenV2';
 import BattleMenuScreen from './screens/BattleMenuScreen';
+import SettingsScreen from './screens/SettingsScreen';
+
+// Components
+import ControlDeckTabBar from './components/ControlDeckTabBar';
 
 // Services
 import { SupabaseProvider } from './services/SupabaseService';
@@ -35,7 +45,7 @@ import OnboardingManager from './services/OnboardingManager';
 import { CharacterProvider } from './contexts/CharacterContext';
 
 // Theme
-import { navigationTheme, tabBarTheme, statusBarTheme } from './constants/Theme';
+import { navigationTheme, statusBarTheme } from './constants/Theme';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -47,67 +57,28 @@ SplashScreen.preventAutoHideAsync();
 function MainTabs() {
   return (
     <Tab.Navigator
-      screenOptions={{
-        tabBarStyle: tabBarTheme.style,
-        tabBarActiveTintColor: tabBarTheme.activeTintColor,
-        tabBarInactiveTintColor: tabBarTheme.inactiveTintColor,
-        headerShown: false,
-        tabBarLabelStyle: {
-          ...tabBarTheme.labelStyle,
-          fontFamily: 'PressStart2P',
-        },
-        tabBarItemStyle: {
-          paddingVertical: 8,
-        },
-      }}
+      tabBar={props => <ControlDeckTabBar {...props} />}
+      screenOptions={{ headerShown: false }}
     >
       <Tab.Screen 
         name="HomeTab" 
         component={HomeScreenV2}
-        options={{
-          tabBarLabel: 'HOME',
-          tabBarIcon: () => (
-            <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontSize: 24 }}>🏠</Text>
-            </View>
-          ),
-        }}
+        options={{ tabBarLabel: 'HOME' }}
       />
       <Tab.Screen 
         name="BattleTab" 
         component={BattleStackNavigator}
-        options={{
-          tabBarLabel: 'BATTLE',
-          tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontSize: 24 }}>{focused ? '⚔️' : '🗡️'}</Text>
-            </View>
-          ),
-        }}
+        options={{ tabBarLabel: 'BATTLE' }}
       />
       <Tab.Screen 
         name="StatsTab" 
         component={StatsScreenV2}
-        options={{
-          tabBarLabel: 'STATS',
-          tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontSize: 24 }}>{focused ? '📊' : '📈'}</Text>
-            </View>
-          ),
-        }}
+        options={{ tabBarLabel: 'STATS' }}
       />
       <Tab.Screen 
         name="SocialTab" 
         component={SocialScreenV2}
-        options={{
-          tabBarLabel: 'SOCIAL',
-          tabBarIcon: ({ focused }) => (
-            <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontSize: 24 }}>{focused ? '🌐' : '👥'}</Text>
-            </View>
-          ),
-        }}
+        options={{ tabBarLabel: 'SOCIAL' }}
       />
     </Tab.Navigator>
   );
@@ -149,11 +120,18 @@ function RootNavigator() {
       initialRouteName={needsOnboarding ? "GuestOnboarding" : "Main"}
     >
       <Stack.Screen name="GuestOnboarding" component={GuestOnboardingScreen} />
+      <Stack.Screen name="OnboardingWelcome" component={OnboardingWelcomeScreen} />
+      <Stack.Screen name="OnboardingAuth" component={OnboardingAuthScreen} />
+      <Stack.Screen name="OnboardingCharacterCreation" component={OnboardingCharacterCreationScreen} />
+      <Stack.Screen name="OnboardingHealth" component={OnboardingHealthScreen} />
       <Stack.Screen name="Main" component={MainTabs} />
+      <Stack.Screen name="BattleMenu" component={BattleMenuScreen} />
       <Stack.Screen name="WorkoutSelection" component={WorkoutSelectionV2} />
       <Stack.Screen name="QuickActivityLog" component={QuickActivityLogScreen} />
       <Stack.Screen name="FoodSelection" component={FoodSelectionScreenV2} />
       <Stack.Screen name="WorkoutHistory" component={WorkoutHistoryScreen} />
+      <Stack.Screen name="Stats" component={StatsScreenV2} />
+      <Stack.Screen name="Settings" component={SettingsScreen} />
     </Stack.Navigator>
   );
 }

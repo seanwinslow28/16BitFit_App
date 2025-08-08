@@ -13,12 +13,11 @@ import {
   Alert,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
-import RNFS from 'react-native-fs';
 import { getPhaserBridge } from '../gameEngine/phaser/integration/PhaserWebViewBridge';
 import PerformanceMonitor from '../gameEngine/core/utils/PerformanceMonitor';
 
 const PHASER_HTML_PATH = Platform.select({
-  ios: `${RNFS.MainBundlePath}/phaser-game-dist/index.html`,
+  ios: 'phaser-game-dist/index.html',
   android: 'file:///android_asset/phaser-game-dist/index.html',
   default: 'http://localhost:8080' // For development
 });

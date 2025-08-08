@@ -42,6 +42,8 @@ CREATE TABLE users (
 CREATE TABLE avatars (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  character_type TEXT NOT NULL CHECK (character_type IN ('trainer', 'yoga', 'weightlifter', 'runner', 'cyclist')),
+  character_gender TEXT NOT NULL CHECK (character_gender IN ('male', 'female')),
   health INTEGER DEFAULT 75,
   strength INTEGER DEFAULT 60,
   stamina INTEGER DEFAULT 70,
@@ -95,6 +97,8 @@ CREATE INDEX idx_workouts_user_id ON workouts(user_id);
 CREATE INDEX idx_workouts_created_at ON workouts(created_at);
 CREATE INDEX idx_battle_results_user_id ON battle_results(user_id);
 CREATE INDEX idx_evolution_milestones_user_id ON evolution_milestones(user_id);
+CREATE INDEX idx_avatars_character_type ON avatars(character_type);
+CREATE INDEX idx_avatars_evolution_stage ON avatars(evolution_stage);
 
 ## Real-time Features
 - Character stat updates during activity logging
@@ -181,7 +185,7 @@ class AvatarProgressionManager {
       .subscribe();
   }
   
-  async updateAvatarStats(userId) {
+  async updateAvatarStats(userId, characterType, characterGender) {
     // Recalculate stats after workout/nutrition log
     const { data } = await supabase.rpc('calculate_avatar_stats', {
       p_user_id: userId
@@ -191,6 +195,8 @@ class AvatarProgressionManager {
     await supabase
       .from('avatars')
       .update({
+        character_type: characterType,
+        character_gender: characterGender,
         health: data.health,
         strength: data.strength,
         stamina: data.stamina,
@@ -199,7 +205,6 @@ class AvatarProgressionManager {
       })
       .eq('user_id', userId);
   }
-}
 
 ## Authentication Strategy
 - Supabase Auth with social login options

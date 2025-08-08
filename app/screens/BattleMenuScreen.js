@@ -1,17 +1,22 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Colors, Typography, Spacing, Effects } from '../constants/DesignSystem';
-import { ScreenHeader } from '../components/home';
+import designTokens from '../constants/designTokens';
 
+// =================================================================================
+// MAIN COMPONENT: BattleMenuScreen
+// This is the new, revamped Battle Menu Screen.
+// =================================================================================
 const BattleMenuScreen = () => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       {/* Screen Header */}
-      <ScreenHeader title="BATTLE MODE" />
-        
+      <View style={styles.screenHeader}>
+        <Text style={styles.appTitle}>BATTLE MODE</Text>
+      </View>
+      
       {/* Menu Options Container */}
       <View style={styles.menuContainer}>
         {/* QUICK BATTLE Button (Active) */}
@@ -21,7 +26,7 @@ const BattleMenuScreen = () => {
         >
           <Text style={styles.menuButtonText}>QUICK BATTLE</Text>
         </TouchableOpacity>
-          
+        
         {/* BOSS FIGHT Button (Disabled) */}
         <View style={[styles.menuButton, styles.menuButtonDisabled]}>
           <Text style={styles.menuButtonText}>BOSS FIGHT</Text>
@@ -32,44 +37,69 @@ const BattleMenuScreen = () => {
   );
 };
 
+// =================================================================================
+// STYLESHEET
+// All styles now reference our `designTokens.js` file.
+// =================================================================================
+const { colors, typography, spacing, radius } = designTokens;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.screen.lightestGreen,
+    backgroundColor: colors.theme.background,
   },
+  // Screen Header
+  screenHeader: {
+    backgroundColor: colors.theme.surfaceDark,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 2,
+    borderBottomColor: colors.theme.text,
+  },
+  appTitle: {
+    fontFamily: typography.fonts.pixel,
+    fontSize: typography.styles.lg.fontSize,
+    color: colors.theme.primary,
+    textShadowColor: colors.theme.text,
+    textShadowOffset: { width: 1, height: 1 },
+  },
+  // Menu Container
   menuContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: Spacing.xl,
-    gap: Spacing.xl,
+    padding: spacing.xl,
+    gap: spacing.xl,
   },
+  // Menu Buttons
   menuButton: {
     width: '100%',
-    backgroundColor: Colors.screen.darkGreen,
-    paddingVertical: Spacing.lg,
-    paddingHorizontal: Spacing.xl,
+    backgroundColor: colors.theme.surfaceDark,
+    paddingVertical: spacing.lg,
+    paddingHorizontal: spacing.xl,
     borderWidth: 2,
-    borderColor: Colors.screen.darkestGreen,
+    borderColor: colors.theme.text,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 4,
-    ...Effects.buttonShadowDefault,
   },
   menuButtonText: {
-    ...Typography.bodyText,
-    color: Colors.screen.lightestGreen,
+    fontFamily: typography.fonts.pixel,
+    fontSize: typography.styles.base.fontSize,
+    color: colors.theme.primary,
     textAlign: 'center',
   },
+  // Disabled State
   menuButtonDisabled: {
-    backgroundColor: Colors.shell.darkerGray,
-    borderColor: Colors.shell.buttonBlack,
+    backgroundColor: colors.shell.dark,
+    borderColor: colors.button.black,
     opacity: 0.6,
   },
   comingSoonText: {
-    ...Typography.subLabel,
-    color: Colors.screen.lightestGreen,
-    marginTop: Spacing.sm,
+    fontFamily: typography.fonts.pixel,
+    fontSize: typography.styles.sm.fontSize,
+    color: colors.theme.primary,
+    marginTop: spacing.sm,
   },
 });
 

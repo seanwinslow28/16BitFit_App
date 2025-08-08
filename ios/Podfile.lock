@@ -383,6 +383,9 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
+  - react-native-slider (4.5.7):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
   - react-native-webview (13.2.2):
     - React-Core
   - React-NativeModulesApple (0.72.10):
@@ -538,6 +541,8 @@ PODS:
   - RNScreens (3.22.1):
     - React-Core
     - React-RCTImage
+  - RNSVG (15.12.1):
+    - React-Core
   - SDWebImage (5.15.8):
     - SDWebImage/Core (= 5.15.8)
   - SDWebImage/Core (5.15.8)
@@ -592,6 +597,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -617,6 +623,7 @@ DEPENDENCIES:
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - SDWebImage (~> 5.15.8)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -709,6 +716,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-slider:
+    :path: "../node_modules/@react-native-community/slider"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-NativeModulesApple:
@@ -759,6 +768,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -806,6 +817,7 @@ SPEC CHECKSUMS:
   React-logger: 13a8b7094f27626adf648a8458e842e27fa70e13
   react-native-netinfo: 66c9ac0d0ae92a57a9ed99ab8a75429740700c73
   react-native-safe-area-context: f998d7c030d9c89b0a745f8466f1f988478d822e
+  react-native-slider: e420ee1754e28dfdd49163bbc42db39b01e41538
   react-native-webview: 65c16ff14c50a6c3d3cf2c6e4b60b47b413dbaf8
   React-NativeModulesApple: cb6d3c0f057dbd98545ddf1ec047f225d1dd9bf9
   React-perflogger: 43287389ea08993c300897a46f95cfac04bb6c1a
@@ -831,6 +843,7 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: dda7ccd00a9b9e16b2c2e2282147ab5300344482
   RNReanimated: 66b73d76033ee90993b08707aea68416eae2ebc5
   RNScreens: 39db1910d2ea9ae885dcda43086818e9f8b714d0
+  RNSVG: f20e0312fc22cf9b166fb842dc406078473ba6bc
   SDWebImage: cb032eba469c54e0000e78bcb0a13cdde0a52798
   SDWebImageAVIFCoder: 8348fef6d0ec69e129c66c9fe4d74fbfbf366112
   SDWebImageSVGCoder: 15a300a97ec1c8ac958f009c02220ac0402e936c

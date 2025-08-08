@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { Colors, Typography, Spacing, Effects } from '../constants/DesignSystem';
-import { ScreenHeader } from '../components/home';
+import designTokens from '../constants/designTokens';
 
-// Mock leaderboard data - replace with API call to Supabase
+// =================================================================================
+// MOCK DATA: Replace this with an API call to your backend/Supabase.
+// =================================================================================
 const MOCK_LEADERBOARD_DATA = [
   { id: '1', rank: 1, name: 'PixelWarrior', level: 99 },
   { id: '2', rank: 2, name: 'MegaStreaker', level: 95 },
   { id: '3', rank: 3, name: 'FitMasterX', level: 92 },
   { id: '4', rank: 4, name: 'CardioKing', level: 88 },
-  { id: '5', rank: 5, name: 'You', level: 85, isCurrentUser: true },
+  { id: '5', rank: 5, name: 'You', level: 85, isCurrentUser: true }, // Highlighted user
   { id: '6', rank: 6, name: 'GymGuru', level: 81 },
   { id: '7', rank: 7, name: 'RookieRyu', level: 76 },
   { id: '8', rank: 8, name: 'IronHeart', level: 75 },
@@ -17,7 +18,10 @@ const MOCK_LEADERBOARD_DATA = [
   { id: '10', rank: 10, name: 'EnduroKid', level: 68 },
 ];
 
-// PlayerRow Component
+// =================================================================================
+// SUB-COMPONENT: PlayerRow
+// Renders a single row in our leaderboard.
+// =================================================================================
 const PlayerRow = ({ item }) => (
   <View style={[styles.playerRow, item.isCurrentUser && styles.userRow]}>
     <Text style={[styles.playerText, styles.rankText]}>{item.rank}</Text>
@@ -26,6 +30,9 @@ const PlayerRow = ({ item }) => (
   </View>
 );
 
+// =================================================================================
+// MAIN COMPONENT: SocialScreenV2
+// =================================================================================
 const SocialScreenV2 = () => {
   const [activeTab, setActiveTab] = useState('Leaderboard');
 
@@ -57,8 +64,10 @@ const SocialScreenV2 = () => {
   return (
     <View style={styles.container}>
       {/* Screen Header */}
-      <ScreenHeader title="SOCIAL" />
-        
+      <View style={styles.screenHeader}>
+        <Text style={styles.appTitle}>SOCIAL</Text>
+      </View>
+      
       {/* Tab Switcher */}
       <View style={styles.tabContainer}>
         <TouchableOpacity onPress={() => setActiveTab('Leaderboard')}>
@@ -77,65 +86,86 @@ const SocialScreenV2 = () => {
   );
 };
 
+// =================================================================================
+// STYLESHEET
+// =================================================================================
+const { colors, typography, spacing, radius } = designTokens;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.screen.lightestGreen,
+    backgroundColor: colors.theme.background,
+  },
+  screenHeader: {
+    backgroundColor: colors.theme.surfaceDark,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 2,
+    borderBottomColor: colors.theme.text,
+  },
+  appTitle: {
+    fontFamily: typography.fonts.pixel,
+    fontSize: typography.styles.lg.fontSize,
+    color: colors.theme.primary,
   },
   // Tab Navigation
   tabContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: Colors.screen.darkGreen,
-    paddingVertical: Spacing.sm,
+    backgroundColor: colors.theme.surfaceDark,
+    paddingVertical: spacing.sm,
     borderBottomWidth: 2,
-    borderBottomColor: Colors.screen.darkestGreen,
+    borderBottomColor: colors.theme.text,
   },
   tabText: {
-    ...Typography.subLabel,
-    color: Colors.screen.lightGreen,
+    fontFamily: typography.fonts.pixel,
+    fontSize: typography.styles.sm.fontSize,
+    color: colors.theme.textLight,
   },
   activeTabText: {
-    color: Colors.screen.lightestGreen,
-    textShadowColor: Colors.screen.lightestGreen,
+    color: colors.theme.primary,
+    textShadowColor: colors.theme.primary,
     textShadowOffset: {width: 0, height: 0},
     textShadowRadius: 4,
   },
   // Content
   contentContainer: {
     flex: 1,
-    padding: Spacing.md,
+    padding: spacing.md,
   },
   // Leaderboard List
   listHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingBottom: Spacing.sm,
+    paddingBottom: spacing.sm,
     borderBottomWidth: 2,
-    borderColor: Colors.screen.darkestGreen,
-    marginBottom: Spacing.xs,
+    borderColor: colors.theme.text,
+    marginBottom: spacing.xs,
   },
   headerText: {
-    ...Typography.subLabel,
-    color: Colors.screen.darkestGreen,
+    fontFamily: typography.fonts.pixel,
+    fontSize: typography.styles.sm.fontSize,
+    color: colors.theme.text,
   },
   playerRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: Spacing.md,
-    paddingHorizontal: Spacing.sm,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.sm,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.screen.darkGreen,
+    borderBottomColor: colors.theme.surfaceDark,
   },
   userRow: {
-    backgroundColor: Colors.screen.lightGreen,
+    backgroundColor: colors.theme.surface,
     borderWidth: 2,
-    borderColor: Colors.shell.accentBlue,
-    borderRadius: 4,
+    borderColor: colors.accent['steely-blue'],
+    borderRadius: radius.sm,
   },
   playerText: {
-    ...Typography.bodyText,
-    color: Colors.screen.darkestGreen,
+    fontFamily: typography.fonts.pixel,
+    fontSize: typography.styles.base.fontSize,
+    color: colors.theme.text,
   },
   rankText: {
     width: 40,
@@ -143,7 +173,7 @@ const styles = StyleSheet.create({
   },
   nameText: {
     flex: 1,
-    marginLeft: Spacing.lg,
+    marginLeft: spacing.lg,
   },
   levelText: {
     width: 60,
@@ -156,8 +186,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   placeholderText: {
-    ...Typography.bodyText,
-    color: Colors.screen.darkGreen,
+    fontFamily: typography.fonts.pixel,
+    fontSize: typography.styles.base.fontSize,
+    color: colors.theme.textLight,
   },
 });
 

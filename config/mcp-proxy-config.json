@@ -8,7 +8,7 @@
       "panicIfInvalid": false,
       "logEnabled": true,
       "authTokens": [
-        "16bitfit-dev-token"
+        "${MCP_PROXY_AUTH_TOKEN}"
       ]
     }
   },

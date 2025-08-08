@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';  
 import { useCharacter } from '../contexts/CharacterContext';  
 import designTokens from '../constants/designTokens'; // Import our design system
+import StatGainAnimation from '../components/animations/StatGainAnimation';
 
 // DATA and LOGIC (unchanged)  
 const QUICK_FOODS = [  
@@ -24,10 +25,11 @@ const QUICK_FOODS = [
 
 const FoodSelectionScreenV2 = () => {  
   const navigation = useNavigation();  
-  const { addNutrition } = useCharacter();  
+  const { addNutrition, characterStats } = useCharacter();  
     
   const [selectedFood, setSelectedFood] = useState(null);  
-  const [showSuccess, setShowSuccess] = useState(false);  
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [statGains, setStatGains] = useState(null);  
     
   const successAnim = useRef(new Animated.Value(0)).current;  
   const eatAnim = useRef(new Animated.Value(1)).current;
@@ -58,13 +60,20 @@ const FoodSelectionScreenV2 = () => {
   };
 
   const handleEatFood = async (food) => {  
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);  
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    
+    const gains = calculateStatGains(food);
+    
     addNutrition({  
       name: food.name, category: food.category, calories: food.calories, protein: food.protein || 0,  
     });  
-    setShowSuccess(true);  
-    Animated.spring(successAnim, { toValue: 1, friction: 4, useNativeDriver: true }).start();  
-    setTimeout(() => navigation.goBack(), 1500);  
+    
+    // Show the stat gain animation instead of simple success
+    setStatGains(gains);
+  };
+  
+  const handleAnimationComplete = () => {
+    navigation.goBack();
   };  
   // ...
 
@@ -110,7 +119,16 @@ const FoodSelectionScreenV2 = () => {
         
       <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>  
         <Text style={styles.backButtonText}>← BACK</Text>  
-      </Pressable>  
+      </Pressable>
+      
+      {/* Stat Gain Animation Overlay */}
+      {statGains && (
+        <StatGainAnimation
+          initialStats={characterStats}
+          gains={statGains}
+          onComplete={handleAnimationComplete}
+        />
+      )}
     </View>  
   );  
 };

@@ -137,6 +137,9 @@ patches/
 # TypeScript
 *.tsbuildinfo
 
+# Security audit reports (may contain sensitive info references)
+SECURITY_AUDIT_REPORT.md
+
 # ESLint
 .eslintcache
 
