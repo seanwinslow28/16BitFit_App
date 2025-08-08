@@ -68,7 +68,7 @@ AUTH0_CLIENT_ID=your-client-id
 AUTH0_CLIENT_SECRET=your-client-secret
 
 # MCP Proxy
-MCP_PROXY_AUTH_TOKEN=16bitfit-dev-token
+MCP_PROXY_AUTH_TOKEN=${MCP_PROXY_AUTH_TOKEN:-your-dev-token}
 EOF
 
 echo -e "${GREEN}✅ .env updated with local Supabase configuration!${NC}"

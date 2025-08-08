@@ -46,7 +46,7 @@ docker-compose ps
 echo ""
 echo "🔗 Testing MCP Proxy Endpoints..."
 # Test MCP Proxy specific endpoints
-curl -s "http://localhost:9090/sse" -H "Authorization: Bearer 16bitfit-dev-token" | head -5
+curl -s "http://localhost:9090/sse" -H "Authorization: Bearer ${MCP_PROXY_AUTH_TOKEN:-dummy-token}" | head -5
 
 echo ""
 echo "📋 Checking Environment Variables..."
