@@ -38,7 +38,7 @@
   * **Stage 2 (Intermediate):** Unlocked after 10 logged workouts.  
   * **Stage 3 (Advanced):** Unlocked after 30 logged workouts.  
   * **Stage 4 (Master):** Unlocked after 50 logged workouts.  
-  * **Stage 5 (Legend):** Unlocked after 75 logged workouts.  
+  * **Stage 5 (Legend):** Unlocked after 100 logged workouts.  
   * Each evolution provides a significant boost to base stats and a complete visual transformation of the avatar.
 
 ### **4\. Core Game Mechanics: The Fighting Engine**

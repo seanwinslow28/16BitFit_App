@@ -57,7 +57,7 @@ Retro arcade style fitness app with a main avatar that has 5 evolution stages. S
 
 **5\.** 👑 **Legend**
 
-**Unlock Condition:** 75-days of logged workouts  
+**Unlock Condition:** 100-days of logged workouts  
  **Visual Style:**
 
 * Final evolution; design inspired by anime boss transformations or Street Fighter final forms
@@ -68,7 +68,7 @@ Retro arcade style fitness app with a main avatar that has 5 evolution stages. S
 
 * Floating particles, electricity, fire, or wind effects around character
 
-In order to have their avatar grow and advance, the user will log their workouts and food intake. When they log healthy foods and log workouts, then the stats of the avatar go up. If they log unhealthy foods, skip workouts, or don’t log at all, the avatars stats slowly go down and when it reaches a critical low point in their stats, the avatar changes to an avatar that looks sick/tired/sluggish. After 10 days of logged workouts, the avatar evolves to level 2\. After 30 days of logged workouts, they evolve to level 3\. After 50 days of logged workouts, they evolve to level 4\. After 75 days of logged workouts, they evolve to level 5\.   
+In order to have their avatar grow and advance, the user will log their workouts and food intake. When they log healthy foods and log workouts, then the stats of the avatar go up. If they log unhealthy foods, skip workouts, or don’t log at all, the avatars stats slowly go down and when it reaches a critical low point in their stats, the avatar changes to an avatar that looks sick/tired/sluggish. After 10 days of logged workouts, the avatar evolves to level 2\. After 30 days of logged workouts, they evolve to level 3\. After 50 days of logged workouts, they evolve to level 4\. After 100 days of logged workouts, they evolve to level 5\.   
 This all pays off because the more you workout and eat healthy, the better your stats become. Which carries over to the boss battles stages.   
 The boss battle stages will be where your character uses its updated stats to fight a boss. For the MVP, there will be a simple training dummy to understand game mechanics and 5 bosses:   
 1)TrainingDummy \- Easy start to understand game mechanics. Not difficult at all  

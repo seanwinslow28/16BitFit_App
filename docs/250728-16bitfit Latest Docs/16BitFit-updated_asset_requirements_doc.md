@@ -1,13 +1,13 @@
-# 16BitFit - Asset Requirements Document
+# 16BitFit - Asset Requirements Document (Updated)
 
 ## 📋 Character System Reference
 
-**For detailed character personalities, evolution stages, and animation sequences, see:**
+**For detailed character personalities, animation sequences, and character specifications, see:**
 `16BitFit-Combined Avatar & Animation Asset Master List.md`
 
 This comprehensive character document contains:
-- **10 Character Personalities** (2 genders × 5 types: Trainer, Yoga, Weightlifter, Runner, Cyclist)
-- **4,786 total animation sequences** across all characters and evolution stages
+- **10 Home Screen Character Personalities** (2 genders × 5 types: Trainer, Yoga, Weightlifter, Runner, Cyclist) with 5 evolution stages
+- **Diverse Combat Character Roster** featuring authentic representation across ethnicities and fighting styles
 - **Dual animation system specifications** (Game Boy home + Street Fighter 2 combat)
 - **Character-specific special moves** and fighting styles
 - **Production priority phases** and DALL-E prompt templates
@@ -18,12 +18,12 @@ This comprehensive character document contains:
 
 *All sprites must be created in a high-fidelity 16-bit style following the dual animation system outlined in the Combined Avatar & Animation Asset Master List.*
 
-### **1.1. Player Character System** 
+### **1.1. Player Character System**
 
-**CHARACTER FOUNDATION:**
-- **10 Base Character Types** (M_Trainer, F_Trainer, M_Yoga, F_Yoga, M_Weightlifter, F_Weightlifter, M_Runner, F_Runner, M_Cyclist, F_Cyclist)
-- **5 Evolution Stages per Character** (Basic, Intermediate, Advanced, Master, Legend)
-- **Total Character Sets Required:** 50 complete avatar sets (10 characters × 5 evolution stages)
+**UPDATED CHARACTER FOUNDATION:**
+- **Home Screen Characters**: 10 base character types × 5 evolution stages = 50 complete avatar sets with evolution progression
+- **Combat Characters**: Diverse individual character roster (no evolution stages) featuring authentic representation
+- **Dual Animation System**: Separate specifications for home screen (Game Boy) and combat (Street Fighter 2)
 
 **DUAL ANIMATION REQUIREMENTS:**
 
@@ -33,6 +33,7 @@ This comprehensive character document contains:
 - **Style:** Chunky, blocky pixels with minimal detail
 - **Animation:** 12-15 FPS for retro feel
 - **Format:** PNG with transparency
+- **Evolution System:** 5 stages per character type (Basic → Intermediate → Advanced → Master → Legend)
 
 **Required Animations per Character/Evolution Stage:**
 - **Idle Animation** (4-6 frames) - Character-specific personality expression
@@ -46,8 +47,9 @@ This comprehensive character document contains:
 - **Style:** Detailed pixel art with smooth animations
 - **Animation:** 60 FPS for fighting game precision
 - **Format:** Sprite sheets optimized for Phaser 3
+- **Character System:** Individual diverse characters (no evolution stages)
 
-**Required Combat Animations per Character/Evolution Stage:**
+**Required Combat Animations per Character:**
 
 **Movement & Stance:**
 - Idle Stance (4-6 frames) - Ready fighting position
@@ -59,7 +61,7 @@ This comprehensive character document contains:
 - Light Punch (LP) (2-3 frames) - Quick jab attack
 - Medium Punch (MP) (3-4 frames) - Standard punch
 - Heavy Punch (HP) (4-6 frames) - Powerful punch with windup
-- **Character-Specific Special Move** (8-12 frames) - Unique signature attack per personality type
+- **Character-Specific Special Move** (8-12 frames) - Unique signature attack per character
 
 **Defensive & Reaction:**
 - Take Hit (2-3 frames) - Recoil from enemy attack
@@ -71,37 +73,77 @@ This comprehensive character document contains:
 - Win Pose (6-8 frames) - Victory celebration
 - Lose/Defeated (4-6 frames) - Defeat animation
 
-**CHARACTER-SPECIFIC SPECIAL MOVES:**
-- **Trainer:** "Motivation Blast" / "Inspiration Wave"
-- **Yoga:** "Zen Strike" / "Harmony Burst"  
-- **Weightlifter:** "Power Slam" / "Strength Surge"
-- **Runner:** "Speed Dash" / "Cardio Combo"
-- **Cyclist:** "Endurance Spin" / "Stamina Storm"
+### **1.2. Combat Character Roster**
 
-### **1.2. Boss Characters** (Street Fighter 2 Style)
+**MVP Diverse Character Lineup:**
 
-**Complete Boss Roster - 6 Bosses × 6 Animations = 36 Boss Sequences:**
+#### **Marcus** - Black Male Trainer
+- **Fighting Style:** Urban Boxing + Motivational Energy
+- **Special Move:** "Motivation Blast" - Explosive encouraging energy projectile
+- **Personality:** Charismatic community fitness leader
+- **Visual Theme:** Athletic wear, confident stance, golden energy effects
 
-#### **Boss 1: Training Dummy**
-- **Idle** (1 frame) - Stationary target
-- **Take Hit** (2 frames) - Recoil/shake when hit
-- **Defeated** (3 frames) - Falls apart/deactivates
+#### **Aria** - Latina Female Trainer  
+- **Fighting Style:** Capoeira + Dance Combat
+- **Special Move:** "Inspiration Wave" - Flowing dance-inspired energy wave
+- **Personality:** Vibrant dance fitness instructor
+- **Visual Theme:** Rhythmic movement, rainbow energy effects, warm colors
+
+#### **Kenji** - Asian Male Yoga Instructor
+- **Fighting Style:** Aikido + Tai Chi Flow
+- **Special Move:** "Zen Strike" - Precise chi-powered palm strike
+- **Personality:** Calm mindfulness coach
+- **Visual Theme:** Balanced stance, blue-white chi energy, fluid movements
+
+#### **Zara** - Middle Eastern Female Weightlifter
+- **Fighting Style:** Powerlifting + Wrestling Techniques  
+- **Special Move:** "Strength Surge" - Explosive shockwave of pure strength
+- **Personality:** Determined barrier-breaking athlete
+- **Visual Theme:** Powerful stance, orange-red energy, geometric patterns
+
+#### **Sean** - Caucasian Male Trainer (Advanced)
+- **Fighting Style:** Classic Boxing + Fitness Coaching
+- **Special Move:** "Champion's Drive" - Blue energy with championship aura
+- **Personality:** Seasoned fitness coach, classic training methodology
+- **Visual Theme:** Traditional athletic gear, blue energy, classic stance
+
+#### **Mary** - Caucasian Female Trainer (Advanced)
+- **Fighting Style:** Kickboxing + Personal Training
+- **Special Move:** "Empowerment Strike" - Pink energy with motivational force
+- **Personality:** Experienced personal trainer, empowering leadership style
+- **Visual Theme:** Professional workout attire, pink energy effects, kickboxing precision
+
+**Expansion Characters (Future Phases):**
+- **Emma** - Caucasian Female Weightlifter (advanced personality)
+- **Dakari** - Black Female Runner (speed-focused combat)
+- **Raj** - South Asian Male Cyclist (endurance-based abilities)
+- **Sofia** - Latina Yoga Instructor (flexibility combat style)
+
+### **1.3. Boss Character System**
+
+#### **Boss 1: Training Dummy** 🎯
+- **Idle Stance** (4-6 frames) - Mechanical, robotic
+- **Movement** (6-8 frames) - Limited, predictable patterns
+- **Primary Attack** (4-6 frames) - Basic mechanical swings
+- **Special Attack** (6-10 frames) - Spinning practice mode
+- **Take Hit** (2-3 frames) - Padded absorption
+- **Defeated** (6-8 frames) - Mechanical shutdown
 
 #### **Boss 2: Procrastination Phantom** 👻
-- **Idle Stance** (4-6 frames) - Ghostly floating
-- **Movement** (6-8 frames) - Teleporting dash
-- **Primary Attack** (4-6 frames) - Phantom strike
-- **Special Attack** (6-10 frames) - Evasion rush
-- **Take Hit** (2-3 frames) - Ethereal recoil
-- **Defeated** (6-8 frames) - Fading away
+- **Idle Stance** (4-6 frames) - Lazy floating, yawning
+- **Movement** (6-8 frames) - Sluggish drift
+- **Primary Attack** (4-6 frames) - Demotivating wave
+- **Special Attack** (6-10 frames) - "Tomorrow trap" field
+- **Take Hit** (2-3 frames) - Surprised jolt
+- **Defeated** (6-8 frames) - Motivational dissolution
 
-#### **Boss 3: Sloth Demon** 🦥
-- **Idle Stance** (4-6 frames) - Slow, heavy breathing
-- **Movement** (6-8 frames) - Lumbering walk
-- **Primary Attack** (4-6 frames) - Lazy swipe
-- **Special Attack** (6-10 frames) - Sleep wave
-- **Take Hit** (2-3 frames) - Minimal reaction
-- **Defeated** (6-8 frames) - Slow collapse
+#### **Boss 3: Sloth Demon** 😴
+- **Idle Stance** (4-6 frames) - Heavy breathing, drowsy
+- **Movement** (6-8 frames) - Slow, deliberate steps
+- **Primary Attack** (4-6 frames) - Lethargy cloud
+- **Special Attack** (6-10 frames) - Sleep inducement aura
+- **Take Hit** (2-3 frames) - Slow recoil
+- **Defeated** (6-8 frames) - Energy awakening
 
 #### **Boss 4: Gym Bully** 💀
 - **Idle Stance** (4-6 frames) - Aggressive posturing
@@ -129,9 +171,9 @@ This comprehensive character document contains:
 
 ---
 
-## **2. Audio Files**
+## **2. Audio Assets**
 
-*All audio must be in a 16-bit chiptune style.*
+*All audio must have a retro 16-bit style that fits the Game Boy aesthetic while maintaining modern clarity.*
 
 ### **2.1. Music Tracks (Looping)**
 
@@ -211,40 +253,66 @@ This comprehensive character document contains:
 - **Blue Accent:** #5577AA
 
 ### **Asset Production Summary**
-- **Home Screen Avatars:** 50 characters × 4 animations × 5 evolution stages = **1,000 sequences**
-- **Combat Avatars:** 50 characters × 15 combat animations × 5 evolution stages = **3,750 sequences**  
+- **Home Screen Avatars:** 10 characters × 4 animations × 5 evolution stages = **200 sequences**
+- **Combat Characters:** 10 diverse characters × 15 combat animations = **150 sequences**  
 - **Boss Sprites:** 6 bosses × 6 animations = **36 sequences**
 - **Audio Files:** 6 music tracks + 17 sound effects = **23 audio assets**
 - **UI & Environment:** Logos, icons, backgrounds, UI components = **~30 assets**
 
-**Grand Total: 4,839 total assets**
+**Grand Total: 439 total assets** (significantly reduced from original 4,839)
 
 ---
 
 ## **5. Production Priority Phases**
 
 ### **Phase 1: MVP Core (Weeks 1-4)**
-- 2 base characters (Male/Female Trainer) × 5 evolution stages
-- Home screen animations for MVP characters
-- Basic combat animations for MVP characters  
+- 6 core combat characters (Marcus, Aria, Kenji, Zara, Sean, Mary) with complete animation sets
+- 2 base home screen characters (Male/Female Trainer) × 5 evolution stages
 - Training Dummy boss sprites
 - Core audio assets and UI components
 
 ### **Phase 2: Character Expansion (Weeks 5-8)**
-- Add Yoga and Weightlifter character types
-- Complete home screen and combat animations
+- Add remaining home screen character types (Yoga, Weightlifter)
+- Complete home screen animations for all character types
 - Add Procrastination Phantom and Sloth Demon bosses
+- Add 2 additional combat characters
 
 ### **Phase 3: Full Roster (Weeks 9-12)**
-- Complete Runner and Cyclist character types
+- Complete all home screen character types (Runner, Cyclist)
+- Add final 2 combat characters
 - All remaining boss sprites
 - Polish and optimization passes
 
 ### **Phase 4: Advanced Features (Weeks 13-16)**
-- Special evolution transformation sequences
-- Advanced combat combinations
+- Home screen evolution transformation sequences
+- Advanced combat combinations and special effects
 - Boss victory celebrations
-- Character customization accessories
+- Character selection UI and customization
+
+---
+
+## **6. Character Selection & Progression System**
+
+### **Dual Character System**
+Users experience two separate but connected character systems:
+
+#### **Home Screen Avatar (Evolution-Based)**
+- **Purpose:** Progress visualization and fitness motivation
+- **Evolution:** 5 stages based on workout milestones
+- **Animations:** Simple Game Boy style reactions
+- **Unlocking:** Selected at onboarding, progresses automatically
+
+#### **Combat Character (Fixed Appearance)**
+- **Purpose:** Fighting game representation and special abilities
+- **Evolution:** No visual evolution, maintains consistent appearance
+- **Animations:** Full Street Fighter 2 style combat moves
+- **Unlocking:** Unlocked through achievements or selection
+
+### **Character Unlocking Strategy**
+- **Start:** Choose 1 home screen personality + choice of 3 combat characters (Marcus, Sean, Mary)
+- **Early Game:** Unlock additional combat characters (Aria, Kenji, Zara) through milestones
+- **Mid Game:** All home screen personalities available
+- **Late Game:** Premium/seasonal combat characters
 
 ---
 

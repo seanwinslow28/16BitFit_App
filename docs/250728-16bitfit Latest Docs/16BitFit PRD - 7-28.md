@@ -45,7 +45,7 @@
   * **User Story:** As "Goal-Oriented Gina," I want to see my character visually transform as I hit my workout milestones so I feel a strong sense of progression and achievement.  
   * **Acceptance Criteria:**  
     1. Each of the 5 stages (Basic, Intermediate, Advanced, Master, Legend) must have a unique 16-bit sprite sheet.  
-    2. Evolution is triggered automatically upon reaching the required workout log count (10, 30, 50, 75).  
+    2. Evolution is triggered automatically upon reaching the required workout log count (10, 30, 50, 100).  
 * **AP-2: Evolution Ceremony**  
   * **Requirement:** An animated sequence must play when an avatar evolves to the next stage.  
   * **Acceptance Criteria:**  
